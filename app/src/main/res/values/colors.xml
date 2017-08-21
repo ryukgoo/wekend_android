@@ -1,0 +1,29 @@
+<resources>
+
+    <color name="black_overlay">#66000000</color>
+
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#F2797C</color>
+    <color name="colorAccent">#909090</color>
+    <color name="colorBackground">#F3F3F3</color>
+
+    <color name="cursorAccent">#FFFF00</color>
+    <color name="controlNormal">#00FF00</color>
+    <color name="controlActivated">#0000FF</color>
+
+    <color name="colorTextNormal">#43434a</color>
+    <color name="colorTextLogin">#FFD5D6</color>
+    <color name="colorTextListSub">#707278</color>
+    <color name="colorTextDisable">#cccccc</color>
+
+    <color name="colorLineDraw">#DADADA</color>
+
+    <color name="colorTextSendMail">#28b1ca</color>
+    <color name="colorTextReceiveMail">#e2154a</color>
+
+    <drawable name="colorPrimary">#FFFFFF</drawable>
+    <drawable name="colorPrimaryDark">#F2797C</drawable>
+    <drawable name="colorTextNormal">#43434a</drawable>
+    <drawable name="colorBackground">#F3F3F3</drawable>
+
+</resources>

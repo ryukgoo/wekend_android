@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/id_tab_mailbox"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabBackground="@drawable/background_filter_sort"
+        app:tabTextColor="@color/colorPrimary"
+        app:tabTextAppearance="@style/MailBoxTabText"
+        app:tabSelectedTextColor="@color/colorPrimary">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.TabLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.entuition.wekend.view.util.UnscrollViewPager
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/id_viewpager_mailbox"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </com.entuition.wekend.view.util.UnscrollViewPager>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@drawable/toolbar_drop_shadow" />
+
+    </FrameLayout>
+
+</LinearLayout>
+

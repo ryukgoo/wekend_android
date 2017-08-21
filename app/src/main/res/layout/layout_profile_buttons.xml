@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/id_button_friend_profile_ok"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_weight="1"
+        android:text="@string/profile_propose_button_accept"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
+        android:background="@color/colorPrimaryDark"/>
+
+    <Button
+        android:id="@+id/id_button_friend_profile_reject"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_weight="1"
+        android:text="@string/profile_propose_button_reject"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@color/colorBackground"/>
+
+</LinearLayout>

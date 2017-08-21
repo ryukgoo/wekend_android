@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        android:background="@drawable/img_bg_thumb_default">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/img_store_product" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/id_griditem_store_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="$5.99"
+        android:textColor="@color/colorTextNormal"
+        android:includeFontPadding="false" />
+
+    <TextView
+        android:id="@+id/id_griditem_store_bonus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:text="Bonus"
+        android:gravity="center"
+        android:textColor="@color/colorAccent"
+        android:includeFontPadding="false" />
+
+</LinearLayout>

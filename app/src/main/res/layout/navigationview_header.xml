@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.entuition.wekend.view.main.ProfileHeaderView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
+    android:theme="@style/ToolbarTheme"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/id_navigationview_image"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/img_bg_thumb_default_1" />
+
+    <TextView
+        android:id="@+id/id_navigationview_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:textColor="#43434a"
+        android:textSize="19sp"
+        android:gravity="center"
+        android:includeFontPadding="false" />
+
+    <TextView
+        android:id="@+id/id_navigationview_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:textColor="#707278"
+        android:textSize="12sp"
+        android:includeFontPadding="false" />
+
+    <TextView
+        android:id="@+id/id_user_point"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:gravity="center"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        android:includeFontPadding="false" />
+
+</com.entuition.wekend.view.main.ProfileHeaderView>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_enabled="false"
+        android:drawable="@drawable/btn_normal_r" />
+    <item
+        android:drawable="@drawable/btn_active_r" />
+</selector>

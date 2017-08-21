@@ -1,0 +1,250 @@
+<resources>
+    <!-- Application Name -->
+    <string name="app_name">Wekend</string>
+
+    <!-- View Labels -->
+    <string name="label_all">전체보기</string>
+    <string name="label_likelist">좋아요</string>
+    <string name="label_mailbox">메일함</string>
+    <string name="label_store">상점</string>
+    <string name="label_setting">설정</string>
+    <string name="label_recommend_friend">친구추천</string>
+    <string name="label_setting_notice">공지사항</string>
+    <string name="label_setting_help">도움말</string>
+    <string name="label_setting_cc">고객센터</string>
+    <string name="label_setting_alarm">알람설정</string>
+    <string name="label_show_map">지도보기</string>
+
+    <!-- LoginActivity -->
+    <string name="login_button_login">로그인</string>
+    <string name="login_button_signup">회원가입</string>
+    <string name="login_activity_email">이메일</string>
+    <string name="login_activity_email_hint">example@entuition.com</string>
+    <string name="login_acitvity_password">비밀번호</string>
+    <string name="login_activity_password_hint">*********</string>
+
+    <string name="login_dialog_failed_title">로그인 실패</string>
+    <string name="login_dialog_failed_message">아이디 또는 패스워드가 맞지 않습니다</string>
+
+    <string name="refresh_token_failed_title">세션만료</string>
+    <string name="refresh_token_failed_message">세션이 만료되어 로그인화면으로 돌아갑니다</string>
+
+    <!-- Register - RegisterActivity -->
+    <string name="register_activity_comment">이메일주소와 비밀번호를 입력해 주세요</string>
+    <string name="register_activity_email_hint">이메일주소를 입력해 주세요</string>
+    <string name="register_activity_email">이메일</string>
+    <string name="register_activity_password">비밀번호</string>
+    <string name="register_activity_password_hint">영문과 숫자의 조합 6자리이상 입력해 주세요</string>
+    <string name="register_activity_password_confirm">비밀번호 확인</string>
+    <string name="register_activity_password_confirm_hint">비밀번호를 다시 한번 입력해 주세요</string>
+    <string name="register_activity_nickname_hint">닉네임</string>
+    <string name="register_activity_next_button">다음</string>
+    <string name="register_activity_alert_title_invalid_email">이메일 입력 오류</string>
+    <string name="register_activity_alert_message_invalid_email">적합하지 않은 이메일입니다</string>
+    <string name="register_activity_alert_title_used_email">이메일 중복확인</string>
+    <string name="register_activity_alert_message_used_email">사용중인 이메일입니다</string>
+    <string name="register_activity_alert_title_invalid_password">비밀번호 입력 오류</string>
+    <string name="register_activity_alert_message_invalid_password">암호는 알파벳과 숫자 조합 6자리 이상이어야 합니다</string>
+    <string name="register_activity_alert_title_password_confirm">비밀번호 입력 오류</string>
+    <string name="register_activity_alert_message_password_confirm">비밀번호가 동일하지 않습니다</string>
+    <string name="register_activity_notice">회원가입을 하면 피크닉의 서비스 약관, 결제 서비스 약관, 개인정보 보호정책, 환불 정책, 보호 프로그램 이용약관에 동의하는 것으로 간주됩니다.</string>
+    <string name="register_alertdialog_failed_title">회원가입 실패</string>
+    <string name="register_alertdialog_failed_message">아이디 또는 패스워드가 맞지 않습니다</string>
+
+    <!-- Reigster - Insert PhoneNumber Activity -->
+    <string name="insert_phonenumber_comment">휴대폰 번호를 입력해 주세요</string>
+    <string name="request_verification_code_comment">인증번호를 입력하고 확인을 눌러주세요.</string>
+    <string name="request_verification_code">인증번호 요청</string>
+    <string name="retry_request_verification_code">인증번호 재요청</string>
+    <string name="confirm_verification_code">인증번호 확인</string>
+    <string name="send_verification_code_failed_title">인증번호 발신 실패</string>
+    <string name="send_verification_code_failed_message">인증번호 발신에 실패하였습니다.\n다시 시도해 주시기 바랍니다</string>
+    <string name="input_phonenumber_hint">(-)를 제외한 전화번호를 입력해주세요</string>
+    <string name="input_verification_hint">인증번호 6자리</string>
+    <string name="title_photo_select">사진 선택</string>
+
+    <!-- Insert User Info Activity -->
+    <string name="enter_your_nickname">닉네임을 작성해 주세요</string>
+    <string name="select_your_gender">성별을 선택해 주세요</string>
+    <string name="choose_your_birth_year">태어난 해를 선택해 주세요</string>
+    <string name="check_duplicate">중복확인</string>
+    <string name="btn_male">남자</string>
+    <string name="btn_female">여자</string>
+    <string name="insert_user_info_alert_title_nickname">닉네임 입력</string>
+    <string name="insert_user_info_alert_message_nickname">닉네임을 중복확인해야 합니다</string>
+    <string name="insert_user_info_alert_title_gender">성별 선택</string>
+    <string name="insert_user_info_alert_message_gender">성별을 선택해야 합니다</string>
+    <string name="insert_photo_comment">Please choose your best photo</string>
+
+    <string name="dialog_negative_button">취소</string>
+    <string name="dialog_positive_button">확인</string>
+
+    <!-- Container Activity -->
+    <string name="bottombar_menu_campaign">캠페인</string>
+    <string name="bottombar_menu_likelist">좋아요</string>
+    <string name="bottombar_menu_mailbox">메일함</string>
+    <string name="bottombar_menu_store">상점</string>
+    <string name="bottombar_menu_setting">설정</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="drawer_menu_notice">공지사항</string>
+    <string name="drawer_menu_help">도움말</string>
+    <string name="drawer_menu_profile">프로필</string>
+    <string name="drawer_menu_cc">고객센터</string>
+    <string name="drawer_menu_setting">알림설정</string>
+    <string name="drawer_menu_logout">로그아웃</string>
+
+    <!-- Campaign List Fragment -->
+    <string name="campaign_filter_category">카테고리</string>
+    <string name="campaign_filter_category_food">맛집</string>
+    <string name="campaign_filter_category_concert">문화공연</string>
+    <string name="campaign_filter_category_leisure">레저스포츠</string>
+
+    <string name="campaign_filter_subcategory">세부 카테고리</string>
+    <string name="campaign_filter_subcategory_food_0">양식</string>
+    <string name="campaign_filter_subcategory_food_1">일식</string>
+    <string name="campaign_filter_subcategory_food_2">중식</string>
+    <string name="campaign_filter_subcategory_food_3">한식</string>
+    <string name="campaign_filter_subcategory_food_4">퓨전/아시안/기타</string>
+    <string name="campaign_filter_subcategory_food_5">디저트/브런치</string>
+    <string name="campaign_filter_subcategory_food_6">호텔</string>
+    <string name="campaign_filter_subcategory_concert_0">전시회</string>
+    <string name="campaign_filter_subcategory_concert_1">클래식/오페라</string>
+    <string name="campaign_filter_subcategory_concert_2">뮤지컬/연극</string>
+    <string name="campaign_filter_subcategory_concert_3">일반공연</string>
+    <string name="campaign_filter_subcategory_leisure_0">레저</string>
+    <string name="campaign_filter_subcategory_leisure_1">스포츠</string>
+
+    <string name="campaign_filter_region">지역선택</string>
+    <string name="campaign_filter_region_0">압구정/청담/신사</string>
+    <string name="campaign_filter_region_1">서래마을/서초/방배</string>
+    <string name="campaign_filter_region_2">도곡/대치/양재</string>
+    <string name="campaign_filter_region_3">역삼/논현/삼성</string>
+    <string name="campaign_filter_region_4">이태원/한남</string>
+    <string name="campaign_filter_region_5">삼청/효자/인사</string>
+    <string name="campaign_filter_region_6">평창/부암</string>
+    <string name="campaign_filter_region_7">종로/광화문</string>
+    <string name="campaign_filter_region_8">성북/정동</string>
+    <string name="campaign_filter_region_9">홍대/합정</string>
+    <string name="campaign_filter_region_10">연남/연희</string>
+    <string name="campaign_filter_region_11">이촌/용산</string>
+    <string name="campaign_filter_region_12">잠실/송파/강동</string>
+    <string name="campaign_filter_region_13">광진/성수</string>
+    <string name="campaign_filter_region_14">장충/혜화/기타</string>
+
+    <string name="campaign_list_filter_ok">완료</string>
+
+    <!-- Campaign Detail Activity-->
+    <string name="campaign_detail_phone">연락처</string>
+    <string name="campaign_detail_address">주소</string>
+    <string name="campaign_detail_price">가격대</string>
+    <string name="campaign_detail_parking">주차</string>
+    <string name="campaign_detail_operation_time">영업시간</string>
+    <string name="campaign_detail_sort_like">좋아요순</string>
+    <string name="campaign_detail_sort_recent">최신순</string>
+    <string name="campaign_detail_button_like">좋아요</string>
+    <string name="campaign_detail_button_confirm_friend">친구 추천 확인</string>
+    <string name="campaign_detail_like_failed">좋아요 실패</string>
+    <string name="campaign_detail_share_failed_title">공유 실패</string>
+    <string name="campaign_detail_share_failed_message">테스트버전으로는 공유를 할 수 없습니다</string>
+
+    <!-- likelist -->
+    <string name="likelist_recommend_friend">친구추천\nNEW+</string>
+
+    <!-- profile -->
+    <string name="profile_campaign">캠페인</string>
+    <string name="profile_propose_button">함께가기 신청</string>
+    <string name="profile_propose_button_not_made">함께가기 신청중</string>
+    <string name="profile_propose_button_ok">함께가기 신청 성공</string>
+    <string name="profile_propose_button_reject">거절</string>
+    <string name="profile_propose_button_accept">수락</string>
+    <string name="profile_propose_text_match_success">함께가기 성공</string>
+    <string name="profile_propose_text_match_fail">함께가기 거절</string>
+    <string name="profile_propose_text_match_already_made">다른 캠페인에서 함께가기 성공</string>
+
+    <!-- Setting Profile Activity -->
+    <string name="profile_edit">프로필 수정</string>
+    <string name="profile_edit_done">완료</string>
+    <string name="profile_nickname">닉네임</string>
+    <string name="profile_age">나이</string>
+    <string name="profile_phone">휴대폰 번호</string>
+    <string name="profile_pink_balloon">핑크풍선</string>
+    <string name="profile_yellow_balloon">노랑풍선</string>
+    <string name="profile_owned_point">보유포인트</string>
+    <string name="profile_verification">인증요청</string>
+    <string name="profile_verification_message">인증번호를 입력하고 확인을 눌러주세요.</string>
+    <string name="profile_verification_confirm">확인</string>
+    <string name="profile_edit_verification_hint">숫자 6자리</string>
+    <string name="profile_edit_phone_complete_title">수정완료</string>
+    <string name="profile_edit_phone_complete_message">휴대폰 번호가 수정되었습니다</string>
+    <string name="profile_edit_phone_failed_title">수정오류</string>
+    <string name="profile_edit_phone_failed_message">휴대폰 번호 수정에 실패하였습니다.\n다시 시도해 주시기 바랍니다.</string>
+
+    <string name="dialog_consume_point_title">함께가기 신청</string>
+    <string name="dialog_consume_point_message">함께가기를 신청하려면 500포인트가 차감됩니다.\n진행하시겠습니까?</string>
+    <string name="dialog_propose_success_title">함께가기 신청성공</string>
+    <string name="dialog_propose_success_message">님에게 함께가기를 신청하였습니다</string>
+    <string name="dialog_propose_made_title">함께가기 성공</string>
+    <string name="dialog_propose_made_message">님과 함께가기를 수락하였습니다</string>
+    <string name="dialog_propose_reject_title">함께가기 거절</string>
+    <string name="dialog_propose_reject_message">님과 함께가기를 거절하였습니다</string>
+    <string name="dialog_propose_failed_no_point_title">함께가기 신청실패</string>
+    <string name="dialog_propose_failed_no_point_message">보유포인트가 부족합니다</string>
+
+    <string name="setting_alarm">알람</string>
+    <string name="setting_vibration">진동</string>
+
+    <!-- MailBox Profile Activity -->
+    <string name="mailbox_title">메일함</string>
+    <string name="mailbox_received">수신함</string>
+    <string name="mailbox_send">발신함</string>
+    <string name="mailbox_profile_request">함께가기 신청</string>
+    <string name="mailbox_profile_requesting">함께가기 신청중</string>
+    <string name="mailbox_profile_made">함께가기 성공</string>"
+    <string name="mailbox_message_propose_not_made">님과 함께가기 신청중입니다.</string>
+    <string name="mailbox_message_propose_made">님과 함께가기가 성공하였습니다.</string>
+    <string name="mailbox_message_propose_reject">님과 함께가기가 거절되었습니다.</string>
+    <string name="mailbox_message_propose_receive">님으로부터 함께가기 신청이 왔습니다.</string>
+
+    <string name="pink_balloon">핑크풍선</string>
+    <string name="yellow_balloon">노랑풍선</string>
+
+    <!-- Verification -->
+    <string name="verification_message_prefix">"[피크닉] 인증번호 ["</string>
+    <string name="verification_message_suffix">"]를 입력해주세요"</string>
+
+    <!-- Alert Messages -->
+    <string name="insert_phonenumber_alert_message_receive_verification_number">인증번호가 발송되었습니다\n인증번호를 입력해주세요</string>
+    <string name="insert_phonenumber_alert_title_wrong_number">전화번호 오류</string>
+    <string name="insert_phonenumber_alert_message_wrong_number">잘못된 전화번호입니다</string>
+
+    <string name="insert_user_info_alert_title_wrong_nickname">닉네임 입력오류</string>
+    <string name="insert_user_info_alert_message_wrong_nickname">잘못된 닉네임입니다</string>
+    <string name="insert_user_info_alert_title_duplicated_nickname">닉네임 중복 확인</string>
+    <string name="insert_user_info_alert_message_duplicated_nickname">사용중인 닉네임입니다</string>
+    <string name="insert_user_info_alert_message_available_nickname">사용가능한 닉네임입니다</string>
+
+    <string name="finish_application_alertdialog_title">위켄드 종료</string>
+    <string name="finish_application_alertdialog_message">앱을 종료하시겠습니까?</string>
+    <string name="finish_application_alertdialog_positive">종료</string>
+    <string name="finish_application_alertdialog_negative">아니요</string>
+
+    <string name="logout_alertdialog_title">위켄드 로그아웃</string>
+    <string name="logout_alertdialog_message">로그아웃시 앱은 자동으로 종료됩니다\n로그아웃 하시겠습니까?</string>
+    <string name="logout_alertdialog_positive">로그아웃</string>
+    <string name="logout_alertdialog_negative">아니요</string>
+
+    <!-- For Google Map API -->
+    <string name="google_public_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjoSh6ncuszhLDK+/kGtKTnHZe2BecXdZ19qGlNmDDM0mF3xEhZSDD9uhS1fzJ96VRXnT/Xz007PcB8EcgTm/up2G13UVpom7CHUpJ4/NhfrFFC4G0XBpAjKUPaeZvlH24TZLAyL4wrzqtVbmeaqohlryyfj33a+HrDjeeMYnoSyOUWThBK4AelC/SqvIwHzlUL/a1Yk5OhcjQgLhirVThKqMdHzmI8RMax47dwAOkwtQTLd0KCMzZJAoNhNFx+hlbwRjowMsi8zKZtbJnZiBC1ae/iVcwt5WChThPMVDE7PNJiM2kwP7fLGC73Qq+YxfRqCyWzPVtOwGGLuVNh+PtwIDAQAB</string>
+
+    <!-- Google Cloud Messaging -->
+    <string name="project_number">575940377619</string>
+    <string name="notification_number">13372938</string>
+    <string name="title_activity_google_maps">Map</string>
+
+    <!-- Facebook App ID -->
+    <string name="facebook_app_id">553669081498489</string>
+
+</resources>

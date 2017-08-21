@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.entuition.wekend"
+    android:versionCode="1343"
+    android:versionName="0.1.0.1343">
+
+    <uses-sdk android:minSdkVersion="17" />
+
+    <supports-screens android:compatibleWidthLimitDp="480" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!--<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.REGISTER" />
+    <uses-permission android:name="com.entuition.wekend.permission.C2D_MESSAGE" />
+
+    <uses-permission android:name="com.android.vending.BILLING" />
+
+    <!--<uses-permission android:name="com.android.vending.CHECH_LICENSE" />-->
+
+    <permission
+        android:name="com.entuition.wekend.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality. 
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application
+        android:name="com.entuition.wekend.WekendApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/app_icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme.Light">
+
+        <!-- *************** ACTIVITIES *************** -->
+        <!-- Splash Screen -->
+        <activity
+            android:name="com.entuition.wekend.view.SplashScreen"
+            android:label="@string/app_name"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <!--<data android:scheme="com.entuition.wekend" />-->
+            </intent-filter>
+
+            <intent-filter
+                android:autoVerify="true"
+                android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="com.entuition.wekend" />
+            </intent-filter>
+
+            <intent-filter>
+
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/kakaolink_host"
+                    android:scheme="@string/kakao_scheme" />
+
+            </intent-filter>
+
+        </activity>
+
+        <!-- Login Activity -->
+        <activity
+            android:name="com.entuition.wekend.view.join.LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Dark"
+            android:screenOrientation="portrait" />
+
+        <!-- Register Activity -->
+        <activity
+            android:name="com.entuition.wekend.view.join.RegisterActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Dark"
+            android:screenOrientation="portrait" />
+
+        <!-- InsertUserInfoActivity -->
+        <activity
+            android:name="com.entuition.wekend.view.join.InsertUserInfoActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Dark"
+            android:screenOrientation="portrait" />
+
+        <!-- InsertPhotoActivity -->
+        <activity
+            android:name="com.entuition.wekend.view.join.InsertPhotoActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Dark"
+            android:screenOrientation="portrait"
+            android:noHistory="true" />
+
+        <!-- InputPhoneNumberActivity -->
+        <activity
+            android:name="com.entuition.wekend.view.join.InputPhoneNumberActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Dark"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.entuition.wekend.view.main.ContainerActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.entuition.wekend.view.main.activities.CampaignDetailActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <!-- RecommendFriendListActivity -->
+        <activity
+            android:name="com.entuition.wekend.view.main.activities.RecommendFriendListActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.entuition.wekend.view.main.activities.SendProposeProfileActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.entuition.wekend.view.main.activities.ReceiveProposeProfileActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.entuition.wekend.view.main.activities.setting.SettingProfileActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.entuition.wekend.view.main.activities.setting.SettingEditProfileActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.entuition.wekend.view.main.activities.setting.SettingAlarmActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.entuition.wekend.view.main.activities.setting.SettingNoticeActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.entuition.wekend.view.main.activities.setting.SettingSubListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".view.main.activities.setting.SettingHelpActivity"
+            android:screenOrientation="portrait" />
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name="com.entuition.wekend.view.main.activities.GoogleMapsActivity"
+            android:label="@string/title_activity_google_maps" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <provider
+            android:authorities="com.facebook.app.FacebookContentProvider553669081498489"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true" />
+
+        <!-- *************** RECEIVERS *************** -->
+        <receiver
+            android:name="com.entuition.wekend.model.googleservice.gcm.ExternalReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.entuition.wekend" />
+            </intent-filter>
+        </receiver>
+
+        <!-- *************** SERVICES *************** -->
+        <service
+            android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
+            android:enabled="true" />
+
+        <service android:name="com.entuition.wekend.model.googleservice.gcm.MessageReceivingService">
+            <intent-filter>
+                <action android:name="com.entuition.wekend.model.gcm.ExternalReceiver" />
+
+                <category android:name="com.entuition.wekend" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
+
+    </application>
+
+</manifest>

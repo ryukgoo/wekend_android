@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/bb_menu_campaign"
+        android:icon="@drawable/btn_icon_home_n"
+        android:title="@string/bottombar_menu_campaign"/>
+    <item
+        android:id="@+id/bb_menu_likelist"
+        android:icon="@drawable/btn_icon_heart_n"
+        android:title="@string/bottombar_menu_likelist" />
+    <item
+        android:id="@+id/bb_menu_mailbox"
+        android:icon="@drawable/btn_icon_mail_n"
+        android:title="@string/bottombar_menu_mailbox" />
+    <item
+        android:id="@+id/bb_menu_store"
+        android:icon="@drawable/btn_icon_store_n"
+        android:title="@string/bottombar_menu_store" />
+    <item
+        android:id="@+id/bb_menu_setting"
+        android:icon="@drawable/btn_icon_drawer_n"
+        android:title="@string/bottombar_menu_setting" />
+</menu>

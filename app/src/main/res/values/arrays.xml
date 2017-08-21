@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="contents_array">
+        <item>@string/drawer_menu_notice</item>
+        <item>@string/drawer_menu_help</item>
+        <item>@string/drawer_menu_profile</item>
+        <item>@string/drawer_menu_cc</item>
+        <item>@string/drawer_menu_setting</item>
+        <item>@string/drawer_menu_logout</item>
+    </string-array>
+
+    <string-array name="mailbox_titles">
+        <item>@string/mailbox_received</item>
+        <item>@string/mailbox_send</item>
+    </string-array>
+
+    <string-array name="store_price">
+        <item>1,000won</item>
+        <item>3,000won</item>
+        <item>5,000won</item>
+        <item>10,000won</item>
+        <item>30,000won</item>
+        <item>50,000won</item>
+    </string-array>
+
+    <string-array name="store_bonus">
+        <item></item>
+        <item>Bonus 500P</item>
+        <item>Bonus 1000P</item>
+        <item>Bonus 2500P</item>
+        <item>Bonus 8500P</item>
+        <item>Monthly</item>
+    </string-array>
+
+    <string-array name="share_apps">
+        <item>Kakao Talk</item>
+        <item>Facebook</item>
+    </string-array>
+
+</resources>

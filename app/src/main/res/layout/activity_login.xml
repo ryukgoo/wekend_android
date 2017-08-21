@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:weightSum="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:background="@color/colorPrimaryDark"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="107dp"
+                android:layout_height="107dp"
+                android:id="@+id/imageView"
+                android:src="@drawable/img_bi_logo" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/colorTextLogin"
+            android:textSize="@dimen/login_static_text_small"
+            android:text="@string/login_activity_email"
+            android:includeFontPadding="false" />
+
+        <EditText
+            android:id="@+id/id_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:textSize="@dimen/login_input_text"
+            android:textColor="@color/colorPrimary"
+            android:hint="@string/login_activity_email_hint"
+            android:textColorHint="@color/colorTextLogin"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:includeFontPadding="false" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/colorTextLogin"
+            android:textSize="@dimen/login_static_text_small"
+            android:text="@string/login_acitvity_password"
+            android:includeFontPadding="false" />
+
+        <EditText
+            android:id="@+id/id_user_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:textSize="@dimen/login_input_text"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorTextLogin"
+            android:hint="@string/login_activity_password_hint"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:includeFontPadding="false" />
+
+        <Button
+            android:id="@+id/id_button_login"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="17dp"
+            android:enabled="false"
+            android:text="@string/login_button_login"
+            android:textSize="17sp"
+            android:textColor="@drawable/selector_textcolor_button_dark"
+            android:background="@drawable/selector_button_white" />
+
+        <Button
+            android:id="@+id/id_button_signup"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/login_button_signup"
+            android:textSize="@dimen/button_text_big"
+            android:textColor="@drawable/selector_textcolor_button_dark"
+            android:background="@drawable/selector_button_white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="24dp"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:text="@string/register_activity_notice"
+            android:textColor="@color/colorTextLogin"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        layout="@layout/layout_screen_progressbar" />
+
+</FrameLayout>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:id="@+id/id_campaign_list_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/campaign_list_item_image_height"
+            android:background="#4d4d4d"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:focusable="false"
+            android:layout_marginTop="@dimen/campaign_list_item_image_margin_top"
+            android:layout_marginBottom="@dimen/campaign_list_item_image_margin_bottom" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/id_campaign_list_like_button"
+            android:layout_gravity="top|right"
+            android:layout_marginTop="@dimen/campaign_list_item_like_margin_top"
+            android:layout_marginRight="@dimen/campaign_list_item_like_margin_right"
+            android:paddingBottom="@dimen/campaign_list_item_like_padding_bottom"
+            android:gravity="center"
+            android:background="@drawable/selector_heart_button"
+            android:textColor="@drawable/selector_textcolor_heart_button"
+            android:focusable="false"
+            android:textSize="@dimen/campaign_list_item_like_textsize"
+            android:text="00"
+            android:includeFontPadding="false" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/campaign_list_item_title_height"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/id_campaign_list_title"
+            android:focusable="false"
+            android:textColor="#4d4d4d"
+            android:maxLines="1"
+            android:textSize="@dimen/campaign_list_item_title_textsize"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/campaign_list_item_title_horizontal_margin"
+            android:layout_marginRight="@dimen/campaign_list_item_title_horizontal_margin"
+            android:includeFontPadding="false" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/id_campaign_list_subtitle"
+            android:text="SubTitle"
+            android:focusable="false"
+            android:textColor="#a2a2a2"
+            android:maxLines="1"
+            android:textSize="12sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/campaign_list_item_title_horizontal_margin"
+            android:layout_marginRight="@dimen/campaign_list_item_title_horizontal_margin"
+            android:layout_marginTop="@dimen/campaign_list_item_subtitle_margin_top"
+            android:includeFontPadding="false" />
+
+    </LinearLayout>
+</LinearLayout>

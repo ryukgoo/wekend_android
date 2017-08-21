@@ -1,0 +1,20 @@
+<resources>
+    <!--
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=BE:71:25:B0:16:D3:25:2C:0D:7F:BC:73:27:43:47:E5:E8:92:F9:93%3Bcom.entuition.picnic
+
+    You can also add your credentials to an existing key, using this line:
+    BE:71:25:B0:16:D3:25:2C:0D:7F:BC:73:27:43:47:E5:E8:92:F9:93;com.entuition.picnic
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyCHG9roL2xQ2WiXBLuq3ZORlmMHRo6xsQM
+    </string>
+</resources>
