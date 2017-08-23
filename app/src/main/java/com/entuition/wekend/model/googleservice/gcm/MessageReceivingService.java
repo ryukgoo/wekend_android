@@ -77,6 +77,8 @@ public class MessageReceivingService extends IntentService {
 
     public static void postNotification(Intent intentAction, Context context, String type, String message, int badge) {
 
+        Log.d(TAG, "postNotification > message : " + message);
+
         intentAction.putExtra(Constants.START_ACTIVITY_POSITION, getMessageType(type));
 
         final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -86,7 +88,7 @@ public class MessageReceivingService extends IntentService {
         final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.app_icon)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
-                .setStyle(new NotificationCompat.MessagingStyle("Wekend"))
+//                .setStyle(new NotificationCompat.MessagingStyle("Wekend"))
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(message)
                 .setContentIntent(pendingIntent)

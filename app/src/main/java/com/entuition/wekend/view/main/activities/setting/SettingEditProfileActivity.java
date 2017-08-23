@@ -176,7 +176,12 @@ public class SettingEditProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UserInfo result) {
                 userInfo = result;
-                profilePhotoList = Utilities.asSortedArrayList(userInfo.getPhotos());
+                if (userInfo.getPhotos() != null) {
+                    profilePhotoList = Utilities.asSortedArrayList(userInfo.getPhotos());
+                } else {
+                    profilePhotoList = new ArrayList<String>();
+                }
+
                 setViews();
             }
 
@@ -388,6 +393,8 @@ public class SettingEditProfileActivity extends AppCompatActivity {
             if (profilePhotoList.size() != 0 && profilePhotoList.get(position) != null) {
                 String photoUrl = S3Utils.getS3Url(Constants.PROFILE_IMAGE_BUCKET_NAME, profilePhotoList.get(position));
                 ImageLoader.getInstance().displayImage(photoUrl, imageView, options, new BigSizeImageLoadingListener(profilePhotoList.get(position)));
+            } else {
+                imageView.setImageResource(R.drawable.profile_default);
             }
 
             editButton.setOnClickListener(new View.OnClickListener() {

@@ -68,7 +68,7 @@ public class ProfileHeaderView extends LinearLayout {
                 .showImageForEmptyUri(R.drawable.img_bg_thumb_male)
                 .showImageOnFail(R.drawable.img_bg_thumb_male)
                 .cacheInMemory(true)
-                .cacheOnDisk(true)
+                .cacheOnDisk(false)
                 .build();
 
         ChangeProfileImageObservable.getInstance().addObserver(new ChangeProfileImageObserver());

@@ -74,6 +74,8 @@ public class InsertPhotoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(InsertPhotoActivity.this, ContainerActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -123,6 +125,9 @@ public class InsertPhotoActivity extends AppCompatActivity {
 
     private void cropImage() {
 
+
+        Log.d(TAG, "cropImage");
+
         outputFile = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
 
         Intent intent = new Intent("com.android.camera.action.CROP");
@@ -146,6 +151,9 @@ public class InsertPhotoActivity extends AppCompatActivity {
             Toast.makeText(this, "자르기용 어플리케이션이 없습니다.", Toast.LENGTH_SHORT).show();
             return;
         }
+
+
+        Log.d(TAG, "cropImage finished");
     }
 
     private void uploadProfileIamge() {

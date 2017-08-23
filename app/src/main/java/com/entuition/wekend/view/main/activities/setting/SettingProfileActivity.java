@@ -123,14 +123,12 @@ public class SettingProfileActivity extends AppCompatActivity {
                 .showImageForEmptyUri(R.drawable.profile_default)
                 .showImageOnFail(R.drawable.profile_default)
                 .cacheInMemory(true)
-                .cacheOnDisk(true)
+                .cacheOnDisk(false)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
     }
 
     private void loadUserInfo() {
-
-        Log.d(TAG, "loadUserINfo");
 
         String userId = UserInfoDaoImpl.getInstance().getUserId(this);
         LoadUserInfoTask task = new LoadUserInfoTask();
@@ -138,7 +136,12 @@ public class SettingProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UserInfo result) {
                 userInfo = result;
-                profilePhotoList = Utilities.asSortedArrayList(userInfo.getPhotos());
+                if (userInfo.getPhotos() != null) {
+                    profilePhotoList = Utilities.asSortedArrayList(userInfo.getPhotos());
+                } else {
+                    profilePhotoList = new ArrayList<String>();
+                }
+
 
                 setViews();
             }
@@ -222,16 +225,18 @@ public class SettingProfileActivity extends AppCompatActivity {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
 
-            Log.d(TAG, "instantiateItem > position : " + position);
-
             View view = getLayoutInflater().inflate(R.layout.campaign_pager_item, container, false);
             view.setTag(position);
             container.addView(view);
 
-            String photoUrl = S3Utils.getS3Url(Constants.PROFILE_IMAGE_BUCKET_NAME, profilePhotoList.get(position));
-
             final ImageView imageView = (ImageView) view.findViewById(R.id.image_pager_item);
-            ImageLoader.getInstance().displayImage(photoUrl, imageView, options, new BigSizeImageLoadingListener(profilePhotoList.get(position)));
+
+            if (profilePhotoList == null || profilePhotoList.size() == 0) {
+                imageView.setImageResource(R.drawable.profile_default);
+            } else {
+                String photoUrl = S3Utils.getS3Url(Constants.PROFILE_IMAGE_BUCKET_NAME, profilePhotoList.get(position));
+                ImageLoader.getInstance().displayImage(photoUrl, imageView, options, new BigSizeImageLoadingListener(profilePhotoList.get(position)));
+            }
 
             return view;
         }

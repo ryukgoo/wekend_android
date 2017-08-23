@@ -16,14 +16,18 @@ android {
         applicationId "com.entuition.wekend"
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 27
-        versionName "0.0.27"
+        versionCode 30
+        versionName "0.0.30"
         multiDexEnabled true
     }
     dexOptions {
         javaMaxHeapSize "4g"
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -42,6 +46,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile group: 'com.kakao.sdk', name: 'kakaolink', version: project.KAKAO_SDK_VERSION
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:support-v13:24.2.0'
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'com.android.support:support-v4:24.2.0'

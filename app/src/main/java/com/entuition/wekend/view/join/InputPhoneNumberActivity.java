@@ -164,6 +164,7 @@ public class InputPhoneNumberActivity extends AppCompatActivity implements View.
                     .setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            buttonRequestVerification.setEnabled(false);
                             editTextVerification.requestFocus();
                             dialogInterface.dismiss();
                         }

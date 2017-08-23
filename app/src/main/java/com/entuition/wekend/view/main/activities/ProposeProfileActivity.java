@@ -28,7 +28,7 @@ import com.entuition.wekend.model.data.product.asynctask.LoadUserInfoAndProductI
 import com.entuition.wekend.model.data.user.UserInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 import com.entuition.wekend.model.transfer.S3Utils;
-import com.entuition.wekend.view.util.AnimateFirstDisplayListener;
+import com.entuition.wekend.view.util.BigSizeImageLoadingListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -135,12 +135,11 @@ public abstract class ProposeProfileActivity extends AppCompatActivity implement
 
         viewPager = (ViewPager) findViewById(R.id.id_profile_viewpager);
         viewpagerAdapter = new FriendProfileViewpagerAdapter();
-        viewPager.setAdapter(viewpagerAdapter);
+//        viewPager.setAdapter(viewpagerAdapter);
 
         pageIndicator = (LinearLayout) findViewById(R.id.id_profile_viewpager_indicator);
 
         displayOptions = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.profile_default)
                 .showImageForEmptyUri(R.drawable.profile_default)
                 .showImageOnFail(R.drawable.profile_default)
                 .cacheInMemory(true)
@@ -150,6 +149,9 @@ public abstract class ProposeProfileActivity extends AppCompatActivity implement
     }
 
     private void loadUserInfoAndProductInfo() {
+
+        Log.d(TAG, "loadUserInfoAndProductInfo started");
+
         LikeDBItem likeDBItem = new LikeDBItem();
         likeDBItem.setUserId(friendUserId);
         likeDBItem.setProductId(productId);
@@ -172,7 +174,8 @@ public abstract class ProposeProfileActivity extends AppCompatActivity implement
 
         textCampaignDescription.setText(Html.fromHtml(description));
 
-        viewpagerAdapter.notifyDataSetChanged();
+        viewPager.setAdapter(viewpagerAdapter);
+//        viewpagerAdapter.notifyDataSetChanged();
 
         dotsCount = viewpagerAdapter.getCount();
         dots = new ImageView[dotsCount];
@@ -239,9 +242,14 @@ public abstract class ProposeProfileActivity extends AppCompatActivity implement
             friendUserInfo = userInfo;
             friendProductInfo = productInfo;
 
-            profilePhotoList = Utilities.asSortedArrayList(userInfo.getPhotos());
+            if (userInfo.getPhotos() != null) {
+                Log.d(TAG, "onSuccess > userInfo.getPhotos() : " + userInfo.getPhotos().toString());
+                profilePhotoList = Utilities.asSortedArrayList(userInfo.getPhotos());
 
-            Log.d(TAG, "profilePHotoList size : " + profilePhotoList.size());
+                Log.d(TAG, "onSuccess > userInfo.getPhotos().size() : " + userInfo.getPhotos().size());
+            } else {
+                profilePhotoList = new ArrayList<String>();
+            }
 
             setViews();
         }
@@ -257,7 +265,7 @@ public abstract class ProposeProfileActivity extends AppCompatActivity implement
 
         @Override
         public int getCount() {
-            return profilePhotoList.size();
+            return Math.max(profilePhotoList.size(), 1);
         }
 
         @Override
@@ -273,13 +281,24 @@ public abstract class ProposeProfileActivity extends AppCompatActivity implement
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
 
+            Log.d(TAG, "instantiateItem > position : " + position);
+            Log.d(TAG, "instantiateItem > profilePhotoList.size() : " + profilePhotoList.size());
+
             View view = getLayoutInflater().inflate(R.layout.campaign_pager_item, container, false);
+            view.setTag(position);
             container.addView(view);
 
-            String photoUrl = S3Utils.getS3Url(Constants.PROFILE_IMAGE_BUCKET_NAME, profilePhotoList.get(position));
-
             ImageView imageView = (ImageView) view.findViewById(R.id.image_pager_item);
-            ImageLoader.getInstance().displayImage(photoUrl, imageView, displayOptions, new AnimateFirstDisplayListener());
+
+            if (profilePhotoList == null || profilePhotoList.size() == 0) {
+                imageView.setImageResource(R.drawable.profile_default);
+            } else {
+
+                Log.d(TAG, "instantiateItem > position : " + position);
+
+                String photoUrl = S3Utils.getS3Url(Constants.PROFILE_IMAGE_BUCKET_NAME, profilePhotoList.get(position));
+                ImageLoader.getInstance().displayImage(photoUrl, imageView, displayOptions, new BigSizeImageLoadingListener(profilePhotoList.get(position)));
+            }
 
             return view;
         }

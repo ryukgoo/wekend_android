@@ -47,7 +47,7 @@
     <string name="register_activity_alert_message_invalid_password">암호는 알파벳과 숫자 조합 6자리 이상이어야 합니다</string>
     <string name="register_activity_alert_title_password_confirm">비밀번호 입력 오류</string>
     <string name="register_activity_alert_message_password_confirm">비밀번호가 동일하지 않습니다</string>
-    <string name="register_activity_notice">회원가입을 하면 피크닉의 서비스 약관, 결제 서비스 약관, 개인정보 보호정책, 환불 정책, 보호 프로그램 이용약관에 동의하는 것으로 간주됩니다.</string>
+    <string name="register_activity_notice">회원가입을 하면 위켄드의 서비스 약관, 결제 서비스 약관, 개인정보 보호정책, 환불 정책, 보호 프로그램 이용약관에 동의하는 것으로 간주됩니다.</string>
     <string name="register_alertdialog_failed_title">회원가입 실패</string>
     <string name="register_alertdialog_failed_message">아이디 또는 패스워드가 맞지 않습니다</string>
 

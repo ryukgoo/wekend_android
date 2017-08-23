@@ -13,6 +13,8 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="colorControlHighlight">@color/colorPrimary</item>
 
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+
         <item name="android:dropDownListViewStyle">@style/FilterSpinnerStyle</item>
     </style>
 </resources>

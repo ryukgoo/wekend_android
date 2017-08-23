@@ -76,8 +76,12 @@ public class AuthenticationTask extends AsyncTask<UserInfo, Void, Void> {
                 userid = responseModel.getUserid();
 
                 UserInfo userInfo = UserInfoDaoImpl.getInstance().getUserInfo(userid);
-                ArrayList<String> photos = Utilities.asSortedArrayList(userInfo.getPhotos());
-                isNoPhotos = photos == null || photos.size() == 0;
+                if (userInfo.getPhotos() != null) {
+                    ArrayList<String> photos = Utilities.asSortedArrayList(userInfo.getPhotos());
+                    isNoPhotos = photos == null || photos.size() == 0;
+                } else {
+                    isNoPhotos = true;
+                }
             }
         }
 
@@ -124,6 +128,8 @@ public class AuthenticationTask extends AsyncTask<UserInfo, Void, Void> {
                 context.startActivity(intent);
             } else {
                 Intent intent = new Intent(context, ContainerActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
         }

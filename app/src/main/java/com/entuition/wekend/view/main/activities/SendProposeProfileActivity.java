@@ -69,7 +69,7 @@ public class SendProposeProfileActivity extends ProposeProfileActivity implement
 
         } else if (proposeStatus.equals(Constants.PROPOSE_STATUS_REJECT)) {
 
-            phoneLayout.setVisibility(View.VISIBLE);
+            phoneLayout.setVisibility(View.GONE);
             sendButtons.setVisibility(View.GONE);
             textMatchResult.setVisibility(View.VISIBLE);
             textPoint.setVisibility(View.GONE);

@@ -50,7 +50,7 @@ public class ReceiveMailListAdapter extends RecyclerSwipeAdapter<SimpleViewHolde
                 .showImageForEmptyUri(R.drawable.img_bg_thumb_s_logo)
                 .showImageOnFail(R.drawable.img_bg_thumb_s_logo)
                 .cacheInMemory(true)
-                .cacheOnDisk(true)
+                .cacheOnDisk(false)
                 .build();
     }
 
