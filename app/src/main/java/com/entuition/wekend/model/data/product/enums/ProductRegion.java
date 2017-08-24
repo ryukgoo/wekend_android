@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public enum ProductRegion implements IProductEnum {
 
-    NONE(100, 0, R.string.campaign_filter_region),
+    NONE(100, 0, R.string.campaign_filter_region_all),
     REGION_SEOUL1(4001, 1, R.string.campaign_filter_region_0),        // 압구정/청담/신사
     REGION_SEOUL2(4002, 2, R.string.campaign_filter_region_1),        // 서래마을/서초/방배
     REGION_SEOUL3(4012, 3, R.string.campaign_filter_region_2),        // 도곡/대치/양재

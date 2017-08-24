@@ -12,7 +12,7 @@ import java.util.List;
  */
 public enum Category implements IProductEnum {
 
-    NONE(100, 0, R.string.campaign_filter_category),
+    NONE(100, 0, R.string.campaign_filter_category_all),
     FOOD(101, 1, R.string.campaign_filter_category_food),
     CONCERT(102, 2, R.string.campaign_filter_category_concert),
     LEISURE(103, 3, R.string.campaign_filter_category_leisure);

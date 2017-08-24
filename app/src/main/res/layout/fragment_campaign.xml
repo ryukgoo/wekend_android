@@ -4,6 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/id_textview_campaign_no_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:gravity="center"
+        android:text="@string/campaign_list_no_result" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

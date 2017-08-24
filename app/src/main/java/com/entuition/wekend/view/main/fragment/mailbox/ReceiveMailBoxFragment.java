@@ -2,6 +2,7 @@ package com.entuition.wekend.view.main.fragment.mailbox;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,11 +13,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
 import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
+import com.entuition.wekend.model.data.mail.ReadReceiveMailObservable;
 import com.entuition.wekend.model.data.mail.ReceiveMail;
 import com.entuition.wekend.model.data.mail.ReceiveMailDaoImpl;
 import com.entuition.wekend.model.data.mail.UpdateReceiveMailObservable;
@@ -44,6 +47,7 @@ public class ReceiveMailBoxFragment extends Fragment {
     private RecyclerView mailListView;
     private LinearLayoutManager layoutManager;
     private SwipeRefreshLayout refreshLayout;
+    private TextView textViewNoResult;
 
     private ReceiveMailListAdapter listAdapter;
 
@@ -53,6 +57,7 @@ public class ReceiveMailBoxFragment extends Fragment {
 
         MailNotificationObservable.getInstance().addObserver(new UpdateNotificationObserver());
         UpdateReceiveMailObservable.getInstance().addObserver(new UpdateNotificationObserver());
+        ReadReceiveMailObservable.getInstance().addObserver(new ReadObserver());
     }
 
     @Override
@@ -69,6 +74,8 @@ public class ReceiveMailBoxFragment extends Fragment {
 
         mailListView = (RecyclerView) rootView.findViewById(R.id.id_list_receive_mailbox);
         progressbar = (FrameLayout) rootView.findViewById(R.id.id_screen_dim_progress);
+        textViewNoResult = (TextView) rootView.findViewById(R.id.id_textview_mailbox_no_result);
+        textViewNoResult.setText(R.string.mailbox_receive_no_result);
 
         layoutManager = new LinearLayoutManager(getActivity());
         mailListView.setLayoutManager(layoutManager);
@@ -124,6 +131,12 @@ public class ReceiveMailBoxFragment extends Fragment {
             listAdapter.notifyDataSetChanged();
             progressbar.setVisibility(View.GONE);
             refreshLayout.setRefreshing(false);
+
+            if (listAdapter.getItemCount() == 0) {
+                textViewNoResult.setVisibility(View.VISIBLE);
+            } else {
+                textViewNoResult.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -135,8 +148,11 @@ public class ReceiveMailBoxFragment extends Fragment {
     private class ItemClickListener implements SimpleViewHolder.IViewHolderListener {
 
         @Override
-        public void onClickItem(int position) {
+        public void onClickItem(final int position) {
+
             final ReceiveMail mail = ReceiveMailDaoImpl.getInstance().getReceiveMailList().get(position);
+            if (mail.getIsRead() == Constants.MAIL_STATUS_UNREAD) { new ReadTask().execute(position); }
+
             getActivity().startActivity(getProfileIntent(mail));
         }
 
@@ -156,8 +172,13 @@ public class ReceiveMailBoxFragment extends Fragment {
                 public void onSuccess(@Nullable Object object) {
                     listAdapter.mItemManger.removeShownLayouts(layout);
                     listAdapter.notifyItemRemoved(position);
-
                     listAdapter.closeAllOpenedLayout();
+
+                    if (listAdapter.getItemCount() == 0) {
+                        textViewNoResult.setVisibility(View.VISIBLE);
+                    } else {
+                        textViewNoResult.setVisibility(View.GONE);
+                    }
                 }
 
                 @Override
@@ -187,6 +208,38 @@ public class ReceiveMailBoxFragment extends Fragment {
         @Override
         public void update(Observable observable, Object data) {
             loadReceiveMail();
+        }
+    }
+
+    private class ReadTask extends AsyncTask<Integer, Void, Void> {
+
+        int position;
+
+        @Override
+        protected Void doInBackground(Integer... params) {
+
+            position = params[0];
+
+            ReceiveMail mail = ReceiveMailDaoImpl.getInstance().getReceiveMailList().get(position);
+            mail.setIsRead(Constants.MAIL_STATUS_READ);
+            ReceiveMailDaoImpl.getInstance().updateReceiveMail(mail);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            ReadReceiveMailObservable.getInstance().read(position);
+        }
+    }
+
+    private class ReadObserver implements Observer {
+
+        @Override
+        public void update(Observable observable, Object data) {
+
+            int position = (int) data;
+            listAdapter.notifyItemChanged(position);
         }
     }
 }

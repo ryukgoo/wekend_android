@@ -12,7 +12,7 @@ import java.util.List;
  */
 public enum Food implements IProductEnum {
 
-    NONE(100, 0, R.string.campaign_filter_subcategory),
+    NONE(100, 0, R.string.campaign_filter_subcategory_all),
     WESTERN_FOOD(1001, 1, R.string.campaign_filter_subcategory_food_0),
     JAPANESE_FOOD(1002, 2, R.string.campaign_filter_subcategory_food_1),
     CHINESE_FOOD(1003, 3, R.string.campaign_filter_subcategory_food_2),

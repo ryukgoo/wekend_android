@@ -12,7 +12,7 @@ import java.util.List;
  */
 public enum Leisure implements IProductEnum {
 
-    NONE(100, 0, R.string.campaign_filter_subcategory),
+    NONE(100, 0, R.string.campaign_filter_subcategory_all),
     LEISURE(3001, 1, R.string.campaign_filter_subcategory_leisure_0),             // 레져
     SPORTS(3002, 2, R.string.campaign_filter_subcategory_leisure_1);              // 스포츠;
 

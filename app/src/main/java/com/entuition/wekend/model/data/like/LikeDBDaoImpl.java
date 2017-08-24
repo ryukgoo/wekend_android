@@ -48,7 +48,8 @@ public class LikeDBDaoImpl implements ILikeDBDao {
 
     private DynamoDBMapper mapper;
     private List<LikeDBItem> likeList;
-    private PaginatedList<LikeReadState> readStates;
+//    private PaginatedList<LikeReadState> readStates;
+    private List<LikeReadState> readStates;
 
     private LikeDBDaoImpl() {
 
@@ -208,6 +209,7 @@ public class LikeDBDaoImpl implements ILikeDBDao {
     @Override
     public void loadLikeProductList(String userId) {
 
+        Log.d(TAG, "LikeListLoad > loadLikeProductList start");
         Log.d(TAG, "loadLikeProductList > userId : " + userId);
 
         if (likeList != null) {
@@ -247,6 +249,8 @@ public class LikeDBDaoImpl implements ILikeDBDao {
         } catch (Exception e) {
 //            Log.e(TAG, e.getMessage());
         }
+
+        Log.d(TAG, "LikeListLoad > loadLikeProductList finish");
     }
 
     @Override
@@ -356,14 +360,21 @@ public class LikeDBDaoImpl implements ILikeDBDao {
 
     public void updateProfileReadState(LikeReadState readState) {
         try {
-            readState.setReadTime(Utilities.getTimestamp());
+
+            if (!readStates.contains(readState)) {
+                readState.setReadTime(Utilities.getTimestamp());
+                readStates.add(readState);
+            } else {
+                readState.setReadTime(Utilities.getTimestamp());
+            }
+
             mapper.save(readState);
 
         } catch (Exception e) {
         }
     }
 
-    public PaginatedList<LikeReadState> getLikeReadState(int productId, String userId) {
+    public List<LikeReadState> getLikeReadState(int productId, String userId) {
 
         LikeReadState readState = new LikeReadState();
         readState.setProductId(productId);
@@ -377,7 +388,11 @@ public class LikeDBDaoImpl implements ILikeDBDao {
                     .withConsistentRead(false)
                     .withScanIndexForward(false);
 
-            readStates = mapper.query(LikeReadState.class, queryExpression);
+            PaginatedList<LikeReadState> results = mapper.query(LikeReadState.class, queryExpression);
+            readStates = new ArrayList<LikeReadState>();
+            for (LikeReadState state : results) {
+                readStates.add(state);
+            }
             return readStates;
 
         } catch (Exception e) {

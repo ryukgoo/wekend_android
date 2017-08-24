@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.entuition.wekend.R;
@@ -67,6 +68,7 @@ public class CampaignListFragment extends AbstractFragment {
     private SwipeRefreshLayout refreshLayout;
     private View dimLayout;
     private SearchView searchView;
+    private TextView textViewNoResult;
     private String searchKeyword;
 
     private SlidingDrawerFilter slidingDrawerFilter;
@@ -124,6 +126,8 @@ public class CampaignListFragment extends AbstractFragment {
                 }
             }
         });
+
+        textViewNoResult = (TextView) view.findViewById(R.id.id_textview_campaign_no_result);
 
         campaignAdapter = new CampaignRecyclerViewAdapter(getActivity());
         campaignAdapter.setOnItemClickListener(new ItemClickListener());
@@ -558,6 +562,12 @@ public class CampaignListFragment extends AbstractFragment {
             progressbarLayout.setVisibility(View.GONE);
 
             campaignAdapter.notifyDataSetChanged();
+
+            if (campaignAdapter.getItemCount() == 0) {
+                textViewNoResult.setVisibility(View.VISIBLE);
+            } else {
+                textViewNoResult.setVisibility(View.GONE);
+            }
 
             refreshLayout.setEnabled(true);
             scrollListener.setLoading(true);

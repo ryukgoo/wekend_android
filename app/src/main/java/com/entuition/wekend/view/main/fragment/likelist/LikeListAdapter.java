@@ -108,8 +108,7 @@ public class LikeListAdapter extends RecyclerSwipeAdapter<SimpleViewHolder> {
         viewHolder.title.setText(String.valueOf(likeItem.getProductTitle()));
         viewHolder.subTitle.setText(likeItem.getProductDesc());
 
-        likeItem.setRead(LikeDBDaoImpl.getInstance().isReadLikeItem(likeItem));
-        if (likeItem.isRead()) {
+        if (LikeDBDaoImpl.getInstance().isReadLikeItem(likeItem)) {
             viewHolder.newText.setVisibility(View.GONE);
         } else {
             viewHolder.newText.setVisibility(View.VISIBLE);

@@ -195,10 +195,14 @@ public class ProductDaoImpl implements IProductInfoDao {
     }
 
     public void getLikedTime() {
+
+        Log.d(TAG, "LikeListLoad > getLIkedTime");
+
         likeStates = new HashMap<Integer, ProductReadState>();
         try {
-
             PaginatedList<ProductReadState> results = mapper.scan(ProductReadState.class, new DynamoDBScanExpression());
+
+            Log.d(TAG, "LikeListLoad > getLIkedTime > scan time");
 
             if (results != null) {
                 for (ProductReadState readState : results) {
@@ -206,8 +210,10 @@ public class ProductDaoImpl implements IProductInfoDao {
                 }
             }
         } catch (Exception e) {
-
+            Log.d(TAG, "LikeListLoad > exception : " + e.toString());
         }
+
+        Log.d(TAG, "LikeListLoad > getLIkedTime > finish");
     }
 
     private DynamoDBQueryExpression<ProductInfo> getQueryExpression(ProductQueryOptions options) {

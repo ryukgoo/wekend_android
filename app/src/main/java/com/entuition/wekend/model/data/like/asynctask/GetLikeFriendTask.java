@@ -2,9 +2,7 @@ package com.entuition.wekend.model.data.like.asynctask;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.entuition.wekend.model.data.like.LikeDBDaoImpl;
 import com.entuition.wekend.model.data.like.LikeDBItem;
 import com.entuition.wekend.model.data.like.LikeReadState;
@@ -42,7 +40,7 @@ public class GetLikeFriendTask extends AsyncTask<Integer, Void, Void> {
         friendList = new ArrayList<LikeDBItem>();
 
         List<LikeDBItem> friends = LikeDBDaoImpl.getInstance().getLikedFriendList(productId, gender);
-        PaginatedList<LikeReadState> readStates = LikeDBDaoImpl.getInstance().getLikeReadState(productId, userId);
+        List<LikeReadState> readStates = LikeDBDaoImpl.getInstance().getLikeReadState(productId, userId);
 
         for (LikeDBItem item : friends) {
             for (LikeReadState state : readStates) {

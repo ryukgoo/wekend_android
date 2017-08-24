@@ -105,13 +105,12 @@ public class MessageReceivingService extends IntentService {
         if (vibrationOnOff == 1) notificationDefault |= Notification.DEFAULT_VIBRATE;
         notificationBuilder.setDefaults(notificationDefault);
 
-        notificationManager.notify(R.string.notification_number, notificationBuilder.build());
-    }
+        if (type.equals(Constants.TYPE_NOTIFICATION_LIKE)) {
+            notificationManager.notify(R.string.notification_id, notificationBuilder.build());
+        } else {
+            notificationManager.notify(NotificationID.getID(), notificationBuilder.build());
+        }
 
-    public static void hideNotification(Context context) {
-        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.cancel(R.string.notification_number);
     }
 
     private static int getMessageType(String type) {
@@ -220,4 +219,5 @@ public class MessageReceivingService extends IntentService {
             Log.e(TAG, "StoreEndpointArnCallback > onFailed!!");
         }
     }
+
 }

@@ -13,12 +13,12 @@
 
     <Button
         android:id="@+id/id_pager_item_button_edit"
-        android:layout_width="40dp"
-        android:layout_height="30dp"
+        android:layout_width="48dp"
+        android:layout_height="40dp"
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
-        android:background="@drawable/btn_icon_photo"
+        android:background="@drawable/btn_icon_photo_shadow"
         android:visibility="gone" />
 
 </FrameLayout>

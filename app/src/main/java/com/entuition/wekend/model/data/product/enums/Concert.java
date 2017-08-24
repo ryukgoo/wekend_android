@@ -12,7 +12,7 @@ import java.util.List;
  */
 public enum Concert implements IProductEnum {
 
-    NONE(100, 0, R.string.campaign_filter_subcategory),
+    NONE(100, 0, R.string.campaign_filter_subcategory_all),
     EXHIBITION(2001, 1, R.string.campaign_filter_subcategory_concert_0),          // 전시회
     CLASSIC_OPERA(2002, 2, R.string.campaign_filter_subcategory_concert_1),       // 클래식/오페라
     MUSICAL_PLAYS(2003, 3, R.string.campaign_filter_subcategory_concert_2),       // 뮤지컬/연극

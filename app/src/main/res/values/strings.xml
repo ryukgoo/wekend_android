@@ -97,12 +97,14 @@
     <string name="drawer_menu_logout">로그아웃</string>
 
     <!-- Campaign List Fragment -->
-    <string name="campaign_filter_category">카테고리</string>
+    <string name="campaign_filter_category_prompt">카테고리 선택</string>
+    <string name="campaign_filter_category_all">전체 카테고리</string>
     <string name="campaign_filter_category_food">맛집</string>
     <string name="campaign_filter_category_concert">문화공연</string>
     <string name="campaign_filter_category_leisure">레저스포츠</string>
 
-    <string name="campaign_filter_subcategory">세부 카테고리</string>
+    <string name="campaign_filter_subcategory_prompt">세부 카테고리 선택</string>
+    <string name="campaign_filter_subcategory_all">전체 세부 카테고리</string>
     <string name="campaign_filter_subcategory_food_0">양식</string>
     <string name="campaign_filter_subcategory_food_1">일식</string>
     <string name="campaign_filter_subcategory_food_2">중식</string>
@@ -117,7 +119,8 @@
     <string name="campaign_filter_subcategory_leisure_0">레저</string>
     <string name="campaign_filter_subcategory_leisure_1">스포츠</string>
 
-    <string name="campaign_filter_region">지역선택</string>
+    <string name="campaign_filter_region_prompt">지역 선택</string>
+    <string name="campaign_filter_region_all">전체 지역</string>
     <string name="campaign_filter_region_0">압구정/청담/신사</string>
     <string name="campaign_filter_region_1">서래마을/서초/방배</string>
     <string name="campaign_filter_region_2">도곡/대치/양재</string>
@@ -136,6 +139,8 @@
 
     <string name="campaign_list_filter_ok">완료</string>
 
+    <string name="campaign_list_no_result">검색결과가 없습니다</string>
+
     <!-- Campaign Detail Activity-->
     <string name="campaign_detail_phone">연락처</string>
     <string name="campaign_detail_address">주소</string>
@@ -152,6 +157,7 @@
 
     <!-- likelist -->
     <string name="likelist_recommend_friend">친구추천\nNEW+</string>
+    <string name="likelist_no_result">마음에 드는 캠페인에 좋아요를 눌러보세요</string>
 
     <!-- profile -->
     <string name="profile_campaign">캠페인</string>
@@ -208,6 +214,9 @@
     <string name="mailbox_message_propose_reject">님과 함께가기가 거절되었습니다.</string>
     <string name="mailbox_message_propose_receive">님으로부터 함께가기 신청이 왔습니다.</string>
 
+    <string name="mailbox_receive_no_result">받은 메일이 없습니다</string>
+    <string name="mailbox_send_no_result">보낸 메일이 없습니다</string>
+
     <string name="pink_balloon">핑크풍선</string>
     <string name="yellow_balloon">노랑풍선</string>
 
@@ -232,7 +241,7 @@
     <string name="finish_application_alertdialog_negative">아니요</string>
 
     <string name="logout_alertdialog_title">위켄드 로그아웃</string>
-    <string name="logout_alertdialog_message">로그아웃시 앱은 자동으로 종료됩니다\n로그아웃 하시겠습니까?</string>
+    <string name="logout_alertdialog_message">로그아웃 하시면 로그인화면으로 돌아갑니다\n로그아웃 하시겠습니까?</string>
     <string name="logout_alertdialog_positive">로그아웃</string>
     <string name="logout_alertdialog_negative">아니요</string>
 
@@ -241,7 +250,7 @@
 
     <!-- Google Cloud Messaging -->
     <string name="project_number">575940377619</string>
-    <string name="notification_number">13372938</string>
+    <string name="notification_id">133725358</string>
     <string name="title_activity_google_maps">Map</string>
 
     <!-- Facebook App ID -->

@@ -162,22 +162,25 @@ public class SlidingDrawerFilter {
                 switch (category) {
                     case FOOD: // FOOD
                         spinnerSubCategory.setAdapter(adapterSubCategoryFood);
+                        spinnerProductRegion.setAdapter(adapterRegion);
                         spinnerProductRegion.setEnabled(true);
                         spinnerSubCategory.setEnabled(true);
                         break;
                     case CONCERT: // CONCERT
                         spinnerSubCategory.setAdapter(adapterSubCategoryConcert);
-                        spinnerProductRegion.setEnabled(false);
+                        spinnerProductRegion.setAdapter(adapterRegion);
+                        spinnerProductRegion.setEnabled(true);
                         spinnerSubCategory.setEnabled(true);
                         break;
                     case LEISURE: // LEISURE
                         spinnerSubCategory.setAdapter(adapterSubCategoryLeisure);
-                        spinnerProductRegion.setEnabled(false);
+                        spinnerProductRegion.setAdapter(adapterRegion);
+                        spinnerProductRegion.setEnabled(true);
                         spinnerSubCategory.setEnabled(true);
                         break;
                     default: // NONE
                         spinnerSubCategory.setAdapter(adapterSubCategoryFood);
-                        spinnerProductRegion.setSelection(0);
+                        spinnerProductRegion.setAdapter(adapterRegion);
                         spinnerProductRegion.setEnabled(false);
                         spinnerSubCategory.setEnabled(false);
                         break;
@@ -194,6 +197,8 @@ public class SlidingDrawerFilter {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+                Log.d(TAG, "MAinCategory > onNothingSelected");
 
                 if (orderType == ProductQueryOptions.ORDER_BY_DATE) {
                     buttonRecentFilter.setSelected(true);

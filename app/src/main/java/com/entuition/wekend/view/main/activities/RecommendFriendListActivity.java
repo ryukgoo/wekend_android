@@ -1,8 +1,8 @@
 package com.entuition.wekend.view.main.activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,13 +15,12 @@ import android.widget.TextView;
 
 import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
+import com.entuition.wekend.model.data.like.LikeDBDaoImpl;
 import com.entuition.wekend.model.data.like.LikeDBItem;
 import com.entuition.wekend.model.data.like.LikeReadState;
 import com.entuition.wekend.model.data.like.ReadFriendObservable;
 import com.entuition.wekend.model.data.like.asynctask.GetLikeFriendTask;
 import com.entuition.wekend.model.data.like.asynctask.IGetLikeFriendCallback;
-import com.entuition.wekend.model.data.like.asynctask.UpdateProfileReadStateTask;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 
 import java.util.ArrayList;
@@ -132,50 +131,67 @@ public class RecommendFriendListActivity extends AppCompatActivity implements Re
     @Override
     public void onItemClicked(View view, int position) {
 
-        final LikeDBItem item = friendList.get(position);
 
-        final String userId = UserInfoDaoImpl.getInstance().getUserId(RecommendFriendListActivity.this);
 
-        LikeReadState readState = new LikeReadState();
-        readState.setLikeId(item.getLikeId());
-        readState.setUserId(userId);
-        readState.setProductId(item.getProductId());
-        readState.setLikeUserId(item.getUserId());
-
-        UpdateProfileReadStateTask readStateTask = new UpdateProfileReadStateTask();
-        readStateTask.setCallback(new ISimpleTaskCallback() {
-            @Override
-            public void onPrepare() {}
-
-            @Override
-            public void onSuccess(@Nullable Object object) {
-                Intent intent = new Intent(RecommendFriendListActivity.this, SendProposeProfileActivity.class);
-                intent.putExtra(Constants.PARAMETER_PRODUCT_ID, item.getProductId());
-                intent.putExtra(Constants.PARAMETER_PROPOSEE_ID, item.getUserId());
-                intent.putExtra(Constants.PARAMETER_PROPOSER_ID, userId);
-                intent.putExtra(Constants.PARAMETER_FRIEND_ID, item.getUserId());
-                startActivity(intent);
-            }
-
-            @Override
-            public void onFailed() {}
-        });
-        readStateTask.execute(readState);
+        new UpdateProfileReadStateTask().execute(position);
     }
 
     private class ReadFriendObserver implements Observer {
 
         @Override
         public void update(Observable observable, Object data) {
-            String likedUserId = String.valueOf(data);
 
-            for (int i = 0 ; i < friendList.size() ; i ++) {
-                LikeDBItem item = friendList.get(i);
-                if (item.getUserId().equals(likedUserId)) {
-                    viewAdapter.notifyItemChanged(i);
-                    return;
-                }
+            int position = (int) data;
+            viewAdapter.notifyItemChanged(position);
+        }
+    }
+
+    /**
+     * Created by ryukgoo on 2017. 6. 29..
+     */
+
+    private class UpdateProfileReadStateTask extends AsyncTask<Integer, Void, Void> {
+
+        int position;
+        String userId;
+
+        @Override
+        protected Void doInBackground(Integer... params) {
+
+            position = params[0];
+
+            LikeDBItem item = friendList.get(position);
+            userId = UserInfoDaoImpl.getInstance().getUserId(RecommendFriendListActivity.this);
+
+            LikeReadState readState = new LikeReadState();
+            readState.setLikeId(item.getLikeId());
+            readState.setUserId(userId);
+            readState.setProductId(item.getProductId());
+            readState.setLikeUserId(item.getUserId());
+
+            try {
+                LikeDBDaoImpl.getInstance().updateProfileReadState(readState);
+            } catch (Exception e) {
+
             }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            LikeDBItem item = friendList.get(position);
+            item.setRead(true);
+
+            Intent intent = new Intent(RecommendFriendListActivity.this, SendProposeProfileActivity.class);
+            intent.putExtra(Constants.PARAMETER_PRODUCT_ID, item.getProductId());
+            intent.putExtra(Constants.PARAMETER_PROPOSEE_ID, item.getUserId());
+            intent.putExtra(Constants.PARAMETER_PROPOSER_ID, userId);
+            intent.putExtra(Constants.PARAMETER_FRIEND_ID, item.getUserId());
+            startActivity(intent);
+
+            ReadFriendObservable.getInstance().read(position);
         }
     }
 }

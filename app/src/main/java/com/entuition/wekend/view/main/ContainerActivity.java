@@ -4,7 +4,6 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
@@ -24,7 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.entuition.wekend.R;
-import com.entuition.wekend.controller.CognitoSyncClientManager;
 import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.authentication.DeveloperAuthenticationProvider;
 import com.entuition.wekend.model.data.user.UserInfo;
@@ -98,7 +96,6 @@ public class ContainerActivity extends AppCompatActivity implements OnMenuTabCli
 
         Log.d(TAG, "onCreate > defaultStartPosition : " + defaultStartPosition);
 
-        MessageReceivingService.hideNotification(this);
         initView(savedInstanceState);
 
         startService(new Intent(this, MessageReceivingService.class));
@@ -377,14 +374,6 @@ public class ContainerActivity extends AppCompatActivity implements OnMenuTabCli
         Log.d(TAG, "Container > onResume!!@@!@!");
 
         inBackground = false;
-
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... params) {
-                CognitoSyncClientManager.getCredentialsProvider().refresh();
-                return null;
-            }
-        }.execute();
 
 //        ((ProfileHeaderView) navigationView.getHeaderView(0)).setViews();
 

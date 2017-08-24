@@ -1,20 +1,20 @@
-package com.entuition.wekend.model.data.like;
+package com.entuition.wekend.model.data.mail;
 
 import java.util.Observable;
 
 /**
- * Created by ryukgoo on 2017. 7. 20..
+ * Created by ryukgoo on 2017. 8. 23..
  */
 
-public class ReadFriendObservable extends Observable {
+public class ReadReceiveMailObservable extends Observable {
 
     private final String TAG = getClass().getSimpleName();
 
-    private static ReadFriendObservable instance;
+    private static ReadReceiveMailObservable instance;
 
-    public static ReadFriendObservable getInstance() {
+    public static ReadReceiveMailObservable getInstance() {
         if (instance == null) {
-            instance = new ReadFriendObservable();
+            instance = new ReadReceiveMailObservable();
         }
         return instance;
     }

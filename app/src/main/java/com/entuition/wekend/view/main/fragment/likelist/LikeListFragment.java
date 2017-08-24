@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
@@ -50,6 +51,7 @@ public class LikeListFragment extends AbstractFragment {
     private LikeListAdapter likeListAdapter;
     private LinearLayoutManager layoutManager;
     private SwipeRefreshLayout refreshLayout;
+    private TextView textViewNoResult;
 
     public LikeListFragment() { }
 
@@ -80,6 +82,8 @@ public class LikeListFragment extends AbstractFragment {
     private void initView(View rootView) {likeListView = (RecyclerView) rootView.findViewById(R.id.id_like_list_recycler_view);
         progressbar = (FrameLayout) rootView.findViewById(R.id.id_screen_dim_progress);
 
+        textViewNoResult = (TextView) rootView.findViewById(R.id.id_textview_likelist_no_result);
+
         // Layout Manager
         layoutManager = new LinearLayoutManager(getActivity());
         likeListView.setLayoutManager(layoutManager);
@@ -91,7 +95,6 @@ public class LikeListFragment extends AbstractFragment {
         likeListAdapter = new LikeListAdapter(getActivity());
         likeListAdapter.setOnItemClickListener(new ItemClickListener());
         likeListAdapter.setMode(Attributes.Mode.Single);
-//        likeListView.setAdapter(likeListAdapter);
 
         refreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.id_like_refresh_layout);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -111,8 +114,6 @@ public class LikeListFragment extends AbstractFragment {
         if (!hidden) {
             ChangeTitleObservable.getInstance().change(getString(R.string.label_likelist));
             DropdownVisibleObservable.getInstance().change(false);
-
-//            likeListAdapter.closeAllOpenedLayout();
         }
     }
 
@@ -137,6 +138,9 @@ public class LikeListFragment extends AbstractFragment {
     }
 
     private void loadLikeListData() {
+
+        Log.d(TAG, "LikeListLoad >>>>>> loadLikeListData start");
+
         GetLikeProductTask task = new GetLikeProductTask(getActivity());
         task.setCallback(new GetLikeProductCallback());
         task.execute();
@@ -147,19 +151,30 @@ public class LikeListFragment extends AbstractFragment {
         @Override
         public void onPrepare() {
             progressbar.setVisibility(View.VISIBLE);
+            likeListView.setEnabled(false);
         }
 
         @Override
         public void onSuccess(@Nullable Object object) {
+            likeListView.setEnabled(true);
             likeListView.setAdapter(likeListAdapter);
             likeListAdapter.notifyDataSetChanged();
             progressbar.setVisibility(View.GONE);
             refreshLayout.setRefreshing(false);
+
+            if (likeListAdapter.getItemCount() == 0) {
+                textViewNoResult.setVisibility(View.VISIBLE);
+            } else {
+                textViewNoResult.setVisibility(View.GONE);
+            }
+
+            Log.d(TAG, "LikeListLoad > GetLikeProductCallback > onSuccess!!!!!");
         }
 
         @Override
         public void onFailed() {
             // TODO : Exceptions~!!!
+            likeListView.setEnabled(true);
             progressbar.setVisibility(View.GONE);
         }
     }
@@ -175,6 +190,12 @@ public class LikeListFragment extends AbstractFragment {
 
             likeListAdapter.notifyDataSetChanged();
             layoutManager.scrollToPosition(0);
+
+            if (likeListAdapter.getItemCount() == 0) {
+                textViewNoResult.setVisibility(View.VISIBLE);
+            } else {
+                textViewNoResult.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -184,6 +205,12 @@ public class LikeListFragment extends AbstractFragment {
             int productId = (Integer) data;
             int position = LikeDBDaoImpl.getInstance().getPositionByProductId(productId);
             likeListAdapter.notifyItemRemoved(position);
+
+            if (likeListAdapter.getItemCount() == 1) {
+                textViewNoResult.setVisibility(View.VISIBLE);
+            } else {
+                textViewNoResult.setVisibility(View.GONE);
+            }
         }
     }
 
