@@ -3,7 +3,7 @@ package com.entuition.wekend.view.join;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -25,13 +25,14 @@ import com.entuition.wekend.controller.CognitoSyncClientManager;
 import com.entuition.wekend.model.Utilities;
 import com.entuition.wekend.model.authentication.DeveloperAuthenticationProvider;
 import com.entuition.wekend.model.authentication.asynctask.IAuthenticationCallback;
+import com.entuition.wekend.view.WekendActivity;
 
 import static com.entuition.wekend.R.id.id_text_agree_agreement;
 
 /**
  * Created by Kim on 2015-08-04.
  */
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
+public class LoginActivity extends WekendActivity implements View.OnClickListener, TextWatcher {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -51,8 +52,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView agreementDone;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (reinitialize(savedInstanceState)) return;
         setContentView(R.layout.activity_login);
 
         initView();

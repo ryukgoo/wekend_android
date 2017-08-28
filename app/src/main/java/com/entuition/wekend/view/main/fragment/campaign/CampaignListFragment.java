@@ -157,7 +157,7 @@ public class CampaignListFragment extends AbstractFragment {
         if (options == null) {
             if (queryOptions == null) {
                 queryOptions = new ProductQueryOptions.Builder()
-                        .setOrderType(ProductQueryOptions.ORDER_BY_LIKE)
+                        .setOrderType(ProductQueryOptions.ORDER_BY_DATE)
                         .setMainCategory(Category.NONE)
                         .setSubCategory(Category.NONE)
                         .setProductRegion(Category.NONE)

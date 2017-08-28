@@ -3,7 +3,6 @@ package com.entuition.wekend.view.main.activities.setting;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +13,7 @@ import com.entuition.wekend.R;
 import com.entuition.wekend.model.data.NoticeInfo;
 import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.user.asynctask.LoadNoticeInfoTask;
+import com.entuition.wekend.view.WekendActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by ryukgoo on 15. 8. 31..
  */
-public class SettingNoticeActivity extends AppCompatActivity {
+public class SettingNoticeActivity extends WekendActivity {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -36,8 +36,9 @@ public class SettingNoticeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (reinitialize(savedInstanceState)) return;
         setContentView(R.layout.activity_setting_help);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.id_setting_toolbar);

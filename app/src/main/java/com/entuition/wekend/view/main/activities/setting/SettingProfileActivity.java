@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,6 +22,7 @@ import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 import com.entuition.wekend.model.data.user.asynctask.ILoadUserInfoCallback;
 import com.entuition.wekend.model.data.user.asynctask.LoadUserInfoTask;
 import com.entuition.wekend.model.transfer.S3Utils;
+import com.entuition.wekend.view.WekendActivity;
 import com.entuition.wekend.view.util.BigSizeImageLoadingListener;
 import com.entuition.wekend.view.util.ChangeProfileImageObservable;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -35,7 +35,7 @@ import java.util.Observer;
 /**
  * Created by ryukgoo on 2016. 1. 6..
  */
-public class SettingProfileActivity extends AppCompatActivity {
+public class SettingProfileActivity extends WekendActivity {
 
     private static final String TAG = "SettingProfileActivity";
 
@@ -60,6 +60,7 @@ public class SettingProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (reinitialize(savedInstanceState)) return;
         setContentView(R.layout.activity_setting_profile);
 
         Log.d(TAG, "onCreate");

@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -41,14 +40,12 @@ import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 import com.entuition.wekend.model.googleservice.googlemap.GetLocationTask;
 import com.entuition.wekend.model.googleservice.googlemap.IGetLocationCallback;
 import com.entuition.wekend.model.transfer.S3Utils;
+import com.entuition.wekend.view.WekendActivity;
 import com.entuition.wekend.view.util.AnimateFirstDisplayListener;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
 import com.facebook.share.Sharer;
-import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.model.ShareOpenGraphAction;
 import com.facebook.share.model.ShareOpenGraphContent;
 import com.facebook.share.model.ShareOpenGraphObject;
@@ -69,7 +66,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 /**
  * Created by ryukgoo on 2016. 8. 4..
  */
-public class CampaignDetailActivity extends AppCompatActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class CampaignDetailActivity extends WekendActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -110,6 +107,7 @@ public class CampaignDetailActivity extends AppCompatActivity implements View.On
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (reinitialize(savedInstanceState)) return;
         setContentView(R.layout.activity_campaign_detail);
 
         productId = getIntent().getIntExtra(Constants.PARAMETER_PRODUCT_ID, -1);

@@ -2,7 +2,7 @@ package com.entuition.wekend.view.main.activities.setting;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,11 +12,12 @@ import android.widget.TextView;
 
 import com.entuition.wekend.R;
 import com.entuition.wekend.model.data.SharedPreferencesWrapper;
+import com.entuition.wekend.view.WekendActivity;
 
 /**
  * Created by ryukgoo on 15. 8. 31..
  */
-public class SettingAlarmActivity extends AppCompatActivity {
+public class SettingAlarmActivity extends WekendActivity {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -24,8 +25,9 @@ public class SettingAlarmActivity extends AppCompatActivity {
     private SwitchCompat switchVibration;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (reinitialize(savedInstanceState)) return;
         setContentView(R.layout.activity_setting_alarm);
 
         initView();

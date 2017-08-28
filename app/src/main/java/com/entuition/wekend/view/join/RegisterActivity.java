@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,11 +19,12 @@ import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.Utilities;
 import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.user.asynctask.CheckAccountTask;
+import com.entuition.wekend.view.WekendActivity;
 
 /**
  * Created by Kim on 2015-08-07.
  */
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener, TextWatcher {
+public class RegisterActivity extends WekendActivity implements View.OnClickListener, DialogInterface.OnClickListener, TextWatcher {
 
     private static final String TAG = "RegisterActivity";
 
@@ -34,8 +34,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private Button btnNext;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (reinitialize(savedInstanceState)) return;
         setContentView(R.layout.activity_register);
 
         initView();

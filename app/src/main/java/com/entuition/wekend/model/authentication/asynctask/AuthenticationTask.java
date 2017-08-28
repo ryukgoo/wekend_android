@@ -125,6 +125,8 @@ public class AuthenticationTask extends AsyncTask<UserInfo, Void, Void> {
 
             if (isNoPhotos) {
                 Intent intent = new Intent(context, InsertPhotoActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             } else {
                 Intent intent = new Intent(context, ContainerActivity.class);

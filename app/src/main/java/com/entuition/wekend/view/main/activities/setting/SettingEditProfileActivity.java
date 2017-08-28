@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -18,7 +19,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -50,6 +50,7 @@ import com.entuition.wekend.model.data.user.asynctask.LoadUserInfoTask;
 import com.entuition.wekend.model.data.user.asynctask.UpdateUserInfoTask;
 import com.entuition.wekend.model.data.user.asynctask.UploadResizedImageTask;
 import com.entuition.wekend.model.transfer.S3Utils;
+import com.entuition.wekend.view.WekendActivity;
 import com.entuition.wekend.view.util.BigSizeImageLoadingListener;
 import com.entuition.wekend.view.util.ChangeProfileImageObservable;
 import com.entuition.wekend.view.util.ImageUtilities;
@@ -65,7 +66,7 @@ import java.util.List;
 /**
  * Created by ryukgoo on 15. 8. 31..
  */
-public class SettingEditProfileActivity extends AppCompatActivity {
+public class SettingEditProfileActivity extends WekendActivity {
 
     private static final int REQUEST_PERMISSION_REQ_CODE = 34;
 
@@ -104,8 +105,9 @@ public class SettingEditProfileActivity extends AppCompatActivity {
     private String uploadedFileName;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (reinitialize(savedInstanceState)) return;
         setContentView(R.layout.activity_setting_edit_profile);
 
         Log.d(TAG, "onCreate!!!!");
@@ -229,14 +231,19 @@ public class SettingEditProfileActivity extends AppCompatActivity {
         findViewById(R.id.id_profile_appbar).setVisibility(View.VISIBLE);
     }
 
+    private void requestPermission() {
+        if (ContextCompat.checkSelfPermission(SettingEditProfileActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_REQ_CODE);
+        } else {
+            selectImageFromGallery();
+        }
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume!!!!");
-        if (ContextCompat.checkSelfPermission(SettingEditProfileActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION_REQ_CODE);
-            return;
-        }
+
     }
 
     @Override
@@ -244,9 +251,18 @@ public class SettingEditProfileActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_PERMISSION_REQ_CODE: {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
+                    selectImageFromGallery();
                 } else {
-//                    Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
+                    new AlertDialog.Builder(new ContextThemeWrapper(SettingEditProfileActivity.this, R.style.CustomAlertDialog))
+                            .setTitle(getString(R.string.edit_profile_image_permission_denied_title))
+                            .setMessage(getString(R.string.edit_profile_image_permission_denied_message))
+                            .setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            })
+                            .show();
                 }
                 break;
             }
@@ -275,6 +291,11 @@ public class SettingEditProfileActivity extends AppCompatActivity {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void selectImageFromGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, ACTION_REQUEST_GALLERY);
     }
 
     private void cropImage() {
@@ -400,8 +421,11 @@ public class SettingEditProfileActivity extends AppCompatActivity {
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, ACTION_REQUEST_GALLERY);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        requestPermission();
+                    } else {
+                        selectImageFromGallery();
+                    }
                 }
             });
 

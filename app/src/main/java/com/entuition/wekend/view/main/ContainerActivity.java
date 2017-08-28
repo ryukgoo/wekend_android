@@ -11,7 +11,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -31,6 +30,7 @@ import com.entuition.wekend.model.data.user.asynctask.UpdateUserInfoTask;
 import com.entuition.wekend.model.googleservice.billing.GoogleBillingController;
 import com.entuition.wekend.model.googleservice.gcm.BadgeNotificationObservable;
 import com.entuition.wekend.model.googleservice.gcm.MessageReceivingService;
+import com.entuition.wekend.view.WekendActivity;
 import com.entuition.wekend.view.main.activities.setting.SettingAlarmActivity;
 import com.entuition.wekend.view.main.activities.setting.SettingHelpActivity;
 import com.entuition.wekend.view.main.activities.setting.SettingNoticeActivity;
@@ -50,7 +50,7 @@ import java.util.Observer;
 /**
  * Created by ryukgoo on 2016. 6. 28..
  */
-public class ContainerActivity extends AppCompatActivity implements OnMenuTabClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class ContainerActivity extends WekendActivity implements OnMenuTabClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -61,8 +61,6 @@ public class ContainerActivity extends AppCompatActivity implements OnMenuTabCli
     public static final int POSITION_STORE = 3;
 
     private final int MAX_FIXED_MENU_COUNT = 5;
-
-    public static Boolean inBackground = true;
 
     private TextView titleTextView;
     private ImageView dropdown;
@@ -90,22 +88,26 @@ public class ContainerActivity extends AppCompatActivity implements OnMenuTabCli
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (reinitialize(savedInstanceState)) return;
+
         setContentView(R.layout.activity_container);
 
         defaultStartPosition = getIntent().getIntExtra(Constants.START_ACTIVITY_POSITION, 0);
-
         Log.d(TAG, "onCreate > defaultStartPosition : " + defaultStartPosition);
 
-        initView(savedInstanceState);
-
+        initView(null);
         startService(new Intent(this, MessageReceivingService.class));
+        addObservers();
+    }
 
+    private void addObservers() {
         BadgeNotificationObservable.getInstance().addObserver(new UpdateBadgeObserver());
         ChangeTitleObservable.getInstance().addObserver(new ChangeTitleObserver());
         DropdownVisibleObservable.getInstance().addObserver(new DropdownVisibleObserver());
     }
 
-    private void initView(Bundle savedInstanceState) {
+    private void initView(@Nullable Bundle savedInstanceState) {
 
         titleTextView = (TextView) findViewById(R.id.id_toolbar_title);
         dropdown = (ImageView) findViewById(R.id.id_toolbar_btn_dropdown);
@@ -169,15 +171,10 @@ public class ContainerActivity extends AppCompatActivity implements OnMenuTabCli
         };
         drawerLayout.setDrawerListener(drawerToggle);
 
-        if (savedInstanceState == null) {
-
-            Log.d(TAG, "initialize Fragments!!!!!");
-
-            campaignListFragment = new CampaignListFragment();
-            likeListFragment = new LikeListFragment();
-            mailBoxFragment = new MailBoxFragment();
-            storeFragment = new StoreFragment();
-        }
+        campaignListFragment = new CampaignListFragment();
+        likeListFragment = new LikeListFragment();
+        mailBoxFragment = new MailBoxFragment();
+        storeFragment = new StoreFragment();
 
         bottomBar = BottomBar.attach(this, savedInstanceState);
         bottomBar.setMaxFixedTabs(MAX_FIXED_MENU_COUNT);
@@ -362,34 +359,26 @@ public class ContainerActivity extends AppCompatActivity implements OnMenuTabCli
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        inBackground = true;
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
 
         Log.d(TAG, "Container > onResume!!@@!@!");
-
-        inBackground = false;
 
 //        ((ProfileHeaderView) navigationView.getHeaderView(0)).setViews();
 
         Log.d(TAG, "onResume > selectedBottomBar : " + selectedBottomBar);
         switch (selectedBottomBar) {
             case POSITION_CAMPAIGN :
-                campaignListFragment.refresh();
+                if (campaignListFragment != null) campaignListFragment.refresh();
                 break;
             case POSITION_LIKE :
-                likeListFragment.refresh();
+                if (likeListFragment != null) likeListFragment.refresh();
                 break;
             case POSITION_MAIL :
-                mailBoxFragment.refresh();
+                if (mailBoxFragment != null) mailBoxFragment.refresh();
                 break;
             case POSITION_STORE :
-                storeFragment.refresh();
+                if (storeFragment != null) storeFragment.refresh();
                 break;
             default:
                 break;
@@ -406,7 +395,11 @@ public class ContainerActivity extends AppCompatActivity implements OnMenuTabCli
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        Log.d(TAG, "onSaveInstanceState");
+
         bottomBar.onSaveInstanceState(outState);
+
+        outState.clear();
     }
 
     @Override

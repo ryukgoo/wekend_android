@@ -10,9 +10,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +26,7 @@ import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.data.user.asynctask.IUploadResizedImageCallback;
 import com.entuition.wekend.model.data.user.asynctask.UploadResizedImageTask;
 import com.entuition.wekend.model.transfer.S3Utils;
+import com.entuition.wekend.view.WekendActivity;
 import com.entuition.wekend.view.main.ContainerActivity;
 import com.entuition.wekend.view.util.ChangeProfileImageObservable;
 import com.entuition.wekend.view.util.ImageUtilities;
@@ -39,7 +40,7 @@ import java.util.List;
 /**
  * Created by Kim on 2015-08-17.
  */
-public class InsertPhotoActivity extends AppCompatActivity {
+public class InsertPhotoActivity extends WekendActivity {
 
     private static final int REQUEST_PERMISSION_REQ_CODE = 34;
 
@@ -56,8 +57,9 @@ public class InsertPhotoActivity extends AppCompatActivity {
     private File outputFile;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (reinitialize(savedInstanceState)) return;
         setContentView(R.layout.activity_insert_photo);
 
         imageProfile = (ImageView) findViewById(R.id.id_image_photo);

@@ -1,17 +1,17 @@
 package com.entuition.wekend.view.join;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 
 import com.entuition.wekend.R;
 import com.entuition.wekend.controller.CognitoSyncClientManager;
@@ -21,11 +21,12 @@ import com.entuition.wekend.model.authentication.DeveloperAuthenticationProvider
 import com.entuition.wekend.model.authentication.asynctask.IAuthenticationCallback;
 import com.entuition.wekend.model.authentication.asynctask.RequestVerificationCodeTask;
 import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.view.WekendActivity;
 
 /**
  * Created by Kim on 2015-08-17.
  */
-public class InputPhoneNumberActivity extends AppCompatActivity implements View.OnClickListener {
+public class InputPhoneNumberActivity extends WekendActivity implements View.OnClickListener {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -34,11 +35,12 @@ public class InputPhoneNumberActivity extends AppCompatActivity implements View.
     private EditText editTextVerification;
     private Button buttonConfirmVerification;
 
-    private FrameLayout progressbarHolder;
+    private ProgressDialog progressDialog;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (reinitialize(savedInstanceState)) return;
         setContentView(R.layout.activity_input_phonenumber);
 
         initView();
@@ -77,7 +79,9 @@ public class InputPhoneNumberActivity extends AppCompatActivity implements View.
         buttonRequestVerification.setOnClickListener(this);
         buttonConfirmVerification.setOnClickListener(this);
 
-        progressbarHolder = (FrameLayout) findViewById(R.id.id_screen_dim_progress);
+        progressDialog = new ProgressDialog(this, R.style.CustomProgressDialog);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(getString(R.string.input_number_progressdialog_message));
     }
 
     @Override
@@ -92,6 +96,17 @@ public class InputPhoneNumberActivity extends AppCompatActivity implements View.
                 String inputVerificationCode = editTextVerification.getText().toString();
                 if (RequestVerificationCodeTask.validateVerificationCode(inputVerificationCode)) {
                     registerUserInfo();
+                } else {
+                    new AlertDialog.Builder(new ContextThemeWrapper(InputPhoneNumberActivity.this, R.style.CustomAlertDialog))
+                            .setTitle(getString(R.string.input_number_dialog_not_match_title))
+                            .setMessage(getString(R.string.input_number_dialog_not_match_message))
+                            .setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            })
+                            .show();
                 }
                 break;
         }
@@ -136,17 +151,19 @@ public class InputPhoneNumberActivity extends AppCompatActivity implements View.
 
         @Override
         public void onPrepare() {
-            progressbarHolder.setVisibility(View.VISIBLE);
+            Log.d(TAG, "onPrepare > RegisterAuthencation");
+            progressDialog.show();
         }
 
         @Override
         public void onSuccess() {
-            progressbarHolder.setVisibility(View.GONE);
+            Log.d(TAG, "onSuccess > RegisterAuthencation");
+            progressDialog.dismiss();
         }
 
         @Override
         public void onFailed() {
-            progressbarHolder.setVisibility(View.GONE);
+            progressDialog.dismiss();
         }
     }
 

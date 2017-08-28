@@ -7,8 +7,8 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,12 +26,13 @@ import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.Utilities;
 import com.entuition.wekend.model.data.user.asynctask.CheckNicknameTask;
 import com.entuition.wekend.model.data.user.asynctask.ICheckNicknameCallback;
+import com.entuition.wekend.view.WekendActivity;
 import com.entuition.wekend.view.util.WekendNumberPicker;
 
 /**
  * Created by Kim on 2015-08-17.
  */
-public class InsertUserInfoActivity extends AppCompatActivity implements View.OnClickListener, DialogInterface.OnClickListener {
+public class InsertUserInfoActivity extends WekendActivity implements View.OnClickListener, DialogInterface.OnClickListener {
 
     private static final String TAG = "InsertUserInfoActivity";
 
@@ -48,8 +49,9 @@ public class InsertUserInfoActivity extends AppCompatActivity implements View.On
     private boolean isAvailableNickname;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (reinitialize(savedInstanceState)) return;
         setContentView(R.layout.activity_insert_userinfo);
 
         initView();

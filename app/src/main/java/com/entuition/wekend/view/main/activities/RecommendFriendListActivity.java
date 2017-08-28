@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +21,7 @@ import com.entuition.wekend.model.data.like.ReadFriendObservable;
 import com.entuition.wekend.model.data.like.asynctask.GetLikeFriendTask;
 import com.entuition.wekend.model.data.like.asynctask.IGetLikeFriendCallback;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
+import com.entuition.wekend.view.WekendActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.Observer;
 /**
  * Created by ryukgoo on 2016. 4. 11..
  */
-public class RecommendFriendListActivity extends AppCompatActivity implements RecommendFriendViewAdapter.ItemClickListener {
+public class RecommendFriendListActivity extends WekendActivity implements RecommendFriendViewAdapter.ItemClickListener {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -47,6 +47,7 @@ public class RecommendFriendListActivity extends AppCompatActivity implements Re
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (reinitialize(savedInstanceState)) return;
         setContentView(R.layout.activity_recommend_friend);
 
         productId = getIntent().getIntExtra(Constants.PARAMETER_PRODUCT_ID, -1);

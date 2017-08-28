@@ -74,7 +74,16 @@
     <string name="insert_user_info_alert_message_nickname">닉네임을 중복확인해야 합니다</string>
     <string name="insert_user_info_alert_title_gender">성별 선택</string>
     <string name="insert_user_info_alert_message_gender">성별을 선택해야 합니다</string>
-    <string name="insert_photo_comment">Please choose your best photo</string>
+    <string name="insert_photo_comment">프로필 사진을 선택해 주세요</string>
+
+    <string name="input_number_progressdialog_title">잠시만 기다려주세요</string>
+    <string name="input_number_progressdialog_message">가입중입니다..</string>
+
+    <string name="input_number_dialog_not_match_title">인증번호 확인실패</string>
+    <string name="input_number_dialog_not_match_message">인증번호가 맞지 않습니다\n다시 시도해 주시기 바랍니다</string>
+
+    <string name="input_number_register_failed_title">회원가입 실패</string>
+    <string name="input_number_register_failed_message">회원가입에 실패하였습니다\n다시 시도해 주시기 바랍니다</string>
 
     <string name="dialog_negative_button">취소</string>
     <string name="dialog_positive_button">확인</string>
@@ -244,6 +253,9 @@
     <string name="logout_alertdialog_message">로그아웃 하시면 로그인화면으로 돌아갑니다\n로그아웃 하시겠습니까?</string>
     <string name="logout_alertdialog_positive">로그아웃</string>
     <string name="logout_alertdialog_negative">아니요</string>
+
+    <string name="edit_profile_image_permission_denied_title">프로필 사진수정 실패</string>
+    <string name="edit_profile_image_permission_denied_message">프로필 사진을 변경하려면 접근권한이 필요합니다</string>
 
     <!-- For Google Map API -->
     <string name="google_public_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjoSh6ncuszhLDK+/kGtKTnHZe2BecXdZ19qGlNmDDM0mF3xEhZSDD9uhS1fzJ96VRXnT/Xz007PcB8EcgTm/up2G13UVpom7CHUpJ4/NhfrFFC4G0XBpAjKUPaeZvlH24TZLAyL4wrzqtVbmeaqohlryyfj33a+HrDjeeMYnoSyOUWThBK4AelC/SqvIwHzlUL/a1Yk5OhcjQgLhirVThKqMdHzmI8RMax47dwAOkwtQTLd0KCMzZJAoNhNFx+hlbwRjowMsi8zKZtbJnZiBC1ae/iVcwt5WChThPMVDE7PNJiM2kwP7fLGC73Qq+YxfRqCyWzPVtOwGGLuVNh+PtwIDAQAB</string>

@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
@@ -28,6 +27,7 @@ import com.entuition.wekend.model.data.product.asynctask.LoadUserInfoAndProductI
 import com.entuition.wekend.model.data.user.UserInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 import com.entuition.wekend.model.transfer.S3Utils;
+import com.entuition.wekend.view.WekendActivity;
 import com.entuition.wekend.view.util.BigSizeImageLoadingListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -37,7 +37,7 @@ import java.util.ArrayList;
 /**
  * Created by ryukgoo on 2016. 4. 18..
  */
-public abstract class ProposeProfileActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+public abstract class ProposeProfileActivity extends WekendActivity implements ViewPager.OnPageChangeListener {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -77,6 +77,9 @@ public abstract class ProposeProfileActivity extends AppCompatActivity implement
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (reinitialize(savedInstanceState)) return;
+
         setContentView(R.layout.activity_propose_profile);
 
         productId = getIntent().getIntExtra(Constants.PARAMETER_PRODUCT_ID, -1);
