@@ -40,6 +40,7 @@
         android:textSize="@dimen/login_input_text"
         android:hint="@string/register_activity_email_hint"
         android:maxLines="1"
+        android:theme="@style/CustomEditTextStyle"
         android:includeFontPadding="false" />
 
     <TextView
@@ -62,6 +63,7 @@
         android:textSize="@dimen/login_input_text"
         android:hint="@string/register_activity_password_hint"
         android:maxLines="1"
+        android:theme="@style/CustomEditTextStyle"
         android:includeFontPadding="false" />
 
     <TextView
@@ -84,6 +86,7 @@
         android:textSize="@dimen/login_input_text"
         android:hint="@string/register_activity_password_confirm_hint"
         android:maxLines="1"
+        android:theme="@style/CustomEditTextStyle"
         android:includeFontPadding="false" />
 
     <Button

@@ -34,6 +34,7 @@
             android:textColorHint="@color/colorTextLogin"
             android:textSize="@dimen/login_input_text"
             android:maxLines="1"
+            android:theme="@style/CustomEditTextStyle"
             android:includeFontPadding="false" />
 
         <Button
@@ -68,6 +69,7 @@
             android:textColorHint="@color/colorTextLogin"
             android:textSize="@dimen/login_input_text"
             android:maxLines="1"
+            android:theme="@style/CustomEditTextStyle"
             android:includeFontPadding="false" />
 
         <Button

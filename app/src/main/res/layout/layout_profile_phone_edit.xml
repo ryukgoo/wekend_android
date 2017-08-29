@@ -30,6 +30,7 @@
             android:textSize="20sp"
             android:inputType="numberDecimal"
             android:background="@android:color/transparent"
+            android:theme="@style/CustomEditTextStyle"
             android:gravity="center" />
 
         <Button
@@ -93,6 +94,7 @@
                 android:inputType="numberDecimal"
                 android:gravity="center"
                 android:textSize="12sp"
+                android:theme="@style/CustomEditTextStyle"
                 android:hint="@string/profile_edit_verification_hint" />
 
             <Button

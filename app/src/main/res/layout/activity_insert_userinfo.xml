@@ -44,6 +44,7 @@
                 android:textColorHint="@color/colorTextLogin"
                 android:hint="@string/register_activity_nickname_hint"
                 android:maxLines="1"
+                android:theme="@style/CustomEditTextStyle"
                 android:includeFontPadding="false" />
 
             <Button

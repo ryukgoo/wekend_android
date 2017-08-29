@@ -9,7 +9,6 @@ import android.support.v7.view.ContextThemeWrapper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,22 +54,10 @@ public class RegisterActivity extends WekendActivity implements View.OnClickList
                     txtUsername.setHint("");
                 } else {
                     txtUsername.setHint(getString(R.string.register_activity_email_hint));
-                }
-            }
-        });
-
-        txtUsername.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     if (!Utilities.isValidEmailExpression(txtUsername.getText().toString())) {
                         showInvalidEmailDialog();
-                        return true;
                     }
                 }
-
-                return false;
             }
         });
 
@@ -82,22 +69,10 @@ public class RegisterActivity extends WekendActivity implements View.OnClickList
                     txtPassword.setHint("");
                 } else {
                     txtPassword.setHint(getString(R.string.register_activity_password_hint));
-                }
-            }
-        });
-
-        txtPassword.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     if (!Utilities.isValidPasswordExpression(txtPassword.getText().toString())) {
                         showInvalidPasswordDialog();
-                        return true;
                     }
                 }
-
-                return false;
             }
         });
 
@@ -108,22 +83,13 @@ public class RegisterActivity extends WekendActivity implements View.OnClickList
                     txtPasswordConfirm.setHint("");
                 } else {
                     txtPasswordConfirm.setHint(getString(R.string.register_activity_password_confirm_hint));
-                }
-            }
-        });
 
-        txtPasswordConfirm.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                final String password = txtPassword.getText().toString();
-                String passwordConfirm = txtPasswordConfirm.getText().toString();
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    if (!password.equals(passwordConfirm)) {
+                    final String password = txtPassword.getText().toString();
+                    String passwordConfirm = txtPasswordConfirm.getText().toString();
+                    if (passwordConfirm != null && passwordConfirm.length() > 0 && !password.equals(passwordConfirm)) {
                         showNotEqualPasswordDialog();
-                        return true;
                     }
                 }
-                return false;
             }
         });
 
@@ -167,7 +133,9 @@ public class RegisterActivity extends WekendActivity implements View.OnClickList
                         }
 
                         @Override
-                        public void onFailed() { }
+                        public void onFailed() {
+                            showUsedEmailDialog();
+                        }
                     });
                     task.execute(username);
                 }
@@ -204,6 +172,7 @@ public class RegisterActivity extends WekendActivity implements View.OnClickList
     }
 
     private void showInvalidEmailDialog() {
+        Log.d(TAG, "showInvalidEmailDialog");
         new AlertDialog.Builder(new ContextThemeWrapper(RegisterActivity.this, R.style.CustomAlertDialog))
                 .setTitle(getString(R.string.register_activity_alert_title_invalid_email))
                 .setMessage(getString(R.string.register_activity_alert_message_invalid_email))
@@ -212,14 +181,21 @@ public class RegisterActivity extends WekendActivity implements View.OnClickList
     }
 
     private void showInvalidPasswordDialog() {
+        Log.d(TAG, "showInvalidPasswordDialog");
         new AlertDialog.Builder(new ContextThemeWrapper(RegisterActivity.this, R.style.CustomAlertDialog))
                 .setTitle(getString(R.string.register_activity_alert_title_invalid_password))
                 .setMessage(getString(R.string.register_activity_alert_message_invalid_password))
-                .setPositiveButton(R.string.dialog_positive_button, RegisterActivity.this)
+                .setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
                 .show();
     }
 
     private void showNotEqualPasswordDialog() {
+        Log.d(TAG, "showNotEqualPasswordDialog");
         new AlertDialog.Builder(new ContextThemeWrapper(RegisterActivity.this, R.style.CustomAlertDialog))
                 .setTitle(getString(R.string.register_activity_alert_title_password_confirm))
                 .setMessage(getString(R.string.register_activity_alert_message_password_confirm))
@@ -228,10 +204,11 @@ public class RegisterActivity extends WekendActivity implements View.OnClickList
     }
 
     private void showUsedEmailDialog() {
+        Log.d(TAG, "showUsedEmailDialog");
         new AlertDialog.Builder(new ContextThemeWrapper(RegisterActivity.this, R.style.CustomAlertDialog))
                 .setTitle(getString(R.string.register_activity_alert_title_used_email))
                 .setMessage(getString(R.string.register_activity_alert_message_used_email))
-                .setPositiveButton(R.string.dialog_positive_button, RegisterActivity.this)
+                .setPositiveButton(R.string.dialog_positive_button, this)
                 .show();
     }
 }

@@ -6,6 +6,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.Request;
@@ -45,6 +46,8 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class Utilities {
 
+    public static final String TAG = "Utilities";
+
     public static final String ENCODING_FORMAT = "UTF8";
     public static final String SIGNATURE_METHOD = "HmacSHA256";
     public static final String HTML_NEW_LINE = "<br />";
@@ -52,7 +55,7 @@ public class Utilities {
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 //    private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
-    private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-zA-Z~!@#$%^&*-=_+]).{6,20})";
+    private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{6,}$";
     private static final String NICKNAME_PATTERN = "^[가-힣a-z0-9_-]{2,15}$";
     private static final String PHONENUMBER_PATTERN = "\\d{11}";
 
@@ -83,6 +86,7 @@ public class Utilities {
     public static boolean isValidEmailExpression(String username) {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(username);
+        Log.d(TAG, "isValidEmailExpression > password: " + username + ", valid : " + matcher.matches());
         return matcher.matches();
     }
 
@@ -94,6 +98,7 @@ public class Utilities {
     public static boolean isValidPasswordExpression(String password) {
         Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
         Matcher matcher = pattern.matcher(password);
+        Log.d(TAG, "isValidEmailExpression > password: " + password + ", valid : " + matcher.matches());
         return matcher.matches();
     }
 
@@ -105,12 +110,14 @@ public class Utilities {
     public static boolean isValidNicknameExpression(String nickname) {
         Pattern pattern = Pattern.compile(NICKNAME_PATTERN);
         Matcher matcher = pattern.matcher(nickname);
+        Log.d(TAG, "isValidEmailExpression > password: " + nickname + ", valid : " + matcher.matches());
         return matcher.matches();
     }
 
     public static boolean isValidPhoneNumberExpression(String phoneNumber) {
         Pattern pattern = Pattern.compile(PHONENUMBER_PATTERN);
         Matcher matcher = pattern.matcher(phoneNumber);
+        Log.d(TAG, "isValidEmailExpression > password: " + phoneNumber + ", valid : " + matcher.matches());
         return matcher.matches();
     }
 
