@@ -26,10 +26,10 @@
 
     <string-array name="store_bonus">
         <item></item>
-        <item>Bonus 500P</item>
-        <item>Bonus 1000P</item>
-        <item>Bonus 2500P</item>
-        <item>Bonus 8500P</item>
+        <item>3000P + 500P</item>
+        <item>5000P + 1000P</item>
+        <item>10000P + 2500P</item>
+        <item>30000P + 8500P</item>
         <item>Monthly</item>
     </string-array>
 

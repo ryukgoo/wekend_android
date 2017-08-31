@@ -16,8 +16,8 @@ android {
         applicationId "com.entuition.wekend"
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 32
-        versionName "0.0.32"
+        versionCode 34
+        versionName "1.0.0"
         multiDexEnabled true
     }
     dexOptions {

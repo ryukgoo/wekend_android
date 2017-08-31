@@ -54,7 +54,7 @@ public class SlidingDrawerFilter {
 
         this.context = context;
 
-        orderType = ProductQueryOptions.ORDER_BY_LIKE;
+        orderType = ProductQueryOptions.ORDER_BY_DATE;
         mainCategory = Category.NONE;
         subCategory = Category.NONE;
         region = Category.NONE;

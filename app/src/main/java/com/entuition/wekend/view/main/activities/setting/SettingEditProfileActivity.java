@@ -79,7 +79,6 @@ public class SettingEditProfileActivity extends WekendActivity {
     private TextView textViewNickname;
     private TextView textViewAge;
     private TextView textViewPoint;
-    private TextView txtYellowBalloon;
 
     private EditText editTextPhoneNumber;
     private Button buttonEditPhoneNumber;
@@ -140,7 +139,6 @@ public class SettingEditProfileActivity extends WekendActivity {
         textViewNickname = (TextView) findViewById(R.id.id_profile_nickname);
         textViewAge = (TextView) findViewById(R.id.id_profile_age);
         textViewPoint = (TextView) findViewById(R.id.id_profile_pink_balloon);
-        txtYellowBalloon = (TextView) findViewById(R.id.id_profile_yellow_balloon);
 
         editTextPhoneNumber = (EditText) findViewById(R.id.id_setting_profile_edittext_phone);
         editTextPhoneNumber.addTextChangedListener(new PhoneNumberTextWatcher());
@@ -201,8 +199,7 @@ public class SettingEditProfileActivity extends WekendActivity {
         int birthYear = userInfo.getBirth();
         textViewAge.setText(String.valueOf(Utilities.getAgeFromBirthYear(birthYear)));
 
-        textViewPoint.setText(getString(R.string.profile_pink_balloon) + " : " + userInfo.getBalloon());
-        txtYellowBalloon.setText(getString(R.string.profile_yellow_balloon) + " : " + userInfo.getBalloon());
+        textViewPoint.setText(getString(R.string.profile_owned_point) + " : " + userInfo.getBalloon());
 
         viewPagerAdapter.notifyDataSetChanged();
 

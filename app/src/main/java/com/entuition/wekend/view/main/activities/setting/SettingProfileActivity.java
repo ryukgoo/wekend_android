@@ -42,8 +42,7 @@ public class SettingProfileActivity extends WekendActivity {
     private TextView txtNickname;
     private TextView txtAge;
     private TextView txtPhoneNumber;
-    private TextView txtPinkBalloon;
-    private TextView txtYellowBalloon;
+    private TextView txtPoint;
     private TextView btnEdit;
 
     private ViewPager viewPager;
@@ -102,8 +101,7 @@ public class SettingProfileActivity extends WekendActivity {
         txtNickname = (TextView) findViewById(R.id.id_profile_nickname);
         txtAge = (TextView) findViewById(R.id.id_profile_age);
         txtPhoneNumber = (TextView) findViewById(R.id.id_profile_phone);
-        txtPinkBalloon = (TextView) findViewById(R.id.id_profile_pink_balloon);
-        txtYellowBalloon = (TextView) findViewById(R.id.id_profile_yellow_balloon);
+        txtPoint = (TextView) findViewById(R.id.id_profile_pink_balloon);
         btnEdit = (TextView) findViewById(R.id.id_profile_edit_button);
         btnEdit.setText(getString(R.string.profile_edit));
         btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -169,8 +167,7 @@ public class SettingProfileActivity extends WekendActivity {
         int birthYear = userInfo.getBirth();
         txtAge.setText(String.valueOf(Utilities.getAgeFromBirthYear(birthYear)));
 
-        txtPinkBalloon.setText(getString(R.string.profile_pink_balloon) + " : " + userInfo.getBalloon());
-        txtYellowBalloon.setText(getString(R.string.profile_yellow_balloon) + " : " + userInfo.getBalloon());
+        txtPoint.setText(getString(R.string.profile_owned_point) + " : " + userInfo.getBalloon());
 
         viewPager.setAdapter(viewPagerAdapter);
 //        viewPagerAdapter.notifyDataSetChanged();

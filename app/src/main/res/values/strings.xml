@@ -185,8 +185,6 @@
     <string name="profile_nickname">닉네임</string>
     <string name="profile_age">나이</string>
     <string name="profile_phone">휴대폰 번호</string>
-    <string name="profile_pink_balloon">핑크풍선</string>
-    <string name="profile_yellow_balloon">노랑풍선</string>
     <string name="profile_owned_point">보유포인트</string>
     <string name="profile_verification">인증요청</string>
     <string name="profile_verification_message">인증번호를 입력하고 확인을 눌러주세요.</string>
@@ -225,9 +223,6 @@
 
     <string name="mailbox_receive_no_result">받은 메일이 없습니다</string>
     <string name="mailbox_send_no_result">보낸 메일이 없습니다</string>
-
-    <string name="pink_balloon">핑크풍선</string>
-    <string name="yellow_balloon">노랑풍선</string>
 
     <!-- Verification -->
     <string name="verification_message_prefix">"[피크닉] 인증번호 ["</string>

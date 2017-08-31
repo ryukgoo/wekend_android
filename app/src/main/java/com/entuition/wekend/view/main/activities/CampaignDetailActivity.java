@@ -435,8 +435,8 @@ public class CampaignDetailActivity extends WekendActivity implements View.OnCli
 
         ShareOpenGraphObject object = new ShareOpenGraphObject.Builder()
                 .putString("og:type", "article")
-                .putString("og:title", "Wekend")
-                .putString("og:description", "This is a test game to test FB share functionality")
+                .putString("og:title", productInfo.getTitleKor())
+                .putString("og:description", productInfo.getDescription())
                 .putString("og:image", imageUrl)
                 .putString("og:url", "https://fb.me/673785809486815")
                 .build();
