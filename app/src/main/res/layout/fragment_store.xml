@@ -18,16 +18,12 @@
             android:textSize="12sp"
             android:includeFontPadding="false" />
 
-        <GridView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/id_gridview_store"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_margin="15dp"
-            android:verticalSpacing="19dp"
-            android:horizontalSpacing="7dp"
-            android:stretchMode="columnWidth"
-            android:numColumns="3" />
+            android:layout_margin="12dp" />
 
     </LinearLayout>
 

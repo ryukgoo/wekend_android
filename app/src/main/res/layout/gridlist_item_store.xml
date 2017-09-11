@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp">
 
-    <FrameLayout
-        android:layout_width="105dp"
-        android:layout_height="105dp"
-        android:background="@drawable/img_bg_thumb_default">
+    <android.support.percent.PercentFrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            app:layout_aspectRatio="100%"
+            app:layout_widthPercent="100%"
+            android:src="@drawable/img_bg_thumb_default" />
+
+        <ImageView
+            app:layout_aspectRatio="100%"
+            app:layout_widthPercent="40%"
             android:layout_gravity="center"
             android:src="@drawable/img_store_product" />
 
-    </FrameLayout>
+    </android.support.percent.PercentFrameLayout>
 
     <TextView
         android:id="@+id/id_griditem_store_price"

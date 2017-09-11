@@ -224,6 +224,10 @@
     <string name="mailbox_receive_no_result">받은 메일이 없습니다</string>
     <string name="mailbox_send_no_result">보낸 메일이 없습니다</string>
 
+    <!-- Store Dialogs -->
+    <string name="store_purchased_failed_title">구매 실패</string>
+    <string name="store_purchased_failed_message">다시 시도해 주세요</string>
+
     <!-- Verification -->
     <string name="verification_message_prefix">"[피크닉] 인증번호 ["</string>
     <string name="verification_message_suffix">"]를 입력해주세요"</string>

@@ -21,7 +21,6 @@
         <item>5,000won</item>
         <item>10,000won</item>
         <item>30,000won</item>
-        <item>50,000won</item>
     </string-array>
 
     <string-array name="store_bonus">

@@ -65,6 +65,13 @@ public class GoogleBillingController implements IabHelper.OnIabSetupFinishedList
     public void init() {
         this.helper = new IabHelper(context, context.getString(R.string.google_public_key));
         this.helper.startSetup(this);
+
+        skuList = new ArrayList<>();
+        skuList.add(SKU_POINT_1000);
+        skuList.add(SKU_POINT_3000);
+        skuList.add(SKU_POINT_5000);
+        skuList.add(SKU_POINT_10000);
+        skuList.add(SKU_POINT_30000);
     }
 
     public void setListener(OnQueryInventory listener) {
@@ -100,14 +107,6 @@ public class GoogleBillingController implements IabHelper.OnIabSetupFinishedList
 
             // TODO : register receiveBroadcast
             try {
-
-                skuList = new ArrayList<>();
-                skuList.add(SKU_POINT_1000);
-                skuList.add(SKU_POINT_3000);
-                skuList.add(SKU_POINT_5000);
-                skuList.add(SKU_POINT_10000);
-                skuList.add(SKU_POINT_30000);
-                skuList.add(SKU_POINT_50000);
 
                 helper.queryInventoryAsync(true, skuList, null, this);
 
