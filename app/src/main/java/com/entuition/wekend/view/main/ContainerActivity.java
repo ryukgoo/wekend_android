@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -18,12 +19,14 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.authentication.DeveloperAuthenticationProvider;
+import com.entuition.wekend.model.data.SharedPreferencesWrapper;
 import com.entuition.wekend.model.data.user.UserInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 import com.entuition.wekend.model.data.user.asynctask.UpdateUserInfoTask;
@@ -32,7 +35,6 @@ import com.entuition.wekend.model.googleservice.gcm.BadgeNotificationObservable;
 import com.entuition.wekend.model.googleservice.gcm.MessageReceivingService;
 import com.entuition.wekend.view.WekendActivity;
 import com.entuition.wekend.view.main.activities.setting.SettingAlarmActivity;
-import com.entuition.wekend.view.main.activities.setting.SettingHelpActivity;
 import com.entuition.wekend.view.main.activities.setting.SettingNoticeActivity;
 import com.entuition.wekend.view.main.activities.setting.SettingProfileActivity;
 import com.entuition.wekend.view.main.fragment.AbstractFragment;
@@ -78,6 +80,7 @@ public class ContainerActivity extends WekendActivity implements OnMenuTabClickL
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
+    private GuidePopupWindow guidePopupWindow;
 
     private CampaignListFragment campaignListFragment;
     private LikeListFragment likeListFragment;
@@ -99,6 +102,15 @@ public class ContainerActivity extends WekendActivity implements OnMenuTabClickL
         initView(null);
         startService(new Intent(this, MessageReceivingService.class));
         addObservers();
+    }
+
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+
+        if (!SharedPreferencesWrapper.getShowNoMoreGuide(PreferenceManager.getDefaultSharedPreferences(this))) {
+            guidePopupWindow.show(true);
+        }
     }
 
     private void addObservers() {
@@ -186,6 +198,8 @@ public class ContainerActivity extends WekendActivity implements OnMenuTabClickL
         int badgeColor = getResources().getColor(R.color.colorPrimaryDark);
         likeBadge = bottomBar.makeBadgeForTabAt(POSITION_LIKE, badgeColor, 0);
         mailBadge = bottomBar.makeBadgeForTabAt(POSITION_MAIL, badgeColor, 0);
+
+        guidePopupWindow = new GuidePopupWindow(ContainerActivity.this, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
         String userId = UserInfoDaoImpl.getInstance().getUserId(this);
         UserInfo userInfo = UserInfoDaoImpl.getInstance().getUserInfo(userId);
@@ -405,7 +419,9 @@ public class ContainerActivity extends WekendActivity implements OnMenuTabClickL
     @Override
     public void onBackPressed() {
 
-        if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
+        if (guidePopupWindow.isShowing()) {
+            guidePopupWindow.dismiss();
+        } else if (drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
             drawerLayout.closeDrawers();
         } else {
             if (fragment.onBackPressed()) {
@@ -522,8 +538,11 @@ public class ContainerActivity extends WekendActivity implements OnMenuTabClickL
                 break;
 
             case R.id.menu_drawer_help :
-                intent = new Intent(ContainerActivity.this, SettingHelpActivity.class);
-                startActivity(intent);
+//                intent = new Intent(ContainerActivity.this, SettingHelpActivity.class);
+//                startActivity(intent);
+
+                guidePopupWindow.show(false);
+
                 break;
 
             case R.id.menu_drawer_profile :

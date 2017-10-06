@@ -3,8 +3,6 @@ package com.entuition.wekend.model.data;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.util.Set;
-
 /**
  * Created by ryukgoo on 2015. 12. 23..
  */
@@ -21,6 +19,7 @@ public class SharedPreferencesWrapper {
     private static final String NOTIFICATION_MAIL_NUM = "NOTIFICATION_MAIL_NUM";
     private static final String NOTIFICATION_ALARM = "NOTIFICATION_ALARM"; // 0:off, 1:on
     private static final String NOTIFICATION_VIBRATION = "NOTIFICATION_VIBRATION"; // 0:off, 1:on
+    private static final String NO_MORE_GUIDE = "NO_MORE_GUIDE";
 
     public static void wipe(SharedPreferences sharedPreferences) {
         SharedPreferencesWrapper.storeValueInSharedPreferences(sharedPreferences, DEVIDE_UID, null);
@@ -63,6 +62,10 @@ public class SharedPreferencesWrapper {
         SharedPreferencesWrapper.storeIntInSharedPreferences(sharedPreferences, NOTIFICATION_VIBRATION, onOff);
     }
 
+    public static void setShowNoMoreGuide(SharedPreferences sharedPreferences, boolean isShow) {
+        SharedPreferencesWrapper.storeBooleanSharedPreferences(sharedPreferences, NO_MORE_GUIDE, isShow);
+    }
+
     public static String getUidForDevice(SharedPreferences sharedPreferences) {
         return SharedPreferencesWrapper.getValueFromSharedPreferences(sharedPreferences, DEVIDE_UID);
     }
@@ -99,6 +102,10 @@ public class SharedPreferencesWrapper {
         return SharedPreferencesWrapper.getIntFromSharedPreferences(sharedPreferences, NOTIFICATION_VIBRATION, 1);
     }
 
+    public static boolean getShowNoMoreGuide(SharedPreferences sharedPreferences) {
+        return SharedPreferencesWrapper.getBooleanFromSharedPreferences(sharedPreferences, NO_MORE_GUIDE);
+    }
+
     protected static void storeIntInSharedPreferences(SharedPreferences sharedPreferences, String key, int value) {
         Log.d(TAG, "storeIntInSharedPreferences > key : " + key + ", value : " + value);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -125,14 +132,14 @@ public class SharedPreferencesWrapper {
         return value;
     }
 
-    protected static void storeArrayInSharedPreferences(SharedPreferences sharedPreferences, String key, Set<String> array) {
+    protected static void storeBooleanSharedPreferences(SharedPreferences sharedPreferences, String key, boolean bool) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putStringSet(key, array);
+        editor.putBoolean(key, bool);
         editor.commit();
     }
 
-    protected static Set<String> getArrayFromSharedPreferences(SharedPreferences sharedPreferences, String key) {
-        Set<String> array = sharedPreferences.getStringSet(key, null);
-        return array;
+    protected static boolean getBooleanFromSharedPreferences(SharedPreferences sharedPreferences, String key) {
+        boolean bool = sharedPreferences.getBoolean(key, false);
+        return bool;
     }
 }

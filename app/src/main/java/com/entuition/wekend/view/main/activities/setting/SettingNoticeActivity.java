@@ -79,7 +79,8 @@ public class SettingNoticeActivity extends WekendActivity {
 
             }
         });
-        task.execute("Notice");
+        task.execute("Help");
+//        task.execute("Notice");
     }
 
     @Override

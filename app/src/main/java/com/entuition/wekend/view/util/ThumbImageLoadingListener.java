@@ -28,7 +28,7 @@ public class ThumbImageLoadingListener extends SimpleImageLoadingListener {
         this.filename = filename;
         options = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
-                .cacheOnDisk(true)
+                .cacheOnDisk(false)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
     }
