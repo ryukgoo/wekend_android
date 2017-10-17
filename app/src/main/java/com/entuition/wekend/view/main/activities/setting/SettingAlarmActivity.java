@@ -12,12 +12,12 @@ import android.widget.TextView;
 
 import com.entuition.wekend.R;
 import com.entuition.wekend.model.data.SharedPreferencesWrapper;
-import com.entuition.wekend.view.WekendActivity;
+import com.entuition.wekend.view.common.WekendAbstractActivity;
 
 /**
  * Created by ryukgoo on 15. 8. 31..
  */
-public class SettingAlarmActivity extends WekendActivity {
+public class SettingAlarmActivity extends WekendAbstractActivity {
 
     private final String TAG = getClass().getSimpleName();
 

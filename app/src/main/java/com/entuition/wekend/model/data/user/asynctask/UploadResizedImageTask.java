@@ -3,15 +3,12 @@ package com.entuition.wekend.model.data.user.asynctask;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.entuition.wekend.model.data.user.UserInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 import com.entuition.wekend.model.transfer.S3TransferUtilityManager;
-import com.entuition.wekend.view.util.ImageUtilities;
 
-import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 

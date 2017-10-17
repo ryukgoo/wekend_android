@@ -1,4 +1,4 @@
-package com.entuition.wekend.view.util;
+package com.entuition.wekend.view.common;
 
 import android.graphics.Bitmap;
 import android.view.View;

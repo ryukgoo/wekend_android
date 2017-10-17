@@ -18,12 +18,12 @@ import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.Utilities;
 import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.user.asynctask.CheckAccountTask;
-import com.entuition.wekend.view.WekendActivity;
+import com.entuition.wekend.view.common.WekendAbstractActivity;
 
 /**
  * Created by Kim on 2015-08-07.
  */
-public class RegisterActivity extends WekendActivity implements View.OnClickListener, DialogInterface.OnClickListener, TextWatcher {
+public class RegisterActivity extends WekendAbstractActivity implements View.OnClickListener, DialogInterface.OnClickListener, TextWatcher {
 
     private static final String TAG = "RegisterActivity";
 

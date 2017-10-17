@@ -25,14 +25,14 @@ import com.entuition.wekend.controller.CognitoSyncClientManager;
 import com.entuition.wekend.model.Utilities;
 import com.entuition.wekend.model.authentication.DeveloperAuthenticationProvider;
 import com.entuition.wekend.model.authentication.asynctask.IAuthenticationCallback;
-import com.entuition.wekend.view.WekendActivity;
+import com.entuition.wekend.view.common.WekendAbstractActivity;
 
 import static com.entuition.wekend.R.id.id_text_agree_agreement;
 
 /**
  * Created by Kim on 2015-08-04.
  */
-public class LoginActivity extends WekendActivity implements View.OnClickListener, TextWatcher {
+public class LoginActivity extends WekendAbstractActivity implements View.OnClickListener, TextWatcher {
 
     private final String TAG = getClass().getSimpleName();
 

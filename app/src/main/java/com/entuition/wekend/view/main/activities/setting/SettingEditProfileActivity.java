@@ -44,16 +44,19 @@ import com.entuition.wekend.model.authentication.asynctask.RequestVerificationCo
 import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.user.UserInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
+import com.entuition.wekend.model.data.user.asynctask.ChangeNicknameObservable;
+import com.entuition.wekend.model.data.user.asynctask.ChangeProfileImageObservable;
+import com.entuition.wekend.model.data.user.asynctask.CheckNicknameTask;
+import com.entuition.wekend.model.data.user.asynctask.ICheckNicknameCallback;
 import com.entuition.wekend.model.data.user.asynctask.ILoadUserInfoCallback;
 import com.entuition.wekend.model.data.user.asynctask.IUploadResizedImageCallback;
 import com.entuition.wekend.model.data.user.asynctask.LoadUserInfoTask;
 import com.entuition.wekend.model.data.user.asynctask.UpdateUserInfoTask;
 import com.entuition.wekend.model.data.user.asynctask.UploadResizedImageTask;
 import com.entuition.wekend.model.transfer.S3Utils;
-import com.entuition.wekend.view.WekendActivity;
-import com.entuition.wekend.view.util.BigSizeImageLoadingListener;
-import com.entuition.wekend.view.util.ChangeProfileImageObservable;
-import com.entuition.wekend.view.util.ImageUtilities;
+import com.entuition.wekend.view.common.BigSizeImageLoadingListener;
+import com.entuition.wekend.view.common.ImageUtilities;
+import com.entuition.wekend.view.common.WekendAbstractActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;
@@ -66,7 +69,7 @@ import java.util.List;
 /**
  * Created by ryukgoo on 15. 8. 31..
  */
-public class SettingEditProfileActivity extends WekendActivity {
+public class SettingEditProfileActivity extends WekendAbstractActivity {
 
     private static final int REQUEST_PERMISSION_REQ_CODE = 34;
 
@@ -76,12 +79,13 @@ public class SettingEditProfileActivity extends WekendActivity {
     private final int ACTION_REQUEST_CAMERA = 1004;
     private final int ACTION_REQUEST_CROP = 1005;
 
-    private TextView textViewNickname;
+    private EditText editTextNickname;
     private TextView textViewAge;
     private TextView textViewPoint;
 
     private EditText editTextPhoneNumber;
     private Button buttonEditPhoneNumber;
+    private Button buttonEditNickname;
     private Button buttonRequestVerification;
     private Button buttonConfirmVerification;
     private EditText editTextVerification;
@@ -136,7 +140,8 @@ public class SettingEditProfileActivity extends WekendActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        textViewNickname = (TextView) findViewById(R.id.id_profile_nickname);
+        editTextNickname = (EditText) findViewById(R.id.id_profile_nickname_edit);
+        editTextNickname.addTextChangedListener(new NicknameTextWatcher());
         textViewAge = (TextView) findViewById(R.id.id_profile_age);
         textViewPoint = (TextView) findViewById(R.id.id_profile_pink_balloon);
 
@@ -144,6 +149,9 @@ public class SettingEditProfileActivity extends WekendActivity {
         editTextPhoneNumber.addTextChangedListener(new PhoneNumberTextWatcher());
         buttonEditPhoneNumber = (Button) findViewById(R.id.id_setting_profile_button_edit_phonenumber);
         buttonEditPhoneNumber.setOnClickListener(new OnClickListeners());
+        buttonEditNickname = (Button) findViewById(R.id.id_setting_profile_button_edit_nickname);
+        buttonEditNickname.setOnClickListener(new OnClickListeners());
+        buttonEditNickname.setEnabled(false);
         editTextVerification = (EditText) findViewById(R.id.id_setting_profile_edittext_verification);
         editTextVerification.addTextChangedListener(new VerificationCodeTextWatcher());
         buttonRequestVerification = (Button) findViewById(R.id.id_setting_profile_button_request_verification);
@@ -164,7 +172,7 @@ public class SettingEditProfileActivity extends WekendActivity {
                 .showImageForEmptyUri(R.drawable.profile_default)
                 .showImageOnFail(R.drawable.profile_default)
                 .cacheInMemory(true)
-                .cacheOnDisk(true)
+                .cacheOnDisk(false)
                 .bitmapConfig(Bitmap.Config.RGB_565)
                 .build();
     }
@@ -194,7 +202,7 @@ public class SettingEditProfileActivity extends WekendActivity {
     }
 
     private void setViews() {
-        textViewNickname.setHint(userInfo.getNickname());
+        editTextNickname.setHint(userInfo.getNickname());
         editTextPhoneNumber.setHint(userInfo.getPhone());
         int birthYear = userInfo.getBirth();
         textViewAge.setText(String.valueOf(Utilities.getAgeFromBirthYear(birthYear)));
@@ -251,8 +259,8 @@ public class SettingEditProfileActivity extends WekendActivity {
                     selectImageFromGallery();
                 } else {
                     new AlertDialog.Builder(new ContextThemeWrapper(SettingEditProfileActivity.this, R.style.CustomAlertDialog))
-                            .setTitle(getString(R.string.edit_profile_image_permission_denied_title))
-                            .setMessage(getString(R.string.edit_profile_image_permission_denied_message))
+                            .setTitle(getString(R.string.profile_edit_image_permission_denied_title))
+                            .setMessage(getString(R.string.profile_edit_image_permission_denied_message))
                             .setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -499,7 +507,26 @@ public class SettingEditProfileActivity extends WekendActivity {
         public void afterTextChanged(Editable s) { }
     }
 
+    private class NicknameTextWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (Utilities.isValidNicknameExpression(s.toString())) {
+                buttonEditNickname.setEnabled(true);
+            } else {
+                buttonEditNickname.setEnabled(false);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) { }
+    }
+
     private class VerificationCodeTextWatcher implements TextWatcher {
+
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
@@ -520,15 +547,19 @@ public class SettingEditProfileActivity extends WekendActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
+
                 case R.id.id_profile_edit_button:
                     onBackPressed();
                     break;
+
                 case R.id.id_setting_profile_button_edit_phonenumber:
                     editTextPhoneNumber.requestFocus();
                     break;
+
                 case R.id.id_setting_profile_button_request_verification:
                     requestVerificationCode();
                     break;
+
                 case R.id.id_setting_profile_button_confirm_verification:
                     String verificationCode = editTextVerification.getText().toString();
                     if (RequestVerificationCodeTask.validateVerificationCode(verificationCode)) {
@@ -574,9 +605,88 @@ public class SettingEditProfileActivity extends WekendActivity {
                         imm.hideSoftInputFromInputMethod(buttonEditDone.getWindowToken(), 0);
                     }
                     break;
+
+                case R.id.id_setting_profile_button_edit_nickname :
+                    String nickname = editTextNickname.getText().toString();
+
+                    new CheckNicknameTask(new CheckNicknameAvailableCallback()).execute(nickname);
+
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    break;
+
                 default:
                     break;
             }
+        }
+    }
+
+    private class CheckNicknameAvailableCallback implements ICheckNicknameCallback, DialogInterface.OnClickListener {
+
+        @Override
+        public void onPrepare() {
+
+        }
+
+        @Override
+        public void onSuccess(boolean isAvaliable) {
+
+            Log.d(TAG, "CheckNicknameAvailableCallback > onSuccess > isAvailable : " + isAvaliable);
+
+            if (isAvaliable) {
+                final String newNickname = editTextNickname.getText().toString();
+                userInfo.setNickname(newNickname);
+
+                UpdateUserInfoTask task = new UpdateUserInfoTask();
+                task.setCallback(new ISimpleTaskCallback() {
+                    @Override
+                    public void onPrepare() { }
+
+                    @Override
+                    public void onSuccess(@Nullable Object object) {
+
+                        ChangeNicknameObservable.getInstance().change(newNickname);
+
+                        new AlertDialog.Builder(new ContextThemeWrapper(SettingEditProfileActivity.this, R.style.CustomAlertDialog))
+                                .setTitle(getString(R.string.profile_edit_nickname_complete_title))
+                                .setMessage(getString(R.string.profile_edit_nickname_complete_message))
+                                .setPositiveButton(R.string.dialog_positive_button, CheckNicknameAvailableCallback.this)
+                                .show();
+                    }
+
+                    @Override
+                    public void onFailed() {
+                        new AlertDialog.Builder(new ContextThemeWrapper(SettingEditProfileActivity.this, R.style.CustomAlertDialog))
+                                .setTitle(getString(R.string.profile_edit_nickname_failed_title))
+                                .setMessage(getString(R.string.profile_edit_nickname_failed_message))
+                                .setPositiveButton(R.string.dialog_positive_button, CheckNicknameAvailableCallback.this)
+                                .show();
+                    }
+                });
+                task.execute(userInfo);
+
+            } else {
+                new AlertDialog.Builder(new ContextThemeWrapper(SettingEditProfileActivity.this, R.style.CustomAlertDialog))
+                        .setTitle(SettingEditProfileActivity.this.getString(R.string.insert_user_info_alert_title_duplicated_nickname))
+                        .setMessage(SettingEditProfileActivity.this.getString(R.string.insert_user_info_alert_message_duplicated_nickname))
+                        .setPositiveButton(R.string.dialog_positive_button, this)
+                        .show();
+            }
+        }
+
+        @Override
+        public void onFailed() {
+            Log.d(TAG, "CheckNicknameAvailableCallback > onFailed");
+            new AlertDialog.Builder(new ContextThemeWrapper(SettingEditProfileActivity.this, R.style.CustomAlertDialog))
+                    .setTitle(getString(R.string.insert_user_info_alert_title_wrong_nickname))
+                    .setMessage(getString(R.string.insert_user_info_alert_message_wrong_nickname))
+                    .setPositiveButton(R.string.dialog_positive_button, CheckNicknameAvailableCallback.this)
+                    .show();
+        }
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            dialog.dismiss();
         }
     }
 }

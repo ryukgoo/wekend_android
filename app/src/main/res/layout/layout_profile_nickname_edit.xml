@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="81dp">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="@string/profile_nickname"
+            android:textSize="16sp"
+            android:gravity="left|center_vertical" />
+
+        <EditText
+            android:id="@+id/id_profile_nickname_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/profile_edit_nickname_hint"
+            android:textSize="20sp"
+            android:inputType="textPersonName"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/id_setting_profile_button_edit_nickname"
+            android:layout_width="57dp"
+            android:layout_height="27dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:text="수정"
+            android:textColor="@drawable/selector_textcolor_button"
+            android:background="@drawable/selector_button_red" />
+
+    </LinearLayout>
+
+    <View
+        android:background="#dadada"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+</LinearLayout>

@@ -30,13 +30,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.entuition.wekend.view.util.UnscrollViewPager
+        <com.entuition.wekend.view.common.UnscrollViewPager
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/id_viewpager_mailbox"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </com.entuition.wekend.view.util.UnscrollViewPager>
+        </com.entuition.wekend.view.common.UnscrollViewPager>
 
         <View
             android:layout_width="match_parent"

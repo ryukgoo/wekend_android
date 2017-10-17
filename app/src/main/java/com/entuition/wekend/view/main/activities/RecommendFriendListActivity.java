@@ -21,7 +21,7 @@ import com.entuition.wekend.model.data.like.ReadFriendObservable;
 import com.entuition.wekend.model.data.like.asynctask.GetLikeFriendTask;
 import com.entuition.wekend.model.data.like.asynctask.IGetLikeFriendCallback;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
-import com.entuition.wekend.view.WekendActivity;
+import com.entuition.wekend.view.common.WekendAbstractActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.Observer;
 /**
  * Created by ryukgoo on 2016. 4. 11..
  */
-public class RecommendFriendListActivity extends WekendActivity implements RecommendFriendViewAdapter.ItemClickListener {
+public class RecommendFriendListActivity extends WekendAbstractActivity implements RecommendFriendViewAdapter.ItemClickListener {
 
     private final String TAG = getClass().getSimpleName();
 

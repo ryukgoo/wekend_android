@@ -27,8 +27,8 @@ import com.entuition.wekend.model.data.product.asynctask.LoadUserInfoAndProductI
 import com.entuition.wekend.model.data.user.UserInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 import com.entuition.wekend.model.transfer.S3Utils;
-import com.entuition.wekend.view.WekendActivity;
-import com.entuition.wekend.view.util.BigSizeImageLoadingListener;
+import com.entuition.wekend.view.common.BigSizeImageLoadingListener;
+import com.entuition.wekend.view.common.WekendAbstractActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -37,7 +37,7 @@ import java.util.ArrayList;
 /**
  * Created by ryukgoo on 2016. 4. 18..
  */
-public abstract class ProposeProfileActivity extends WekendActivity implements ViewPager.OnPageChangeListener {
+public abstract class ProposeProfileActivity extends WekendAbstractActivity implements ViewPager.OnPageChangeListener {
 
     private final String TAG = getClass().getSimpleName();
 

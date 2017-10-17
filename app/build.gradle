@@ -16,8 +16,8 @@ android {
         applicationId "com.entuition.wekend"
         minSdkVersion 17
         targetSdkVersion 24
-        versionCode 38
-        versionName "1.1.0"
+        versionCode 39
+        versionName "1.1.2"
         multiDexEnabled true
     }
     dexOptions {
@@ -45,7 +45,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile group: 'com.kakao.sdk', name: 'kakaolink', version: project.KAKAO_SDK_VERSION
+    compile group: 'com.kakao.sdk', name: 'kakaolink', version: '1.6.0' //project.KAKAO_SDK_VERSION
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:support-v13:24.2.0'
     compile 'com.android.support:appcompat-v7:24.2.0'

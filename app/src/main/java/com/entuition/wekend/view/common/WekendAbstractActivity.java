@@ -1,15 +1,17 @@
-package com.entuition.wekend.view;
+package com.entuition.wekend.view.common;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.entuition.wekend.view.SplashScreen;
+
 /**
  * Created by ryukgoo on 2017. 8. 28..
  */
 
-public class WekendActivity extends AppCompatActivity {
+public class WekendAbstractActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

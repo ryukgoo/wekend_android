@@ -27,12 +27,12 @@ import com.entuition.wekend.model.data.like.asynctask.DeleteLikeProductTask;
 import com.entuition.wekend.model.data.like.asynctask.GetLikeProductTask;
 import com.entuition.wekend.model.data.like.asynctask.UpdateLikeReadStateTask;
 import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.view.common.DividerItemDecoration;
 import com.entuition.wekend.view.main.ChangeTitleObservable;
 import com.entuition.wekend.view.main.DropdownVisibleObservable;
 import com.entuition.wekend.view.main.activities.CampaignDetailActivity;
 import com.entuition.wekend.view.main.fragment.AbstractFragment;
 import com.entuition.wekend.view.main.fragment.SimpleViewHolder;
-import com.entuition.wekend.view.util.DividerItemDecoration;
 
 import java.util.Observable;
 import java.util.Observer;

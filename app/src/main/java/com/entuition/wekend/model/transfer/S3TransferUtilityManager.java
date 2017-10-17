@@ -111,13 +111,17 @@ public class S3TransferUtilityManager {
             return;
         }
 
-        File file = new File(filePath);
-        TransferObserver observer = transferUtility.upload(Constants.PROFILE_IMAGE_BUCKET_NAME, newFilename, file);
-        observers.add(observer);
-        S3TransferMap map = new S3TransferMap(filePath);
-        S3Utils.fillMap(map, observer, false);
-        transferRecordsMaps.put(observer.getId(), map);
-        observer.setTransferListener(uploadListener);
+        try {
+            File file = new File(filePath);
+            TransferObserver observer = transferUtility.upload(Constants.PROFILE_IMAGE_BUCKET_NAME, newFilename, file);
+            observers.add(observer);
+            S3TransferMap map = new S3TransferMap(filePath);
+            S3Utils.fillMap(map, observer, false);
+            transferRecordsMaps.put(observer.getId(), map);
+            observer.setTransferListener(uploadListener);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 
     public String getFilePath(int id) {

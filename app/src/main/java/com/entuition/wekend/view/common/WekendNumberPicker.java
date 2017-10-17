@@ -1,4 +1,4 @@
-package com.entuition.wekend.view.util;
+package com.entuition.wekend.view.common;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.NumberPicker;
-
-import com.entuition.wekend.R;
 
 /**
  * Created by ryukgoo on 2016. 11. 7..

@@ -19,12 +19,13 @@ import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.Utilities;
 import com.entuition.wekend.model.data.user.UserInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
+import com.entuition.wekend.model.data.user.asynctask.ChangeNicknameObservable;
+import com.entuition.wekend.model.data.user.asynctask.ChangeProfileImageObservable;
 import com.entuition.wekend.model.data.user.asynctask.ILoadUserInfoCallback;
 import com.entuition.wekend.model.data.user.asynctask.LoadUserInfoTask;
 import com.entuition.wekend.model.transfer.S3Utils;
-import com.entuition.wekend.view.WekendActivity;
-import com.entuition.wekend.view.util.BigSizeImageLoadingListener;
-import com.entuition.wekend.view.util.ChangeProfileImageObservable;
+import com.entuition.wekend.view.common.BigSizeImageLoadingListener;
+import com.entuition.wekend.view.common.WekendAbstractActivity;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -35,7 +36,7 @@ import java.util.Observer;
 /**
  * Created by ryukgoo on 2016. 1. 6..
  */
-public class SettingProfileActivity extends WekendActivity {
+public class SettingProfileActivity extends WekendAbstractActivity {
 
     private static final String TAG = "SettingProfileActivity";
 
@@ -69,6 +70,7 @@ public class SettingProfileActivity extends WekendActivity {
         loadUserInfo();
 
         ChangeProfileImageObservable.getInstance().addObserver(new ChangeProfileImageObserver());
+        ChangeNicknameObservable.getInstance().addObserver(new ChangeNicknameObserver());
     }
 
     @Override
@@ -254,6 +256,15 @@ public class SettingProfileActivity extends WekendActivity {
             View view = viewPager.findViewWithTag(viewPager.getCurrentItem());
             ImageView imageView = (ImageView) view.findViewById(R.id.image_pager_item);
             imageView.setImageBitmap(bitmap);
+        }
+    }
+
+    private class ChangeNicknameObserver implements Observer {
+
+        @Override
+        public void update(Observable observable, Object data) {
+            String nickname = (String) data;
+            txtNickname.setText(nickname);
         }
     }
 }

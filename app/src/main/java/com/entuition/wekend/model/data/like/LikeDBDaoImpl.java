@@ -92,6 +92,7 @@ public class LikeDBDaoImpl implements ILikeDBDao {
             likeItem.setLikeId(UUID.randomUUID().toString());
 
             mapper.save(likeItem);
+
             likeList.add(0, likeItem);
 
         } catch (Exception e) {
@@ -241,6 +242,13 @@ public class LikeDBDaoImpl implements ILikeDBDao {
                     }
                 }
 
+                Date updatedTime = DateUtils.parseISO8601Date(item.getUpdatedTime());
+                Date productLikedTime = DateUtils.parseISO8601Date(item.getProductLikedTime());
+
+                if (updatedTime.getTime() > productLikedTime.getTime()) {
+                    item.setProductLikedTime(item.getUpdatedTime());
+                }
+
                 likeList.add(item);
             }
 
@@ -325,16 +333,22 @@ public class LikeDBDaoImpl implements ILikeDBDao {
 
     public void updateLikeReadState(LikeDBItem item) {
         item.setReadTime(Utilities.getTimestamp());
-        mapper.save(item);
+        try {
+            mapper.save(item);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 
     public void comeNewLikeNotification(int productId) {
-
         LikeDBItem newComeItem = getItemByProductId(productId);
-        int removeIndex = likeList.indexOf(newComeItem);
-        likeList.remove(removeIndex);
-        newComeItem.setReadTime(null);
-        likeList.add(0, newComeItem);
+
+        if (newComeItem != null) {
+            int removeIndex = likeList.indexOf(newComeItem);
+            if (removeIndex > 0) likeList.remove(removeIndex);
+            newComeItem.setReadTime(null);
+            likeList.add(0, newComeItem);
+        }
 
         AddLikeObservable.getInstance().addLike(productId);
     }

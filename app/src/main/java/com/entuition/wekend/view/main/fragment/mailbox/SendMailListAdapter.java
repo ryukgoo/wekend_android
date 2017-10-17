@@ -16,9 +16,9 @@ import com.entuition.wekend.model.data.mail.SendMail;
 import com.entuition.wekend.model.data.mail.SendMailDaoImpl;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 import com.entuition.wekend.model.transfer.S3Utils;
+import com.entuition.wekend.view.common.AnimateFirstDisplayListener;
+import com.entuition.wekend.view.common.MaskBitmapDisplayer;
 import com.entuition.wekend.view.main.fragment.SimpleViewHolder;
-import com.entuition.wekend.view.util.AnimateFirstDisplayListener;
-import com.entuition.wekend.view.util.MaskBitmapDisplayer;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

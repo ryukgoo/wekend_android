@@ -8,17 +8,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v13.app.FragmentPagerAdapter;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.entuition.wekend.R;
+import com.entuition.wekend.view.common.UnscrollViewPager;
 import com.entuition.wekend.view.main.ChangeTitleObservable;
 import com.entuition.wekend.view.main.DropdownVisibleObservable;
 import com.entuition.wekend.view.main.fragment.AbstractFragment;
-import com.entuition.wekend.view.util.UnscrollViewPager;
 
 /**
  * Created by ryukgoo on 2016. 6. 30..

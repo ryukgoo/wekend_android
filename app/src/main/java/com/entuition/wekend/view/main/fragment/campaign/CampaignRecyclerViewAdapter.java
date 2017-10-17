@@ -3,7 +3,6 @@ package com.entuition.wekend.view.main.fragment.campaign;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import com.entuition.wekend.model.data.product.ProductDaoImpl;
 import com.entuition.wekend.model.data.product.ProductInfo;
 import com.entuition.wekend.model.data.product.enums.ProductRegion;
 import com.entuition.wekend.model.transfer.S3Utils;
-import com.entuition.wekend.view.util.AnimateFirstDisplayListener;
+import com.entuition.wekend.view.common.AnimateFirstDisplayListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

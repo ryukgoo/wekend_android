@@ -26,9 +26,7 @@ public class GetProductSubListTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-
         results = ProductDaoImpl.getInstance().getProductSubList();
-
         return null;
     }
 

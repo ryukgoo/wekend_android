@@ -13,7 +13,7 @@ import com.entuition.wekend.R;
 import com.entuition.wekend.model.data.NoticeInfo;
 import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.user.asynctask.LoadNoticeInfoTask;
-import com.entuition.wekend.view.WekendActivity;
+import com.entuition.wekend.view.common.WekendAbstractActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.List;
  * Created by ryukgoo on 2016. 10. 20..
  */
 
-public class SettingHelpActivity extends WekendActivity {
+public class SettingHelpActivity extends WekendAbstractActivity {
 
     private final String TAG = getClass().getSimpleName();
 

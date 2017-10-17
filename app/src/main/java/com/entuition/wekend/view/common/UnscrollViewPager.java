@@ -1,4 +1,4 @@
-package com.entuition.wekend.view.util;
+package com.entuition.wekend.view.common;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

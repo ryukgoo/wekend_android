@@ -7,12 +7,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.entuition.wekend.R;
-import com.entuition.wekend.view.WekendActivity;
+import com.entuition.wekend.view.common.WekendAbstractActivity;
 
 /**
  * Created by ryukgoo on 2016. 8. 17..
  */
-public class SettingSubListActivity extends WekendActivity {
+public class SettingSubListActivity extends WekendAbstractActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -101,11 +101,13 @@ public class ProductDaoImpl implements IProductInfoDao {
     @Override
     public List<ProductInfo> getProductSubList() {
         if (queryPage != null) {
-
-            List<ProductInfo> subList = queryPage.getSubList();
-            productInfoList.addAll(subList);
-
-            return subList;
+            try {
+                List<ProductInfo> subList = queryPage.getSubList();
+                productInfoList.addAll(subList);
+                return subList;
+            } catch (Exception e) {
+                Log.e(TAG, "getProductSubList > e : " + e.getMessage());
+            }
         }
         return null;
     }

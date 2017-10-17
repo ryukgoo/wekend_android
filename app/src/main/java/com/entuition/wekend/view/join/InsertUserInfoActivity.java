@@ -26,13 +26,13 @@ import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.Utilities;
 import com.entuition.wekend.model.data.user.asynctask.CheckNicknameTask;
 import com.entuition.wekend.model.data.user.asynctask.ICheckNicknameCallback;
-import com.entuition.wekend.view.WekendActivity;
-import com.entuition.wekend.view.util.WekendNumberPicker;
+import com.entuition.wekend.view.common.WekendAbstractActivity;
+import com.entuition.wekend.view.common.WekendNumberPicker;
 
 /**
  * Created by Kim on 2015-08-17.
  */
-public class InsertUserInfoActivity extends WekendActivity implements View.OnClickListener, DialogInterface.OnClickListener {
+public class InsertUserInfoActivity extends WekendAbstractActivity implements View.OnClickListener, DialogInterface.OnClickListener {
 
     private static final String TAG = "InsertUserInfoActivity";
 

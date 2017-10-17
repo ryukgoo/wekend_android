@@ -194,6 +194,13 @@
     <string name="profile_edit_phone_complete_message">휴대폰 번호가 수정되었습니다</string>
     <string name="profile_edit_phone_failed_title">수정오류</string>
     <string name="profile_edit_phone_failed_message">휴대폰 번호 수정에 실패하였습니다.\n다시 시도해 주시기 바랍니다.</string>
+    <string name="profile_edit_nickname_hint">새로운 닉네임을 입력해 주세요</string>
+    <string name="profile_edit_image_permission_denied_title">프로필 사진수정 실패</string>
+    <string name="profile_edit_image_permission_denied_message">프로필 사진을 변경하려면 접근권한이 필요합니다</string>
+    <string name="profile_edit_nickname_complete_title">수정완료</string>
+    <string name="profile_edit_nickname_complete_message">닉네임이 수정되었습니다</string>
+    <string name="profile_edit_nickname_failed_title">수정오류</string>
+    <string name="profile_edit_nickname_failed_message">닉네임 수정에 실패하였습니다.\n다시 시도해 주시기 바랍니다.</string>
 
     <string name="dialog_consume_point_title">함께가기 신청</string>
     <string name="dialog_consume_point_message">함께가기를 신청하려면 500포인트가 차감됩니다.\n진행하시겠습니까?</string>
@@ -252,9 +259,6 @@
     <string name="logout_alertdialog_message">로그아웃 하시면 로그인화면으로 돌아갑니다\n로그아웃 하시겠습니까?</string>
     <string name="logout_alertdialog_positive">로그아웃</string>
     <string name="logout_alertdialog_negative">아니요</string>
-
-    <string name="edit_profile_image_permission_denied_title">프로필 사진수정 실패</string>
-    <string name="edit_profile_image_permission_denied_message">프로필 사진을 변경하려면 접근권한이 필요합니다</string>
 
     <!-- For Google Map API -->
     <string name="google_public_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjoSh6ncuszhLDK+/kGtKTnHZe2BecXdZ19qGlNmDDM0mF3xEhZSDD9uhS1fzJ96VRXnT/Xz007PcB8EcgTm/up2G13UVpom7CHUpJ4/NhfrFFC4G0XBpAjKUPaeZvlH24TZLAyL4wrzqtVbmeaqohlryyfj33a+HrDjeeMYnoSyOUWThBK4AelC/SqvIwHzlUL/a1Yk5OhcjQgLhirVThKqMdHzmI8RMax47dwAOkwtQTLd0KCMzZJAoNhNFx+hlbwRjowMsi8zKZtbJnZiBC1ae/iVcwt5WChThPMVDE7PNJiM2kwP7fLGC73Qq+YxfRqCyWzPVtOwGGLuVNh+PtwIDAQAB</string>

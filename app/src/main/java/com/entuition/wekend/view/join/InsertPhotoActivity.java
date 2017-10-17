@@ -23,13 +23,13 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
+import com.entuition.wekend.model.data.user.asynctask.ChangeProfileImageObservable;
 import com.entuition.wekend.model.data.user.asynctask.IUploadResizedImageCallback;
 import com.entuition.wekend.model.data.user.asynctask.UploadResizedImageTask;
 import com.entuition.wekend.model.transfer.S3Utils;
-import com.entuition.wekend.view.WekendActivity;
+import com.entuition.wekend.view.common.ImageUtilities;
+import com.entuition.wekend.view.common.WekendAbstractActivity;
 import com.entuition.wekend.view.main.ContainerActivity;
-import com.entuition.wekend.view.util.ChangeProfileImageObservable;
-import com.entuition.wekend.view.util.ImageUtilities;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.utils.DiskCacheUtils;
 import com.nostra13.universalimageloader.utils.MemoryCacheUtils;
@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * Created by Kim on 2015-08-17.
  */
-public class InsertPhotoActivity extends WekendActivity {
+public class InsertPhotoActivity extends WekendAbstractActivity {
 
     private static final int REQUEST_PERMISSION_REQ_CODE = 34;
 

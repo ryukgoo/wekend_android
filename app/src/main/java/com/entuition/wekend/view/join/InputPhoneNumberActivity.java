@@ -21,12 +21,12 @@ import com.entuition.wekend.model.authentication.DeveloperAuthenticationProvider
 import com.entuition.wekend.model.authentication.asynctask.IAuthenticationCallback;
 import com.entuition.wekend.model.authentication.asynctask.RequestVerificationCodeTask;
 import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
-import com.entuition.wekend.view.WekendActivity;
+import com.entuition.wekend.view.common.WekendAbstractActivity;
 
 /**
  * Created by Kim on 2015-08-17.
  */
-public class InputPhoneNumberActivity extends WekendActivity implements View.OnClickListener {
+public class InputPhoneNumberActivity extends WekendAbstractActivity implements View.OnClickListener {
 
     private final String TAG = getClass().getSimpleName();
 

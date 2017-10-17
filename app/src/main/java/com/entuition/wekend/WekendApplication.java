@@ -34,8 +34,6 @@ public class WekendApplication extends MultiDexApplication {
         ImageLoader.getInstance().init(config.build());
     }
 
-
-
     @Override
     public void onTerminate() {
         Log.d(TAG, "Application onTerminated!!!");
@@ -44,8 +42,5 @@ public class WekendApplication extends MultiDexApplication {
 
         super.onTerminate();
     }
-
-
-
 
 }

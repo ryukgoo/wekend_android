@@ -14,11 +14,12 @@ import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.data.user.UserInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
+import com.entuition.wekend.model.data.user.asynctask.ChangeNicknameObservable;
+import com.entuition.wekend.model.data.user.asynctask.ChangeProfileImageObservable;
 import com.entuition.wekend.model.transfer.S3Utils;
+import com.entuition.wekend.view.common.ImageUtilities;
+import com.entuition.wekend.view.common.MaskBitmapDisplayer;
 import com.entuition.wekend.view.main.activities.setting.SettingProfileActivity;
-import com.entuition.wekend.view.util.ChangeProfileImageObservable;
-import com.entuition.wekend.view.util.ImageUtilities;
-import com.entuition.wekend.view.util.MaskBitmapDisplayer;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -73,6 +74,7 @@ public class ProfileHeaderView extends LinearLayout {
 
         ChangeProfileImageObservable.getInstance().addObserver(new ChangeProfileImageObserver());
         ChangePointObservable.getInstance().addObserver(new ChangePointObserver());
+        ChangeNicknameObservable.getInstance().addObserver(new ChangeNicknameObserver());
     }
 
     public void setViews() {
@@ -115,6 +117,15 @@ public class ProfileHeaderView extends LinearLayout {
         public void update(Observable observable, Object data) {
             int point = (int) data;
             textUserPoint.setText(context.getString(R.string.profile_owned_point) + " " + point + "P");
+        }
+    }
+
+    private class ChangeNicknameObserver implements Observer {
+
+        @Override
+        public void update(Observable observable, Object data) {
+            String nickname = (String) data;
+            textUserNickname.setText(nickname);
         }
     }
 }

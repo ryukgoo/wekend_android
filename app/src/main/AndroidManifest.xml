@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.entuition.wekend"
-    android:versionCode="1690"
-    android:versionName="0.1.0.1690">
+    android:versionCode="1761"
+    android:versionName="0.1.0.1761">
 
     <uses-sdk android:minSdkVersion="17" />
 
@@ -48,6 +48,7 @@
             android:name="com.entuition.wekend.view.SplashScreen"
             android:label="@string/app_name"
             android:noHistory="true"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -121,7 +122,21 @@
         <activity
             android:name="com.entuition.wekend.view.main.activities.CampaignDetailActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:parentActivityName=".view.main.ContainerActivity"
+            android:screenOrientation="portrait">
+            <!--
+            <intent-filter>
+
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="@string/kakaolink_host"
+                    android:scheme="@string/kakao_scheme" />
+
+            </intent-filter> -->
+        </activity>
 
         <!-- RecommendFriendListActivity -->
         <activity

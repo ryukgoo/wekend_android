@@ -109,7 +109,7 @@
             android:maxLines="1"
             android:includeFontPadding="false" />
 
-        <com.entuition.wekend.view.util.WekendNumberPicker
+        <com.entuition.wekend.view.common.WekendNumberPicker
             android:id="@+id/id_birth_year_picker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

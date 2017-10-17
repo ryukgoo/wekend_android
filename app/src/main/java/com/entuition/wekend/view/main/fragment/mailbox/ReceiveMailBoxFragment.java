@@ -27,9 +27,9 @@ import com.entuition.wekend.model.data.mail.asynctask.DeleteReceiveMailTask;
 import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.mail.asynctask.LoadReceiveMailTask;
 import com.entuition.wekend.model.googleservice.gcm.MailNotificationObservable;
+import com.entuition.wekend.view.common.DividerItemDecoration;
 import com.entuition.wekend.view.main.activities.ReceiveProposeProfileActivity;
 import com.entuition.wekend.view.main.fragment.SimpleViewHolder;
-import com.entuition.wekend.view.util.DividerItemDecoration;
 
 import java.util.Observable;
 import java.util.Observer;

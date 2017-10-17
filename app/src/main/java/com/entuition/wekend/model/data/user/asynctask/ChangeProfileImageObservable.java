@@ -1,4 +1,4 @@
-package com.entuition.wekend.view.util;
+package com.entuition.wekend.model.data.user.asynctask;
 
 import android.graphics.Bitmap;
 

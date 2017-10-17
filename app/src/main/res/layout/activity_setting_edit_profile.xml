@@ -29,7 +29,7 @@
             <include
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/layout_profile_nickname" />
+                layout="@layout/layout_profile_nickname_edit" />
 
             <include
                 android:layout_width="match_parent"

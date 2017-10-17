@@ -18,7 +18,7 @@ import com.entuition.wekend.model.data.product.enums.Food;
 import com.entuition.wekend.model.data.product.enums.IProductEnum;
 import com.entuition.wekend.model.data.product.enums.Leisure;
 import com.entuition.wekend.model.data.product.enums.ProductRegion;
-import com.entuition.wekend.view.util.CenterAlignedSpinnerAdapter;
+import com.entuition.wekend.view.common.CenterAlignedSpinnerAdapter;
 
 /**
  * Created by ryukgoo on 2016. 7. 19..

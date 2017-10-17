@@ -33,7 +33,7 @@ import com.entuition.wekend.model.data.user.asynctask.UpdateUserInfoTask;
 import com.entuition.wekend.model.googleservice.billing.GoogleBillingController;
 import com.entuition.wekend.model.googleservice.gcm.BadgeNotificationObservable;
 import com.entuition.wekend.model.googleservice.gcm.MessageReceivingService;
-import com.entuition.wekend.view.WekendActivity;
+import com.entuition.wekend.view.common.WekendAbstractActivity;
 import com.entuition.wekend.view.main.activities.setting.SettingAlarmActivity;
 import com.entuition.wekend.view.main.activities.setting.SettingNoticeActivity;
 import com.entuition.wekend.view.main.activities.setting.SettingProfileActivity;
@@ -52,7 +52,7 @@ import java.util.Observer;
 /**
  * Created by ryukgoo on 2016. 6. 28..
  */
-public class ContainerActivity extends WekendActivity implements OnMenuTabClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class ContainerActivity extends WekendAbstractActivity implements OnMenuTabClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private final String TAG = getClass().getSimpleName();
 

@@ -14,9 +14,9 @@ import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.data.like.LikeDBDaoImpl;
 import com.entuition.wekend.model.data.like.LikeDBItem;
 import com.entuition.wekend.model.transfer.S3Utils;
+import com.entuition.wekend.view.common.AnimateFirstDisplayListener;
+import com.entuition.wekend.view.common.MaskBitmapDisplayer;
 import com.entuition.wekend.view.main.fragment.SimpleViewHolder;
-import com.entuition.wekend.view.util.AnimateFirstDisplayListener;
-import com.entuition.wekend.view.util.MaskBitmapDisplayer;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 

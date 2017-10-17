@@ -40,8 +40,8 @@ import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 import com.entuition.wekend.model.googleservice.googlemap.GetLocationTask;
 import com.entuition.wekend.model.googleservice.googlemap.IGetLocationCallback;
 import com.entuition.wekend.model.transfer.S3Utils;
-import com.entuition.wekend.view.WekendActivity;
-import com.entuition.wekend.view.util.AnimateFirstDisplayListener;
+import com.entuition.wekend.view.common.AnimateFirstDisplayListener;
+import com.entuition.wekend.view.common.WekendAbstractActivity;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -57,16 +57,22 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.kakao.kakaolink.KakaoLink;
-import com.kakao.kakaolink.KakaoTalkLinkMessageBuilder;
-import com.kakao.util.KakaoParameterException;
+import com.kakao.kakaolink.v2.KakaoLinkResponse;
+import com.kakao.kakaolink.v2.KakaoLinkService;
+import com.kakao.message.template.ButtonObject;
+import com.kakao.message.template.ContentObject;
+import com.kakao.message.template.FeedTemplate;
+import com.kakao.message.template.LinkObject;
+import com.kakao.message.template.SocialObject;
+import com.kakao.network.ErrorResult;
+import com.kakao.network.callback.ResponseCallback;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 /**
  * Created by ryukgoo on 2016. 8. 4..
  */
-public class CampaignDetailActivity extends WekendActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class CampaignDetailActivity extends WekendAbstractActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
     private final String TAG = getClass().getSimpleName();
 
@@ -96,10 +102,6 @@ public class CampaignDetailActivity extends WekendActivity implements View.OnCli
 
     private boolean hasAlreadyLike = false;
 
-    // For Kakao
-    private KakaoLink kakaoLink;
-    private KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder;
-
     // For Facebook
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
@@ -112,14 +114,6 @@ public class CampaignDetailActivity extends WekendActivity implements View.OnCli
 
         productId = getIntent().getIntExtra(Constants.PARAMETER_PRODUCT_ID, -1);
         userId = UserInfoDaoImpl.getInstance().getUserId(this);
-
-        // Kakao
-        try {
-            kakaoLink = KakaoLink.getKakaoLink(getApplicationContext());
-
-        } catch (KakaoParameterException e) {
-            e.printStackTrace();
-        }
 
         // Facebook
 //        FacebookSdk.sdkInitialize(getApplicationContext());
@@ -164,32 +158,38 @@ public class CampaignDetailActivity extends WekendActivity implements View.OnCli
     @Override
     protected void onResume() {
         super.onResume();
-        mapView.onResume();
+        if (mapView != null) {
+            mapView.onResume();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mapView.onPause();
+        if (mapView != null) {
+            mapView.onPause();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mapView.onDestroy();
+        if (mapView != null) {
+            mapView.onDestroy();
+        }
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mapView.onLowMemory();
+        if (mapView != null) {
+            mapView.onLowMemory();
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_campaign_detail, menu);
-
-        MenuItem shareItem = menu.findItem(R.id.id_action_share);
 
         MenuItem shareForKakao = menu.findItem(R.id.id_action_share_kakao);
         shareForKakao.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
@@ -417,15 +417,47 @@ public class CampaignDetailActivity extends WekendActivity implements View.OnCli
         String imageName = ProductDaoImpl.getProductImageName(productInfo.getId(), 0);
         String imageUrl = S3Utils.getS3Url(Constants.PRODUCT_IMAGE_BUCKET_NAME, imageName);
 
-        try {
-            kakaoTalkLinkMessageBuilder = kakaoLink.createKakaoTalkLinkMessageBuilder();
-            kakaoTalkLinkMessageBuilder.addText(productInfo.getTitleKor());
-            kakaoTalkLinkMessageBuilder.addImage(imageUrl, 300, 200);
-            kakaoTalkLinkMessageBuilder.addAppButton(getString(R.string.app_name));
-            kakaoLink.sendMessage(kakaoTalkLinkMessageBuilder, this);
-        } catch (KakaoParameterException e) {
-            Log.e(TAG, "kakao Error : " + e.getMessage());
-        }
+        LinkObject linkObject = LinkObject
+                .newBuilder()
+                .setWebUrl("https://fb.me/673785809486815")
+                .setMobileWebUrl("https://fb.me/673785809486815")
+                .setAndroidExecutionParams("productId=" + productInfo.getId())
+                .setIosExecutionParams("productId=" + productInfo.getId())
+                .build();
+
+        ContentObject contentObject = ContentObject
+                .newBuilder(productInfo.getTitleKor(), imageUrl, linkObject)
+                .setDescrption(productInfo.getDescription())
+                .setImageHeight(200)
+                .setImageWidth(300)
+                .build();
+
+        int likeCount = productInfo.getLikeCount() / Constants.LIKE_COUNT_DELIMETER;
+        SocialObject socialObject = SocialObject
+                .newBuilder()
+                .setLikeCount(likeCount)
+                .build();
+
+        ButtonObject buttonObject = new ButtonObject("앱으로 보기", linkObject);
+
+        FeedTemplate params = FeedTemplate
+                .newBuilder(contentObject)
+                .setSocial(socialObject)
+                .addButton(buttonObject)
+                .build();
+
+        KakaoLinkService.getInstance().sendDefault(this, params, new ResponseCallback<KakaoLinkResponse>() {
+            @Override
+            public void onFailure(ErrorResult errorResult) {
+                Log.e(TAG, "KakaoLinkService > sendDefault > onFailure > errorResult : " + errorResult.toString());
+            }
+
+            @Override
+            public void onSuccess(KakaoLinkResponse result) {
+                Log.d(TAG, "KakaoLinkService > sendDefault > onSuccess > result : " + result.toString());
+            }
+        });
+
     }
 
     private void sendFacebookLink() {
@@ -438,7 +470,7 @@ public class CampaignDetailActivity extends WekendActivity implements View.OnCli
                 .putString("og:title", productInfo.getTitleKor())
                 .putString("og:description", productInfo.getDescription())
                 .putString("og:image", imageUrl)
-                .putString("og:url", "https://fb.me/673785809486815")
+                .putString("og:url", "https://fb.me/673785809486815?productId=" + productInfo.getId())
                 .build();
 
         ShareOpenGraphAction action = new ShareOpenGraphAction.Builder()
