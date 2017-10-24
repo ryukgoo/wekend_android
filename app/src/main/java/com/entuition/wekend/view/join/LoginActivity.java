@@ -24,7 +24,7 @@ import com.entuition.wekend.R;
 import com.entuition.wekend.controller.CognitoSyncClientManager;
 import com.entuition.wekend.model.Utilities;
 import com.entuition.wekend.model.authentication.DeveloperAuthenticationProvider;
-import com.entuition.wekend.model.authentication.asynctask.IAuthenticationCallback;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.view.common.WekendAbstractActivity;
 
 import static com.entuition.wekend.R.id.id_text_agree_agreement;
@@ -58,6 +58,11 @@ public class LoginActivity extends WekendAbstractActivity implements View.OnClic
         setContentView(R.layout.activity_login);
 
         initView();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private void initView() {
@@ -237,7 +242,7 @@ public class LoginActivity extends WekendAbstractActivity implements View.OnClic
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
     }
 
-    private class LoginAuthenticationCallback implements IAuthenticationCallback {
+    private class LoginAuthenticationCallback implements ISimpleTaskCallback {
 
         @Override
         public void onPrepare() {
@@ -245,7 +250,7 @@ public class LoginActivity extends WekendAbstractActivity implements View.OnClic
         }
 
         @Override
-        public void onSuccess() {
+        public void onSuccess(@Nullable Object object) {
             progressbarHolder.setVisibility(View.GONE);
         }
 

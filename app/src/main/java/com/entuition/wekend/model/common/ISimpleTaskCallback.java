@@ -1,4 +1,4 @@
-package com.entuition.wekend.model.data.mail.asynctask;
+package com.entuition.wekend.model.common;
 
 import android.support.annotation.Nullable;
 

@@ -18,6 +18,7 @@ import com.entuition.wekend.view.common.MaskBitmapDisplayer;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +29,7 @@ import java.util.List;
 public class RecommendFriendViewAdapter extends RecyclerView.Adapter<RecommendFriendViewAdapter.RecommendFriendViewHolder> {
 
     private LayoutInflater layoutInflater;
-    private ItemClickListener listener;
+    private WeakReference<ItemClickListener> listener;
     private List<LikeDBItem> datas;
 
     private DisplayImageOptions options;
@@ -51,7 +52,7 @@ public class RecommendFriendViewAdapter extends RecyclerView.Adapter<RecommendFr
     }
 
     public void setItemClickListener(ItemClickListener listener) {
-        this.listener = listener;
+        this.listener = new WeakReference<ItemClickListener>(listener);
     }
 
     @Override
@@ -105,7 +106,7 @@ public class RecommendFriendViewAdapter extends RecyclerView.Adapter<RecommendFr
         @Override
         public void onClick(View v) {
             if (listener != null) {
-                listener.onItemClicked(v, getAdapterPosition());
+                listener.get().onItemClicked(v, getAdapterPosition());
             }
         }
     }

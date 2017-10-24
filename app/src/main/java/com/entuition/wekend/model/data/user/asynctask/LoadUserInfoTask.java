@@ -1,5 +1,6 @@
 package com.entuition.wekend.model.data.user.asynctask;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.entuition.wekend.model.data.user.UserInfo;
@@ -10,8 +11,13 @@ import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
  */
 public class LoadUserInfoTask extends AsyncTask<String, Void, Void> {
 
+    private final Context context;
     private UserInfo userInfo;
     private ILoadUserInfoCallback callback;
+
+    public LoadUserInfoTask(Context context) {
+        this.context = context;
+    }
 
     public void setCallback(ILoadUserInfoCallback callback) {
         this.callback = callback;
@@ -21,7 +27,7 @@ public class LoadUserInfoTask extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... params) {
 
         String userId = params[0];
-        userInfo = UserInfoDaoImpl.getInstance().getUserInfo(userId);
+        userInfo = UserInfoDaoImpl.getInstance(context).getUserInfo(userId);
 
         return null;
     }

@@ -91,13 +91,6 @@ public abstract class ProposeProfileActivity extends WekendAbstractActivity impl
         profilePhotoList = new ArrayList<String>();
 
         initViews();
-        onInitViews();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
         loadUserInfoAndProductInfo();
     }
 
@@ -159,7 +152,7 @@ public abstract class ProposeProfileActivity extends WekendAbstractActivity impl
         likeDBItem.setUserId(friendUserId);
         likeDBItem.setProductId(productId);
 
-        LoadUserInfoAndProductInfoTask task = new LoadUserInfoAndProductInfoTask();
+        LoadUserInfoAndProductInfoTask task = new LoadUserInfoAndProductInfoTask(this);
         task.setCallback(new LoadUserInfoAndProductInfoCallback());
         task.execute(likeDBItem);
     }
@@ -201,7 +194,7 @@ public abstract class ProposeProfileActivity extends WekendAbstractActivity impl
         findViewById(R.id.id_profile_appbar).setVisibility(View.VISIBLE);
         findViewById(R.id.id_profile_description).setVisibility(View.VISIBLE);
 
-        UserInfo userInfo = UserInfoDaoImpl.getInstance().getUserInfo(UserInfoDaoImpl.getInstance().getUserId(this));
+        UserInfo userInfo = UserInfoDaoImpl.getInstance(this).getUserInfo();
 
         textPoint.setText(getString(R.string.profile_owned_point) + " " + userInfo.getBalloon() + "P");
 
@@ -210,7 +203,7 @@ public abstract class ProposeProfileActivity extends WekendAbstractActivity impl
 
     protected abstract void setListeners();
 
-    protected abstract void onInitViews();
+    protected abstract void onCompleteLoadInfos();
 
     protected abstract void onSuccessGetProposeStatus(String proposeStatus);
 
@@ -255,6 +248,7 @@ public abstract class ProposeProfileActivity extends WekendAbstractActivity impl
             }
 
             setViews();
+            onCompleteLoadInfos();
         }
 
         @Override

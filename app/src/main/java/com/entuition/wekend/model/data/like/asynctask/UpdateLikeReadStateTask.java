@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import com.entuition.wekend.model.data.like.LikeDBDaoImpl;
 import com.entuition.wekend.model.data.like.LikeDBItem;
-import com.entuition.wekend.model.data.like.ReadLikeObservable;
+import com.entuition.wekend.model.data.like.observable.ReadLikeObservable;
 
 /**
  * Created by ryukgoo on 2017. 7. 20..

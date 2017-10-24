@@ -1,8 +1,9 @@
 package com.entuition.wekend.model.data.user.asynctask;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 
 /**
@@ -13,10 +14,12 @@ public class CheckAccountTask extends AsyncTask<String, Void, Void> {
 
     private final String TAG = getClass().getSimpleName();
 
+    private final Context context;
     private ISimpleTaskCallback callback;
     private boolean isValidAccount;
 
-    public CheckAccountTask(ISimpleTaskCallback callback) {
+    public CheckAccountTask(Context context, ISimpleTaskCallback callback) {
+        this.context = context;
         this.callback = callback;
     }
 
@@ -29,7 +32,7 @@ public class CheckAccountTask extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... params) {
 
         String email = params[0];
-        isValidAccount = UserInfoDaoImpl.getInstance().isValidEmail(email);
+        isValidAccount = UserInfoDaoImpl.getInstance(context).isValidEmail(email);
         return null;
     }
 

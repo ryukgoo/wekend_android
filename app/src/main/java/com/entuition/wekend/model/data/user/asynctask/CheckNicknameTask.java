@@ -1,5 +1,6 @@
 package com.entuition.wekend.model.data.user.asynctask;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -12,10 +13,12 @@ public class CheckNicknameTask extends AsyncTask<String, Void, Void> {
 
     private final String TAG = getClass().getSimpleName();
 
+    private final Context context;
     private ICheckNicknameCallback callback;
     private boolean isNicknameAvailable;
 
-    public CheckNicknameTask(ICheckNicknameCallback callback) {
+    public CheckNicknameTask(Context context, ICheckNicknameCallback callback) {
+        this.context = context;
         this.callback = callback;
     }
 
@@ -28,7 +31,7 @@ public class CheckNicknameTask extends AsyncTask<String, Void, Void> {
     protected Void doInBackground(String... params) {
         Log.d(TAG, "ChecknicknameTask Start");
         String nickname = params[0];
-        isNicknameAvailable = UserInfoDaoImpl.getInstance().isNicknameAvailable(nickname);
+        isNicknameAvailable = UserInfoDaoImpl.getInstance(context).isNicknameAvailable(nickname);
 
         return null;
     }

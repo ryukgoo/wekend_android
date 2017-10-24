@@ -19,13 +19,13 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
 import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
-import com.entuition.wekend.model.data.mail.ReadReceiveMailObservable;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.mail.ReceiveMail;
 import com.entuition.wekend.model.data.mail.ReceiveMailDaoImpl;
-import com.entuition.wekend.model.data.mail.UpdateReceiveMailObservable;
 import com.entuition.wekend.model.data.mail.asynctask.DeleteReceiveMailTask;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.mail.asynctask.LoadReceiveMailTask;
+import com.entuition.wekend.model.data.mail.observable.ReadReceiveMailObservable;
+import com.entuition.wekend.model.data.mail.observable.UpdateReceiveMailObservable;
 import com.entuition.wekend.model.googleservice.gcm.MailNotificationObservable;
 import com.entuition.wekend.view.common.DividerItemDecoration;
 import com.entuition.wekend.view.main.activities.ReceiveProposeProfileActivity;
@@ -51,13 +51,28 @@ public class ReceiveMailBoxFragment extends Fragment {
 
     private ReceiveMailListAdapter listAdapter;
 
+    //Observers
+    private UpdateNotificationObserver updateNotificationObserver;
+    private ReadObserver readObserver;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        MailNotificationObservable.getInstance().addObserver(new UpdateNotificationObserver());
-        UpdateReceiveMailObservable.getInstance().addObserver(new UpdateNotificationObserver());
-        ReadReceiveMailObservable.getInstance().addObserver(new ReadObserver());
+        updateNotificationObserver = new UpdateNotificationObserver();
+        MailNotificationObservable.getInstance().addObserver(updateNotificationObserver);
+        UpdateReceiveMailObservable.getInstance().addObserver(updateNotificationObserver);
+        readObserver = new ReadObserver();
+        ReadReceiveMailObservable.getInstance().addObserver(readObserver);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        MailNotificationObservable.getInstance().deleteObserver(updateNotificationObserver);
+        UpdateReceiveMailObservable.getInstance().deleteObserver(updateNotificationObserver);
+        ReadReceiveMailObservable.getInstance().deleteObserver(readObserver);
     }
 
     @Override

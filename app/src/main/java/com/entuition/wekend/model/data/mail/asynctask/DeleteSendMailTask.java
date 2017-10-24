@@ -3,6 +3,7 @@ package com.entuition.wekend.model.data.mail.asynctask;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.mail.SendMail;
 import com.entuition.wekend.model.data.mail.SendMailDaoImpl;
 

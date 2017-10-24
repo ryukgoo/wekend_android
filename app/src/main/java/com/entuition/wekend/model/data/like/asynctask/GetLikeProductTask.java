@@ -4,8 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.like.LikeDBDaoImpl;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.product.ProductDaoImpl;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 
@@ -16,7 +16,7 @@ public class GetLikeProductTask extends AsyncTask<Void, Void, Void> {
 
     private final String TAG = getClass().getSimpleName();
 
-    private Context context;
+    private final Context context;
     private boolean isSuccess;
     private ISimpleTaskCallback callback;
 
@@ -35,7 +35,7 @@ public class GetLikeProductTask extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        String userId = UserInfoDaoImpl.getInstance().getUserId(context);
+        String userId = UserInfoDaoImpl.getInstance(context).getUserId();
         Log.d(TAG, "GetLikeProductTask >>>>>> userId : " + userId);
         try {
             ProductDaoImpl.getInstance().getLikedTime();

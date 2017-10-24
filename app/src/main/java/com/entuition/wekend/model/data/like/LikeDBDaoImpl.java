@@ -11,6 +11,7 @@ import com.amazonaws.util.DateUtils;
 import com.entuition.wekend.controller.CognitoSyncClientManager;
 import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.Utilities;
+import com.entuition.wekend.model.data.like.observable.AddLikeObservable;
 import com.entuition.wekend.model.data.product.ProductDaoImpl;
 import com.entuition.wekend.model.data.product.ProductReadState;
 
@@ -48,11 +49,9 @@ public class LikeDBDaoImpl implements ILikeDBDao {
 
     private DynamoDBMapper mapper;
     private List<LikeDBItem> likeList;
-//    private PaginatedList<LikeReadState> readStates;
     private List<LikeReadState> readStates;
 
     private LikeDBDaoImpl() {
-
         AmazonDynamoDBClient dynamoDBClient = CognitoSyncClientManager.getDynamoDBClient();
         mapper = new DynamoDBMapper(dynamoDBClient);
         likeList = new ArrayList<LikeDBItem>();
@@ -105,7 +104,6 @@ public class LikeDBDaoImpl implements ILikeDBDao {
     public void deleteLike(LikeDBItem likeDBItem) throws Exception {
         try {
             mapper.delete(likeDBItem);
-//            likeList.remove(likeDBItem);
         } catch (Exception e) {
             throw e;
         }
@@ -345,7 +343,7 @@ public class LikeDBDaoImpl implements ILikeDBDao {
 
         if (newComeItem != null) {
             int removeIndex = likeList.indexOf(newComeItem);
-            if (removeIndex > 0) likeList.remove(removeIndex);
+            if (removeIndex >= 0) likeList.remove(removeIndex);
             newComeItem.setReadTime(null);
             likeList.add(0, newComeItem);
         }

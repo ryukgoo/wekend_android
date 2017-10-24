@@ -187,7 +187,7 @@ public class CognitoDeveloperAuthenticationClient {
         CognitoSyncClientManager.getCredentialsProvider().setLogins(null);
         CognitoSyncClientManager.getCredentialsProvider().clear();
 
-        UserInfoDaoImpl.getInstance().clear();
+        UserInfoDaoImpl.getInstance(context).clear();
         ProductDaoImpl.getInstance().clear();
         LikeDBDaoImpl.getInstance().clear();
         ReceiveMailDaoImpl.getInstance().clear();

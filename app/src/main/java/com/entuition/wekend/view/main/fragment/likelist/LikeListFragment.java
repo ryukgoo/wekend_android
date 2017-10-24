@@ -18,15 +18,15 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
 import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
-import com.entuition.wekend.model.data.like.AddLikeObservable;
-import com.entuition.wekend.model.data.like.DeleteLikeObservable;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.like.LikeDBDaoImpl;
 import com.entuition.wekend.model.data.like.LikeDBItem;
-import com.entuition.wekend.model.data.like.ReadLikeObservable;
 import com.entuition.wekend.model.data.like.asynctask.DeleteLikeProductTask;
 import com.entuition.wekend.model.data.like.asynctask.GetLikeProductTask;
 import com.entuition.wekend.model.data.like.asynctask.UpdateLikeReadStateTask;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.model.data.like.observable.AddLikeObservable;
+import com.entuition.wekend.model.data.like.observable.DeleteLikeObservable;
+import com.entuition.wekend.model.data.like.observable.ReadLikeObservable;
 import com.entuition.wekend.view.common.DividerItemDecoration;
 import com.entuition.wekend.view.main.ChangeTitleObservable;
 import com.entuition.wekend.view.main.DropdownVisibleObservable;
@@ -53,15 +53,32 @@ public class LikeListFragment extends AbstractFragment {
     private SwipeRefreshLayout refreshLayout;
     private TextView textViewNoResult;
 
+    // Observers
+    private AddLikeObserver addLikeObserver;
+    private DeleteLikeObserver deleteLikeObserver;
+    private ReadLikeObserver readLikeObserver;
+
     public LikeListFragment() { }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AddLikeObservable.getInstance().addObserver(new AddLikeObserver());
-        DeleteLikeObservable.getInstance().addObserver(new DeleteLikeObserver());
-        ReadLikeObservable.getInstance().addObserver(new ReadLikeObserver());
+        addLikeObserver = new AddLikeObserver();
+        AddLikeObservable.getInstance().addObserver(addLikeObserver);
+        deleteLikeObserver = new DeleteLikeObserver();
+        DeleteLikeObservable.getInstance().addObserver(deleteLikeObserver);
+        readLikeObserver = new ReadLikeObserver();
+        ReadLikeObservable.getInstance().addObserver(readLikeObserver);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        AddLikeObservable.getInstance().deleteObserver(addLikeObserver);
+        DeleteLikeObservable.getInstance().deleteObserver(deleteLikeObserver);
+        ReadLikeObservable.getInstance().deleteObserver(readLikeObserver);
     }
 
     @Nullable

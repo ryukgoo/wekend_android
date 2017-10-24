@@ -2,9 +2,9 @@ package com.entuition.wekend.model.data.like.asynctask;
 
 import android.os.AsyncTask;
 
-import com.entuition.wekend.model.data.like.DeleteLikeObservable;
 import com.entuition.wekend.model.data.like.LikeDBDaoImpl;
 import com.entuition.wekend.model.data.like.LikeDBItem;
+import com.entuition.wekend.model.data.like.observable.DeleteLikeObservable;
 import com.entuition.wekend.model.data.product.ProductDaoImpl;
 
 /**

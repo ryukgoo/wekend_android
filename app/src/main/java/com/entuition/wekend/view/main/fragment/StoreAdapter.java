@@ -71,8 +71,11 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
 
         @Override
         public void onClick(View v) {
-            if (listener != null) {
-                listener.onItemClicked(v, getAdapterPosition());
+
+            final int position = getAdapterPosition();
+
+            if (listener != null && position != RecyclerView.NO_POSITION) {
+                listener.onItemClicked(v, position);
             }
         }
     }

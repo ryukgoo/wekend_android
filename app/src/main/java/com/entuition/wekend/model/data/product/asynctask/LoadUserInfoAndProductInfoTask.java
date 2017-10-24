@@ -1,5 +1,6 @@
 package com.entuition.wekend.model.data.product.asynctask;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.entuition.wekend.model.data.like.LikeDBItem;
@@ -15,10 +16,15 @@ public class LoadUserInfoAndProductInfoTask extends AsyncTask<LikeDBItem, Void, 
 
     private final String TAG = getClass().getSimpleName();
 
+    private final Context context;
     private UserInfo userInfo;
     private ProductInfo productInfo;
 
     private ILoadUserInfoAndProductInfoCallback callback;
+
+    public LoadUserInfoAndProductInfoTask(Context context) {
+        this.context = context;
+    }
 
     public void setCallback(ILoadUserInfoAndProductInfoCallback callback) {
         this.callback = callback;
@@ -39,7 +45,7 @@ public class LoadUserInfoAndProductInfoTask extends AsyncTask<LikeDBItem, Void, 
         String userId = likeItem.getUserId();
         int productId = likeItem.getProductId();
 
-        userInfo = UserInfoDaoImpl.getInstance().getUserInfo(userId);
+        userInfo = UserInfoDaoImpl.getInstance(context).getUserInfo(userId);
         productInfo = ProductDaoImpl.getInstance().getProductInfo(productId);
 
         return null;

@@ -1,23 +1,24 @@
-package com.entuition.wekend.model.authentication;
+package com.entuition.wekend.model.authentication.asynctask;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
 import com.entuition.wekend.controller.CognitoSyncClientManager;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.model.authentication.DeveloperAuthenticationProvider;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 
 /**
  * Created by ryukgoo on 2017. 10. 16..
  */
 
-public class AuthenticateTask extends AsyncTask<Void, Void, Void> {
+public class InitAuthenticationTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
+    private final Context context;
     private ISimpleTaskCallback callback;
     private boolean isRegistered;
 
-    public AuthenticateTask(Context context) {
+    public InitAuthenticationTask(Context context) {
         this.context = context;
     }
 
@@ -28,7 +29,7 @@ public class AuthenticateTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        CognitoSyncClientManager.init(context);
+        CognitoSyncClientManager.init(context.getApplicationContext());
 
         isRegistered = false;
         String username = DeveloperAuthenticationProvider.getDevAuthClientInstance().getUsernameFromDevice();
@@ -42,8 +43,7 @@ public class AuthenticateTask extends AsyncTask<Void, Void, Void> {
             isRegistered = (token != null);
 
             if (isRegistered) {
-                String userId = UserInfoDaoImpl.getInstance().getUserId(context);
-                UserInfoDaoImpl.getInstance().loadUserInfo(userId);
+                UserInfoDaoImpl.getInstance(context).getUserInfo();
             }
         }
 

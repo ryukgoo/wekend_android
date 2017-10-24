@@ -49,10 +49,15 @@ public class SimpleViewHolder extends RecyclerView.ViewHolder implements View.On
     @Override
     public void onClick(View v) {
         Log.d(TAG, "onClick!!@!@!@");
+
+        final int position = getAdapterPosition();
+
+        if (position == RecyclerView.NO_POSITION) return;
+
         if (v.getId() == R.id.id_recyclerview_item_delete) {
-            listener.onClickDeleteButton(getAdapterPosition(), swipeLayout);
+            listener.onClickDeleteButton(position, swipeLayout);
         } else {
-            listener.onClickItem(getAdapterPosition());
+            listener.onClickItem(position);
         }
     }
 

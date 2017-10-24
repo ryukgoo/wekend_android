@@ -19,7 +19,7 @@ public class ReadyCampaignListTask extends AsyncTask<ProductQueryOptions, Void, 
 
     private final String TAG = getClass().getSimpleName();
 
-    private Context context;
+    private final Context context;
     private IReadyCampaignListCallback callback;
     private List<ProductInfo> results;
     private List<LikeDBItem> likeList;
@@ -39,7 +39,7 @@ public class ReadyCampaignListTask extends AsyncTask<ProductQueryOptions, Void, 
 
     @Override
     protected Void doInBackground(ProductQueryOptions... params) {
-        String userId = UserInfoDaoImpl.getInstance().getUserId(context);
+        String userId = UserInfoDaoImpl.getInstance(context).getUserId();
 
         likeList = LikeDBDaoImpl.getInstance().getLikedProductList(userId);
         results = ProductDaoImpl.getInstance().loadProductList(params[0], likeList);

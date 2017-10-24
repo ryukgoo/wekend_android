@@ -84,8 +84,7 @@ public class StoreFragment extends AbstractFragment implements StoreAdapter.Item
 
     @Override
     public void refresh() {
-        String userName = UserInfoDaoImpl.getInstance().getUserId(getActivity());
-        UserInfo userInfo = UserInfoDaoImpl.getInstance().getUserInfo(userName);
+        UserInfo userInfo = UserInfoDaoImpl.getInstance(getActivity()).getUserInfo();
         textPoint.setText("보유포인트 " + userInfo.getBalloon() + "P");
     }
 
@@ -105,8 +104,7 @@ public class StoreFragment extends AbstractFragment implements StoreAdapter.Item
         DropdownVisibleObservable.getInstance().change(false);
 
         textPoint = (TextView) rootView.findViewById(R.id.id_textview_store_point);
-        String userName = UserInfoDaoImpl.getInstance().getUserId(getActivity());
-        UserInfo userInfo = UserInfoDaoImpl.getInstance().getUserInfo(userName);
+        UserInfo userInfo = UserInfoDaoImpl.getInstance(getActivity()).getUserInfo();
         textPoint.setText("보유포인트 " + userInfo.getBalloon() + "P");
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.id_gridview_store);
@@ -131,8 +129,7 @@ public class StoreFragment extends AbstractFragment implements StoreAdapter.Item
         Log.d(TAG, "onPurchasedFinished > sku : " + sku);
         progressbarLayout.setVisibility(View.GONE);
 
-        String userName = UserInfoDaoImpl.getInstance().getUserId(getActivity());
-        UserInfo userInfo = UserInfoDaoImpl.getInstance().getUserInfo(userName);
+        UserInfo userInfo = UserInfoDaoImpl.getInstance(getActivity()).getUserInfo();
         textPoint.setText("보유포인트 " + userInfo.getBalloon() + "P");
 
         ((ContainerActivity) getActivity()).refreshNavigationView();
@@ -143,8 +140,7 @@ public class StoreFragment extends AbstractFragment implements StoreAdapter.Item
         Log.d(TAG, "onComsumePurchase");
         progressbarLayout.setVisibility(View.GONE);
 
-        String userName = UserInfoDaoImpl.getInstance().getUserId(getActivity());
-        UserInfo userInfo = UserInfoDaoImpl.getInstance().getUserInfo(userName);
+        UserInfo userInfo = UserInfoDaoImpl.getInstance(getActivity()).getUserInfo();
         textPoint.setText("보유포인트 " + userInfo.getBalloon() + "P");
 
         ((ContainerActivity) getActivity()).refreshNavigationView();

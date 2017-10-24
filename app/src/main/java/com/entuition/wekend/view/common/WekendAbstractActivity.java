@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.entuition.wekend.view.SplashScreen;
 
@@ -21,6 +22,9 @@ public class WekendAbstractActivity extends AppCompatActivity {
     }
 
     protected boolean reinitialize(@Nullable Bundle savedInstanceState) {
+
+        Log.d("WekendAbstractActivity", "AppCompatActivity > reinitialize : " + (savedInstanceState != null));
+
         if (savedInstanceState != null) {
             Intent restartIntent = new Intent(this, SplashScreen.class);
             restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

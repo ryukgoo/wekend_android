@@ -1,6 +1,7 @@
 package com.entuition.wekend.view.main.activities;
 
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ContextThemeWrapper;
@@ -9,9 +10,9 @@ import android.view.View;
 
 import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.mail.SendMail;
 import com.entuition.wekend.model.data.mail.asynctask.GetSendMailTask;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.mail.asynctask.UpdateSendMailTask;
 import com.entuition.wekend.model.data.user.asynctask.ConsumePointTask;
 import com.entuition.wekend.view.main.ChangePointObservable;
@@ -24,19 +25,19 @@ public class SendProposeProfileActivity extends ProposeProfileActivity implement
     private final String TAG = getClass().getSimpleName();
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        getSendMail();
-    }
-
-    @Override
-    protected void onInitViews() {
         phoneLayout.setVisibility(View.GONE);
         textMatchResult.setVisibility(View.GONE);
         sendButtons.setVisibility(View.VISIBLE);
         receiveButtons.setVisibility(View.GONE);
         textPoint.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onCompleteLoadInfos() {
+        getSendMail();
     }
 
     @Override
@@ -148,7 +149,7 @@ public class SendProposeProfileActivity extends ProposeProfileActivity implement
                 mail.setProductId(productId);
                 mail.setStatus(Constants.PROPOSE_STATUS_NOT_MADE);
 
-                UpdateSendMailTask task = new UpdateSendMailTask();
+                UpdateSendMailTask task = new UpdateSendMailTask(SendProposeProfileActivity.this);
                 task.setCallback(new UpdateSendMailCallback());
                 task.execute(mail);
 

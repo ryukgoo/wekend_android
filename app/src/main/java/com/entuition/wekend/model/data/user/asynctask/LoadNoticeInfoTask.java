@@ -1,9 +1,10 @@
 package com.entuition.wekend.model.data.user.asynctask;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
-import com.entuition.wekend.model.data.NoticeInfo;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
+import com.entuition.wekend.model.data.user.NoticeInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 
 import java.util.List;
@@ -14,8 +15,13 @@ import java.util.List;
 
 public class LoadNoticeInfoTask extends AsyncTask<String, Void, Void> {
 
+    private final Context context;
     private ISimpleTaskCallback callback;
     private List<NoticeInfo> result;
+
+    public LoadNoticeInfoTask(Context context) {
+        this.context = context;
+    }
 
     public void setCallback(ISimpleTaskCallback callback) {
         this.callback = callback;
@@ -24,7 +30,7 @@ public class LoadNoticeInfoTask extends AsyncTask<String, Void, Void> {
     @Override
     protected Void doInBackground(String... params) {
         String type = params[0];
-        result = UserInfoDaoImpl.getInstance().getNoticeInfoList(type);
+        result = UserInfoDaoImpl.getInstance(context).getNoticeInfoList(type);
         return null;
     }
 

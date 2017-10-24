@@ -3,9 +3,9 @@ package com.entuition.wekend.model.data.product.asynctask;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.like.LikeDBDaoImpl;
 import com.entuition.wekend.model.data.like.LikeDBItem;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.product.ProductDaoImpl;
 import com.entuition.wekend.model.data.product.ProductInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
@@ -20,7 +20,7 @@ public class SearchProductsTask extends AsyncTask<String, Void, Void> {
 
     private final String TAG = getClass().getSimpleName();
 
-    private Context context;
+    private final Context context;
     private ISimpleTaskCallback callback;
     private List<ProductInfo> results;
 
@@ -42,7 +42,7 @@ public class SearchProductsTask extends AsyncTask<String, Void, Void> {
 
         String keyword = strings[0];
 
-        String userId = UserInfoDaoImpl.getInstance().getUserId(context);
+        String userId = UserInfoDaoImpl.getInstance(context).getUserId();
         List<LikeDBItem> likeList = LikeDBDaoImpl.getInstance().getLikedProductList(userId);
         results = ProductDaoImpl.getInstance().searchProducts(keyword, likeList);
 

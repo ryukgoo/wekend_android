@@ -17,9 +17,9 @@ import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.data.like.LikeDBDaoImpl;
 import com.entuition.wekend.model.data.like.LikeDBItem;
 import com.entuition.wekend.model.data.like.LikeReadState;
-import com.entuition.wekend.model.data.like.ReadFriendObservable;
 import com.entuition.wekend.model.data.like.asynctask.GetLikeFriendTask;
 import com.entuition.wekend.model.data.like.asynctask.IGetLikeFriendCallback;
+import com.entuition.wekend.model.data.like.observable.ReadFriendObservable;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 import com.entuition.wekend.view.common.WekendAbstractActivity;
 
@@ -43,6 +43,7 @@ public class RecommendFriendListActivity extends WekendAbstractActivity implemen
     private RecyclerView recyclerView;
     private RecommendFriendViewAdapter viewAdapter;
     private SwipeRefreshLayout refreshLayout;
+    private ReadFriendObserver readFriendObserver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,14 @@ public class RecommendFriendListActivity extends WekendAbstractActivity implemen
         initView();
         loadRecommendFriendData();
 
-        ReadFriendObservable.getInstance().addObserver(new ReadFriendObserver());
+        readFriendObserver = new ReadFriendObserver();
+        ReadFriendObservable.getInstance().addObserver(readFriendObserver);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ReadFriendObservable.getInstance().deleteObserver(readFriendObserver);
+        super.onDestroy();
     }
 
     @Override
@@ -162,7 +170,7 @@ public class RecommendFriendListActivity extends WekendAbstractActivity implemen
             position = params[0];
 
             LikeDBItem item = friendList.get(position);
-            userId = UserInfoDaoImpl.getInstance().getUserId(RecommendFriendListActivity.this);
+            userId = UserInfoDaoImpl.getInstance(RecommendFriendListActivity.this).getUserId();
 
             LikeReadState readState = new LikeReadState();
             readState.setLikeId(item.getLikeId());

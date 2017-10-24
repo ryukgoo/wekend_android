@@ -9,9 +9,9 @@ import com.entuition.clientsdk.model.GetTokenResponseModel;
 import com.entuition.clientsdk.model.RegisterRequestModel;
 import com.entuition.wekend.controller.CognitoSyncClientManager;
 import com.entuition.wekend.model.Constants;
-import com.entuition.wekend.model.authentication.asynctask.AuthenticationTask;
-import com.entuition.wekend.model.authentication.asynctask.IAuthenticationCallback;
+import com.entuition.wekend.model.authentication.asynctask.LoginUserTask;
 import com.entuition.wekend.model.authentication.asynctask.RegisterUserTask;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.user.UserInfo;
 
 /**
@@ -89,7 +89,7 @@ public class DeveloperAuthenticationProvider extends AWSAbstractCognitoDeveloper
      * @param password
      * @param context
      */
-    public void register(String username, String password, String nickname, String gender, int birth, String phone, Context context, IAuthenticationCallback callback) {
+    public void register(String username, String password, String nickname, String gender, int birth, String phone, Context context, ISimpleTaskCallback callback) {
         RegisterRequestModel requestModel = new RegisterRequestModel();
         requestModel.setUsername(username);
         requestModel.setPassword(password);
@@ -109,12 +109,12 @@ public class DeveloperAuthenticationProvider extends AWSAbstractCognitoDeveloper
      * @param password
      * @param context
      */
-    public void login(String username, String password, Context context, IAuthenticationCallback callback) {
+    public void login(String username, String password, Context context, ISimpleTaskCallback callback) {
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername(username);
         userInfo.setHashedPassword(password);
 
-        AuthenticationTask task = new AuthenticationTask(context);
+        LoginUserTask task = new LoginUserTask(context);
         task.setCallback(callback);
         task.execute(userInfo);
     }

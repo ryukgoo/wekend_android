@@ -14,8 +14,8 @@ import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.data.user.UserInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
-import com.entuition.wekend.model.data.user.asynctask.ChangeNicknameObservable;
-import com.entuition.wekend.model.data.user.asynctask.ChangeProfileImageObservable;
+import com.entuition.wekend.model.data.user.observable.ChangeNicknameObservable;
+import com.entuition.wekend.model.data.user.observable.ChangeProfileImageObservable;
 import com.entuition.wekend.model.transfer.S3Utils;
 import com.entuition.wekend.view.common.ImageUtilities;
 import com.entuition.wekend.view.common.MaskBitmapDisplayer;
@@ -41,6 +41,11 @@ public class ProfileHeaderView extends LinearLayout {
     private String userId;
     private UserInfo userInfo;
     private DisplayImageOptions displayImageOptions;
+
+    // Observers
+    private ChangeProfileImageObserver changeProfileImageObserver;
+    private ChangePointObserver changePointObserver;
+    private ChangeNicknameObserver changeNicknameObserver;
 
     public ProfileHeaderView(Context context) {
         this(context, null);
@@ -72,14 +77,17 @@ public class ProfileHeaderView extends LinearLayout {
                 .cacheOnDisk(false)
                 .build();
 
-        ChangeProfileImageObservable.getInstance().addObserver(new ChangeProfileImageObserver());
-        ChangePointObservable.getInstance().addObserver(new ChangePointObserver());
-        ChangeNicknameObservable.getInstance().addObserver(new ChangeNicknameObserver());
+        changeProfileImageObserver = new ChangeProfileImageObserver();
+        ChangeProfileImageObservable.getInstance().addObserver(changeProfileImageObserver);
+        changePointObserver = new ChangePointObserver();
+        ChangePointObservable.getInstance().addObserver(changePointObserver);
+        changeNicknameObserver = new ChangeNicknameObserver();
+        ChangeNicknameObservable.getInstance().addObserver(changeNicknameObserver);
     }
 
     public void setViews() {
-        userId = UserInfoDaoImpl.getInstance().getUserId(context);
-        userInfo = UserInfoDaoImpl.getInstance().getUserInfo(userId);
+        userId = UserInfoDaoImpl.getInstance(context).getUserId();
+        userInfo = UserInfoDaoImpl.getInstance(context).getUserInfo();
 
         textUserNickname.setText(userInfo.getNickname());
         textUsername.setText(userInfo.getUsername());

@@ -10,8 +10,8 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.entuition.wekend.R;
-import com.entuition.wekend.model.data.NoticeInfo;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
+import com.entuition.wekend.model.data.user.NoticeInfo;
 import com.entuition.wekend.model.data.user.asynctask.LoadNoticeInfoTask;
 import com.entuition.wekend.view.common.WekendAbstractActivity;
 
@@ -61,7 +61,7 @@ public class SettingHelpActivity extends WekendAbstractActivity {
     }
 
     private void loadNoticeInfos() {
-        LoadNoticeInfoTask task = new LoadNoticeInfoTask();
+        LoadNoticeInfoTask task = new LoadNoticeInfoTask(this);
         task.setCallback(new ISimpleTaskCallback() {
             @Override
             public void onPrepare() {

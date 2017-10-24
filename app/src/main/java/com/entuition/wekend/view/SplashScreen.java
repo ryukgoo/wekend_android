@@ -9,8 +9,8 @@ import android.util.Log;
 
 import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
-import com.entuition.wekend.model.authentication.AuthenticateTask;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.model.authentication.asynctask.InitAuthenticationTask;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.view.join.LoginActivity;
 import com.entuition.wekend.view.main.ContainerActivity;
 import com.entuition.wekend.view.main.activities.CampaignDetailActivity;
@@ -45,7 +45,7 @@ public class SplashScreen extends AppCompatActivity {
         Log.d(TAG, "widthDP : " + getResources().getConfiguration().screenWidthDp);
         Log.d(TAG, "heightDP : " + getResources().getConfiguration().screenHeightDp);
 
-        AuthenticateTask task = new AuthenticateTask(this);
+        InitAuthenticationTask task = new InitAuthenticationTask(this);
         task.setCallback(new ISimpleTaskCallback() {
 
             @Override

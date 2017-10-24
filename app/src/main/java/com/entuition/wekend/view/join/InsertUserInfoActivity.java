@@ -122,7 +122,7 @@ public class InsertUserInfoActivity extends WekendAbstractActivity implements Vi
                 Log.d(TAG, "Check nickname duplicated");
                 String nickname = txtNickname.getText().toString();
 
-                new CheckNicknameTask(new CheckNicknameCallback()).execute(nickname);
+                new CheckNicknameTask(InsertUserInfoActivity.this, new CheckNicknameCallback()).execute(nickname);
 
                 buttonMale.requestFocus();
                 // hide IME..

@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.entuition.wekend.model.data.like.LikeDBDaoImpl;
 import com.entuition.wekend.model.data.like.LikeDBItem;
-import com.entuition.wekend.model.data.like.AddLikeObservable;
+import com.entuition.wekend.model.data.like.observable.AddLikeObservable;
 import com.entuition.wekend.model.data.product.ProductDaoImpl;
 
 /**
@@ -60,7 +60,7 @@ public class AddLikeProductTask extends AsyncTask<LikeDBItem, Void, Void> {
         super.onPostExecute(aVoid);
 
         if (isSuccess) {
-            callback.onSuccess(likedCount, friendCount);
+            callback.onSuccess(friendCount);
             AddLikeObservable.getInstance().addLike(productId);
         } else {
             callback.onFailed();

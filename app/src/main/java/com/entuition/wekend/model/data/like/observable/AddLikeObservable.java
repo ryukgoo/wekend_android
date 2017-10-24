@@ -1,4 +1,4 @@
-package com.entuition.wekend.model.data.like;
+package com.entuition.wekend.model.data.like.observable;
 
 import java.util.Observable;
 

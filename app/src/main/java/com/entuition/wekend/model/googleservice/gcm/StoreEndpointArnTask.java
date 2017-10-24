@@ -39,7 +39,7 @@ public class StoreEndpointArnTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
 
-        String userId = UserInfoDaoImpl.getInstance().getUserId(context);
+        String userId = UserInfoDaoImpl.getInstance(context).getUserId();
 
         gcm = GoogleCloudMessaging.getInstance(context);
         try {
@@ -83,8 +83,7 @@ public class StoreEndpointArnTask extends AsyncTask<Void, Void, Void> {
         super.onPostExecute(aVoid);
 
         if (isSuccess) {
-            String userId = UserInfoDaoImpl.getInstance().getUserId(context);
-            UserInfoDaoImpl.getInstance().getUserInfo(userId).setEndpointARN(endpointARN);
+            UserInfoDaoImpl.getInstance(context).getUserInfo().setEndpointARN(endpointARN);
             callback.onSuccess(registrationId);
         } else {
             callback.onFailed();

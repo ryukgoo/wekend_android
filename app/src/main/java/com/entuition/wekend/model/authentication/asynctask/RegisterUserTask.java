@@ -12,6 +12,7 @@ import com.entuition.clientsdk.model.RegisterResponseModel;
 import com.entuition.wekend.R;
 import com.entuition.wekend.controller.CognitoSyncClientManager;
 import com.entuition.wekend.model.authentication.DeveloperAuthenticationProvider;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 
 /**
  * Created by ryukgoo on 2015. 12. 16..
@@ -31,13 +32,13 @@ public class RegisterUserTask extends AsyncTask<RegisterRequestModel, Void, Regi
     private int birth;
     private String phone;
 
-    private IAuthenticationCallback callback;
+    private ISimpleTaskCallback callback;
 
     public RegisterUserTask(Context context) {
         this.context = context;
     }
 
-    public void setCallback(IAuthenticationCallback callback) {
+    public void setCallback(ISimpleTaskCallback callback) {
         this.callback = callback;
     }
 

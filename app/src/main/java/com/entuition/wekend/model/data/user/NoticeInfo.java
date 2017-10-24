@@ -1,4 +1,4 @@
-package com.entuition.wekend.model.data;
+package com.entuition.wekend.model.data.user;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;

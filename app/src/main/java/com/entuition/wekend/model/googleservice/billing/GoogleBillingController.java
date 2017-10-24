@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.entuition.wekend.R;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.user.UserInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 import com.entuition.wekend.model.data.user.asynctask.UpdateUserInfoTask;
@@ -46,7 +46,7 @@ public class GoogleBillingController implements IabHelper.OnIabSetupFinishedList
         if (instance == null) {
             synchronized (GoogleBillingController.class) {
                 if (instance == null) {
-                    instance = new GoogleBillingController(context);
+                    instance = new GoogleBillingController(context.getApplicationContext());
                 }
             }
         }
@@ -203,11 +203,11 @@ public class GoogleBillingController implements IabHelper.OnIabSetupFinishedList
                     break;
             }
 
-            UserInfo userInfo = UserInfoDaoImpl.getInstance().getUserInfo(UserInfoDaoImpl.getInstance().getUserId(context));
+            UserInfo userInfo = UserInfoDaoImpl.getInstance(context).getUserInfo();
             point = point + userInfo.getBalloon();
             userInfo.setBalloon(point);
 
-            UpdateUserInfoTask task = new UpdateUserInfoTask();
+            UpdateUserInfoTask task = new UpdateUserInfoTask(context);
             final int finalPoint = point;
             task.setCallback(new ISimpleTaskCallback() {
 

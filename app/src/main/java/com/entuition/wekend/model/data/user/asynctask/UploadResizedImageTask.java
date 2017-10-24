@@ -20,7 +20,7 @@ public class UploadResizedImageTask extends AsyncTask<Uri, Void, Void> {
 
     private final String TAG = getClass().getSimpleName();
 
-    private Context context;
+    private final Context context;
     private boolean isSuccess;
     private String uploadedImagePath;
     private TransferListener listener;
@@ -42,8 +42,8 @@ public class UploadResizedImageTask extends AsyncTask<Uri, Void, Void> {
     protected Void doInBackground(Uri... params) {
         Uri imageUri = params[0];
 
-        String userId = UserInfoDaoImpl.getInstance().getUserId(context);
-        UserInfo userInfo = UserInfoDaoImpl.getInstance().getUserInfo(userId);
+        String userId = UserInfoDaoImpl.getInstance(context).getUserId();
+        UserInfo userInfo = UserInfoDaoImpl.getInstance(context).getUserInfo();
         S3TransferUtilityManager.getInstance(context).setUploadListener(listener);
 
         uploadedImagePath = UserInfoDaoImpl.getUploadedPhotoFileName(userId, 0);
@@ -53,7 +53,7 @@ public class UploadResizedImageTask extends AsyncTask<Uri, Void, Void> {
         photos.add(uploadedImagePath);
 
         userInfo.setPhotos(photos);
-        isSuccess = UserInfoDaoImpl.getInstance().updateUserInfo(userInfo);
+        isSuccess = UserInfoDaoImpl.getInstance(context).updateUserInfo(userInfo);
 
         return null;
     }

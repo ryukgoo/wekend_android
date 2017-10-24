@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.entuition.wekend.model.Utilities;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.surem.api.sms.SureSMSAPI;
 import com.surem.net.SendReport;
 import com.surem.net.sms.SureSMSDeliveryReport;

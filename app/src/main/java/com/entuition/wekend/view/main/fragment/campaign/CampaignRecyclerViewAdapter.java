@@ -132,6 +132,8 @@ public class CampaignRecyclerViewAdapter extends RecyclerView.Adapter<CampaignRe
 
             final int position = getAdapterPosition();
 
+            if (position == RecyclerView.NO_POSITION) return;
+
             if (v.getId() == R.id.id_campaign_list_like_button) {
                 listener.onItemLikeClicked(position);
             } else {

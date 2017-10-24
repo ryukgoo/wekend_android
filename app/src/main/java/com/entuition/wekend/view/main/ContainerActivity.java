@@ -88,6 +88,12 @@ public class ContainerActivity extends WekendAbstractActivity implements OnMenuT
     private StoreFragment storeFragment;
     private AbstractFragment fragment;
 
+    // Observsers
+    private UpdateBadgeObserver updateBadgeObserver;
+    private ChangeTitleObserver changeTitleObserver;
+    private DropdownVisibleObserver dropdownVisibleObserver;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +111,15 @@ public class ContainerActivity extends WekendAbstractActivity implements OnMenuT
     }
 
     @Override
+    protected void onDestroy() {
+
+        Log.d(TAG, "onDestroy");
+
+        removeObservers();
+        super.onDestroy();
+    }
+
+    @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
 
@@ -114,9 +129,18 @@ public class ContainerActivity extends WekendAbstractActivity implements OnMenuT
     }
 
     private void addObservers() {
-        BadgeNotificationObservable.getInstance().addObserver(new UpdateBadgeObserver());
+        updateBadgeObserver = new UpdateBadgeObserver();
+        BadgeNotificationObservable.getInstance().addObserver(updateBadgeObserver);
+        changeTitleObserver = new ChangeTitleObserver();
         ChangeTitleObservable.getInstance().addObserver(new ChangeTitleObserver());
+        dropdownVisibleObserver = new DropdownVisibleObserver();
         DropdownVisibleObservable.getInstance().addObserver(new DropdownVisibleObserver());
+    }
+
+    private void removeObservers() {
+        BadgeNotificationObservable.getInstance().deleteObserver(updateBadgeObserver);
+        ChangeTitleObservable.getInstance().deleteObserver(changeTitleObserver);
+        DropdownVisibleObservable.getInstance().deleteObserver(dropdownVisibleObserver);
     }
 
     private void initView(@Nullable Bundle savedInstanceState) {
@@ -201,8 +225,7 @@ public class ContainerActivity extends WekendAbstractActivity implements OnMenuT
 
         guidePopupWindow = new GuidePopupWindow(ContainerActivity.this, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
-        String userId = UserInfoDaoImpl.getInstance().getUserId(this);
-        UserInfo userInfo = UserInfoDaoImpl.getInstance().getUserInfo(userId);
+        UserInfo userInfo = UserInfoDaoImpl.getInstance(this).getUserInfo();
         updateBadgeCount(likeBadge, userInfo.getNewLikeCount());
         int mailCount = userInfo.getNewReceiveCount() + userInfo.getNewSendCount();
         updateBadgeCount(mailBadge, mailCount);
@@ -326,8 +349,7 @@ public class ContainerActivity extends WekendAbstractActivity implements OnMenuT
     }
 
     private void clearBadgeCount(String type) {
-        String userId = UserInfoDaoImpl.getInstance().getUserId(this);
-        UserInfo userInfo = UserInfoDaoImpl.getInstance().getUserInfo(userId);
+        UserInfo userInfo = UserInfoDaoImpl.getInstance(this).getUserInfo();
 
         switch (type) {
             case Constants.TYPE_NOTIFICATION_LIKE :
@@ -343,7 +365,7 @@ public class ContainerActivity extends WekendAbstractActivity implements OnMenuT
                 break;
         }
 
-        UpdateUserInfoTask task = new UpdateUserInfoTask();
+        UpdateUserInfoTask task = new UpdateUserInfoTask(this);
         task.execute(userInfo);
     }
 

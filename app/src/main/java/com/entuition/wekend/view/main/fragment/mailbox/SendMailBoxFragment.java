@@ -19,13 +19,13 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
 import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
-import com.entuition.wekend.model.data.mail.ReadSendMailObservable;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.mail.SendMail;
 import com.entuition.wekend.model.data.mail.SendMailDaoImpl;
-import com.entuition.wekend.model.data.mail.UpdateSendMailObservable;
 import com.entuition.wekend.model.data.mail.asynctask.DeleteSendMailTask;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.mail.asynctask.LoadSendMailTask;
+import com.entuition.wekend.model.data.mail.observable.ReadSendMailObservable;
+import com.entuition.wekend.model.data.mail.observable.UpdateSendMailObservable;
 import com.entuition.wekend.model.googleservice.gcm.MailNotificationObservable;
 import com.entuition.wekend.view.common.DividerItemDecoration;
 import com.entuition.wekend.view.main.activities.SendProposeProfileActivity;
@@ -99,7 +99,8 @@ public class SendMailBoxFragment extends Fragment {
     }
 
     private void loadSendMail() {
-        LoadSendMailTask task = new LoadSendMailTask(getActivity());
+//        LoadSendMailTask task = new LoadSendMailTask(getActivity());
+        LoadSendMailTask task = new LoadSendMailTask(getActivity().getApplicationContext());
         task.setCallback(new LoadSendMailCallback());
         task.execute();
     }

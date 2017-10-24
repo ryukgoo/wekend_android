@@ -10,7 +10,6 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.entuition.wekend.controller.CognitoSyncClientManager;
 import com.entuition.wekend.model.Constants;
-import com.entuition.wekend.model.data.NoticeInfo;
 import com.entuition.wekend.model.data.SharedPreferencesWrapper;
 
 import java.util.ArrayList;
@@ -26,22 +25,24 @@ public class UserInfoDaoImpl implements IUserInfoDao {
 
     private static UserInfoDaoImpl sInstance = null;
 
-    public static UserInfoDaoImpl getInstance() {
+    public static UserInfoDaoImpl getInstance(Context context) {
         if (sInstance == null) {
             synchronized (UserInfoDaoImpl.class) {
                 if (sInstance == null) {
-                    sInstance = new UserInfoDaoImpl();
+                    sInstance = new UserInfoDaoImpl(context.getApplicationContext());
                 }
             }
         }
         return sInstance;
     }
 
+    private Context context;
     private String hostUserId;
     private HashMap<String, UserInfo> userInfos;
     private DynamoDBMapper mapper;
 
-    public UserInfoDaoImpl() {
+    public UserInfoDaoImpl(Context context) {
+        this.context = context;
         AmazonDynamoDBClient ddbClient = CognitoSyncClientManager.getDynamoDBClient();
         mapper = new DynamoDBMapper(ddbClient);
         userInfos = new HashMap<String, UserInfo>();
@@ -53,27 +54,16 @@ public class UserInfoDaoImpl implements IUserInfoDao {
     }
 
     @Override
-    public String getTableStatus() {
-        return null;
-    }
-
-    @Override
-    public String getUserId(Context context) {
+    public String getUserId() {
         if (hostUserId == null) {
             hostUserId = SharedPreferencesWrapper.getUserIdFromSharedPreferences(PreferenceManager.getDefaultSharedPreferences(context));
         }
         return hostUserId;
     }
 
-    public UserInfo loadUserInfo(String userId) {
-        try {
-            UserInfo userInfo = mapper.load(UserInfo.class, userId);
-            userInfos.put(userId, userInfo);
-            return userInfo;
-        } catch (Exception e) {
-            Log.e(TAG, e.toString());
-        }
-        return null;
+    @Override
+    public UserInfo getUserInfo() {
+        return getUserInfo(getUserId());
     }
 
     @Override
@@ -105,16 +95,17 @@ public class UserInfoDaoImpl implements IUserInfoDao {
     }
 
     @Override
-    public void deleteUserInfo(String userid) {
+    public boolean deleteUserInfo(String userId) {
         try {
-            UserInfo deleteUser = mapper.load(UserInfo.class, userid);
+            UserInfo deleteUser = mapper.load(UserInfo.class, userId);
             mapper.delete(deleteUser);
+            return true;
         } catch (Exception e) {
             Log.e(TAG, e.toString());
+            return false;
         }
     }
 
-    @Override
     public boolean isNicknameAvailable(String nickname) {
 
         Log.d(TAG, "isNicknameAvailable > nickname : " + nickname);
@@ -180,15 +171,26 @@ public class UserInfoDaoImpl implements IUserInfoDao {
         }
     }
 
+    protected UserInfo loadUserInfo(String userId) {
+        try {
+            UserInfo userInfo = mapper.load(UserInfo.class, userId);
+            userInfos.put(userId, userInfo);
+            return userInfo;
+        } catch (Exception e) {
+            Log.e(TAG, e.toString());
+        }
+        return null;
+    }
+
     public static String getUploadedPhotoFileName(String folderName, int position) {
         return folderName + "/" + getPhotoFileName(position);
     }
 
-    public static String getPhotoFileName(int position) {
+    private static String getPhotoFileName(int position) {
         return getPhotoTempName(position) + Constants.JPG_FILE_FORMAT;
     }
 
-    public static String getPhotoTempName(int position) {
+    private static String getPhotoTempName(int position) {
         return Constants.PROFILE_IMAGE_NAME_PREFIX + "_" + position;
     }
 }

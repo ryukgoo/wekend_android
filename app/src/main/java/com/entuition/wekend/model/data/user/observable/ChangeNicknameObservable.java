@@ -1,4 +1,4 @@
-package com.entuition.wekend.model.data.user.asynctask;
+package com.entuition.wekend.model.data.user.observable;
 
 import java.util.Observable;
 

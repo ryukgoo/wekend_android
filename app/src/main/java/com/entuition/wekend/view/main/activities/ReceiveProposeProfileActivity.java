@@ -1,6 +1,7 @@
 package com.entuition.wekend.view.main.activities;
 
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ContextThemeWrapper;
@@ -8,9 +9,9 @@ import android.view.View;
 
 import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.mail.ReceiveMail;
 import com.entuition.wekend.model.data.mail.asynctask.GetReceiveMailTask;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.mail.asynctask.UpdateReceiveMailTask;
 
 /**
@@ -21,19 +22,19 @@ public class ReceiveProposeProfileActivity extends ProposeProfileActivity implem
     private final String TAG = getClass().getSimpleName();
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        getReceiveMail();
-    }
-
-    @Override
-    protected void onInitViews() {
         phoneLayout.setVisibility(View.GONE);
         textMatchResult.setVisibility(View.GONE);
         sendButtons.setVisibility(View.GONE);
         receiveButtons.setVisibility(View.GONE);
         textPoint.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onCompleteLoadInfos() {
+        getReceiveMail();
     }
 
     @Override
@@ -111,7 +112,7 @@ public class ReceiveProposeProfileActivity extends ProposeProfileActivity implem
         mail.setProductId(productId);
         mail.setStatus(Constants.PROPOSE_STATUS_MADE);
 
-        UpdateReceiveMailTask task = new UpdateReceiveMailTask();
+        UpdateReceiveMailTask task = new UpdateReceiveMailTask(this);
         task.setCallback(new AcceptProposeCallback());
         task.execute(mail);
     }
@@ -124,7 +125,7 @@ public class ReceiveProposeProfileActivity extends ProposeProfileActivity implem
         mail.setProductId(productId);
         mail.setStatus(Constants.PROPOSE_STATUS_REJECT);
 
-        UpdateReceiveMailTask task = new UpdateReceiveMailTask();
+        UpdateReceiveMailTask task = new UpdateReceiveMailTask(this);
         task.setCallback(new RejectProposeCallback());
         task.execute(mail);
     }

@@ -23,14 +23,14 @@ import android.widget.Toast;
 
 import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
-import com.entuition.wekend.model.data.like.AddLikeObservable;
-import com.entuition.wekend.model.data.like.DeleteLikeObservable;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.like.LikeDBDaoImpl;
 import com.entuition.wekend.model.data.like.LikeDBItem;
 import com.entuition.wekend.model.data.like.asynctask.AddLikeProductTask;
 import com.entuition.wekend.model.data.like.asynctask.DeleteLikeProductTask;
 import com.entuition.wekend.model.data.like.asynctask.IAddLikeProductCallback;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.model.data.like.observable.AddLikeObservable;
+import com.entuition.wekend.model.data.like.observable.DeleteLikeObservable;
 import com.entuition.wekend.model.data.product.ProductDaoImpl;
 import com.entuition.wekend.model.data.product.ProductInfo;
 import com.entuition.wekend.model.data.product.ProductQueryOptions;
@@ -77,6 +77,10 @@ public class CampaignListFragment extends AbstractFragment {
     private ScrollListener scrollListener;
     private boolean isStartFromBeginning;
 
+    // Observers
+    private AddLikeObserver addLikeObserver;
+    private DeleteLikeObserver deleteLikeObserver;
+
     // check response time ==>>> FOR TEST!!
     long startTime;
     long endTime;
@@ -91,8 +95,18 @@ public class CampaignListFragment extends AbstractFragment {
         Log.d(TAG, "onCreate");
 
         setHasOptionsMenu(true);
-        AddLikeObservable.getInstance().addObserver(new AddLikeObserver());
-        DeleteLikeObservable.getInstance().addObserver(new DeleteLikeObserver());
+        addLikeObserver = new AddLikeObserver();
+        AddLikeObservable.getInstance().addObserver(addLikeObserver);
+        deleteLikeObserver = new DeleteLikeObserver();
+        DeleteLikeObservable.getInstance().addObserver(deleteLikeObserver);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        AddLikeObservable.getInstance().deleteObserver(addLikeObserver);
+        DeleteLikeObservable.getInstance().deleteObserver(deleteLikeObserver);
     }
 
     @Nullable
@@ -446,10 +460,10 @@ public class CampaignListFragment extends AbstractFragment {
 
             if (!LikeDBDaoImpl.getInstance().hasLikeProduct(productInfo.getId())) {
                 LikeDBItem likeDBItem = new LikeDBItem();
-                likeDBItem.setUserId(UserInfoDaoImpl.getInstance().getUserId(getActivity()));
+                likeDBItem.setUserId(UserInfoDaoImpl.getInstance(getActivity()).getUserId());
                 likeDBItem.setProductId(productInfo.getId());
 
-                LoadUserInfoAndProductInfoTask task = new LoadUserInfoAndProductInfoTask();
+                LoadUserInfoAndProductInfoTask task = new LoadUserInfoAndProductInfoTask(getActivity());
                 task.setCallback(new LoadUserInfoAndProductInfoCallback());
                 task.execute(likeDBItem);
             } else {
@@ -626,9 +640,9 @@ public class CampaignListFragment extends AbstractFragment {
     private class AddLikeProductCallback implements IAddLikeProductCallback {
 
         @Override
-        public void onSuccess(int totalCount, int friendCount) {
+        public void onSuccess(int friendCount) {
             setListEnabled(true);
-//            progressbarLayout.setVisibility(View.GONE);
+            //            progressbarLayout.setVisibility(View.GONE);
         }
 
         @Override

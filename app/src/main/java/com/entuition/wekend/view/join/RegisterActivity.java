@@ -16,7 +16,7 @@ import android.widget.EditText;
 import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.Utilities;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.user.asynctask.CheckAccountTask;
 import com.entuition.wekend.view.common.WekendAbstractActivity;
 
@@ -113,7 +113,7 @@ public class RegisterActivity extends WekendAbstractActivity implements View.OnC
                     showNotEqualPasswordDialog();
                 } else {
 
-                    CheckAccountTask task = new CheckAccountTask(new ISimpleTaskCallback() {
+                    CheckAccountTask task = new CheckAccountTask(RegisterActivity.this, new ISimpleTaskCallback() {
                         @Override
                         public void onPrepare() { }
 

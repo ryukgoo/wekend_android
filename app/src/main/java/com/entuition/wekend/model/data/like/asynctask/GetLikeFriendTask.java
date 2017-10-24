@@ -18,7 +18,7 @@ public class GetLikeFriendTask extends AsyncTask<Integer, Void, Void> {
 
     private static final String TAG = "GetLikeFriendTask";
 
-    private Context context;
+    private final Context context;
     private List<LikeDBItem> friendList;
     private IGetLikeFriendCallback callback;
 
@@ -34,8 +34,8 @@ public class GetLikeFriendTask extends AsyncTask<Integer, Void, Void> {
     protected Void doInBackground(Integer... params) {
 
         int productId = params[0];
-        String userId = UserInfoDaoImpl.getInstance().getUserId(context);
-        String gender = UserInfoDaoImpl.getInstance().getUserInfo(userId).getGender();
+        String userId = UserInfoDaoImpl.getInstance(context).getUserId();
+        String gender = UserInfoDaoImpl.getInstance(context).getUserInfo().getGender();
 
         friendList = new ArrayList<LikeDBItem>();
 

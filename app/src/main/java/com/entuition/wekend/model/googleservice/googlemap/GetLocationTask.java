@@ -11,7 +11,7 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public class GetLocationTask extends AsyncTask<String, Void, Void> {
 
-    private Context context;
+    private final Context context;
     private LatLng location;
     private IGetLocationCallback callback;
 

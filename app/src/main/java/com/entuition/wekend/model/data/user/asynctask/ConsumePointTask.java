@@ -3,7 +3,7 @@ package com.entuition.wekend.model.data.user.asynctask;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.user.UserInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 
@@ -13,7 +13,7 @@ import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 
 public class ConsumePointTask extends AsyncTask<Void, Void, Void> {
 
-    private Context context;
+    private final Context context;
     private ISimpleTaskCallback callback;
     private boolean isSuccess = false;
 
@@ -28,8 +28,7 @@ public class ConsumePointTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
 
-
-        UserInfo userInfo = UserInfoDaoImpl.getInstance().loadUserInfo(UserInfoDaoImpl.getInstance().getUserId(context));
+        UserInfo userInfo = UserInfoDaoImpl.getInstance(context).getUserInfo();
 
         if (userInfo.getBalloon() >= 500) {
             userInfo.setBalloon(userInfo.getBalloon() - 500);
@@ -38,8 +37,7 @@ public class ConsumePointTask extends AsyncTask<Void, Void, Void> {
             return null;
         }
 
-        isSuccess = UserInfoDaoImpl.getInstance().updateUserInfo(userInfo);
-        UserInfoDaoImpl.getInstance().loadUserInfo(UserInfoDaoImpl.getInstance().getUserId(context));
+        isSuccess = UserInfoDaoImpl.getInstance(context).updateUserInfo(userInfo);
 
         return null;
     }
@@ -47,8 +45,7 @@ public class ConsumePointTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         if (isSuccess) {
-            String userId = UserInfoDaoImpl.getInstance().getUserId(context);
-            UserInfo userInfo = UserInfoDaoImpl.getInstance().getUserInfo(userId);
+            UserInfo userInfo = UserInfoDaoImpl.getInstance(context).getUserInfo();
             callback.onSuccess(userInfo.getBalloon());
         } else {
             callback.onFailed();

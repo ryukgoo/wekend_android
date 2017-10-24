@@ -3,6 +3,7 @@ package com.entuition.wekend.model.data.mail.asynctask;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.mail.ReceiveMailDaoImpl;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 
@@ -11,7 +12,7 @@ import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
  */
 public class LoadReceiveMailTask extends AsyncTask<String, Void, Void> {
 
-    private Context context;
+    private final Context context;
     private ISimpleTaskCallback callback;
     private boolean isSuccess;
 
@@ -31,7 +32,7 @@ public class LoadReceiveMailTask extends AsyncTask<String, Void, Void> {
     @Override
     protected Void doInBackground(String... params) {
 
-        String userId = UserInfoDaoImpl.getInstance().getUserId(context);
+        String userId = UserInfoDaoImpl.getInstance(context).getUserId();
         isSuccess = ReceiveMailDaoImpl.getInstance().loadReceiveMailList(userId);
 
         return null;

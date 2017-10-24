@@ -1,12 +1,14 @@
 package com.entuition.wekend.model.data.mail.asynctask;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.Utilities;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.mail.SendMail;
 import com.entuition.wekend.model.data.mail.SendMailDaoImpl;
-import com.entuition.wekend.model.data.mail.UpdateSendMailObservable;
+import com.entuition.wekend.model.data.mail.observable.UpdateSendMailObservable;
 import com.entuition.wekend.model.data.product.ProductDaoImpl;
 import com.entuition.wekend.model.data.product.ProductInfo;
 import com.entuition.wekend.model.data.user.UserInfo;
@@ -19,8 +21,13 @@ public class UpdateSendMailTask extends AsyncTask<SendMail, Void, Void> {
 
     private final String TAG = getClass().getSimpleName();
 
+    private final Context context;
     private boolean isSuccess;
     private ISimpleTaskCallback callback;
+
+    public UpdateSendMailTask(Context context) {
+        this.context = context;
+    }
 
     public void setCallback(ISimpleTaskCallback callback) {
         this.callback = callback;
@@ -41,8 +48,8 @@ public class UpdateSendMailTask extends AsyncTask<SendMail, Void, Void> {
 
         SendMail mail = params[0];
 
-        UserInfo userInfo = UserInfoDaoImpl.getInstance().getUserInfo(mail.getUserId());
-        UserInfo receiverInfo = UserInfoDaoImpl.getInstance().getUserInfo(mail.getReceiverId());
+        UserInfo userInfo = UserInfoDaoImpl.getInstance(context).getUserInfo(mail.getUserId());
+        UserInfo receiverInfo = UserInfoDaoImpl.getInstance(context).getUserInfo(mail.getReceiverId());
         ProductInfo productInfo = ProductDaoImpl.getInstance().getProductInfo(mail.getProductId());
 
         mail.setSenderNickname(userInfo.getNickname());

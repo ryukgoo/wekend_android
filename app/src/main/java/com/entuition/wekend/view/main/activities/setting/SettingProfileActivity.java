@@ -19,10 +19,10 @@ import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.Utilities;
 import com.entuition.wekend.model.data.user.UserInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
-import com.entuition.wekend.model.data.user.asynctask.ChangeNicknameObservable;
-import com.entuition.wekend.model.data.user.asynctask.ChangeProfileImageObservable;
 import com.entuition.wekend.model.data.user.asynctask.ILoadUserInfoCallback;
 import com.entuition.wekend.model.data.user.asynctask.LoadUserInfoTask;
+import com.entuition.wekend.model.data.user.observable.ChangeNicknameObservable;
+import com.entuition.wekend.model.data.user.observable.ChangeProfileImageObservable;
 import com.entuition.wekend.model.transfer.S3Utils;
 import com.entuition.wekend.view.common.BigSizeImageLoadingListener;
 import com.entuition.wekend.view.common.WekendAbstractActivity;
@@ -57,6 +57,10 @@ public class SettingProfileActivity extends WekendAbstractActivity {
 
     private DisplayImageOptions options;
 
+    //Observers
+    private ChangeProfileImageObserver changeProfileImageObserver;
+    private ChangeNicknameObserver changeNicknameObserver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,8 +73,17 @@ public class SettingProfileActivity extends WekendAbstractActivity {
         initViews();
         loadUserInfo();
 
-        ChangeProfileImageObservable.getInstance().addObserver(new ChangeProfileImageObserver());
-        ChangeNicknameObservable.getInstance().addObserver(new ChangeNicknameObserver());
+        changeProfileImageObserver = new ChangeProfileImageObserver();
+        ChangeProfileImageObservable.getInstance().addObserver(changeProfileImageObserver);
+        changeNicknameObserver = new ChangeNicknameObserver();
+        ChangeNicknameObservable.getInstance().addObserver(changeNicknameObserver);
+    }
+
+    @Override
+    protected void onDestroy() {
+        ChangeProfileImageObservable.getInstance().deleteObserver(changeProfileImageObserver);
+        ChangeNicknameObservable.getInstance().deleteObserver(changeNicknameObserver);
+        super.onDestroy();
     }
 
     @Override
@@ -131,8 +144,8 @@ public class SettingProfileActivity extends WekendAbstractActivity {
 
     private void loadUserInfo() {
 
-        String userId = UserInfoDaoImpl.getInstance().getUserId(this);
-        LoadUserInfoTask task = new LoadUserInfoTask();
+        String userId = UserInfoDaoImpl.getInstance(this).getUserId();
+        LoadUserInfoTask task = new LoadUserInfoTask(this);
         task.setCallback(new ILoadUserInfoCallback() {
             @Override
             public void onSuccess(UserInfo result) {

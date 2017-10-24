@@ -41,11 +41,9 @@ import com.entuition.wekend.R;
 import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.Utilities;
 import com.entuition.wekend.model.authentication.asynctask.RequestVerificationCodeTask;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.user.UserInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
-import com.entuition.wekend.model.data.user.asynctask.ChangeNicknameObservable;
-import com.entuition.wekend.model.data.user.asynctask.ChangeProfileImageObservable;
 import com.entuition.wekend.model.data.user.asynctask.CheckNicknameTask;
 import com.entuition.wekend.model.data.user.asynctask.ICheckNicknameCallback;
 import com.entuition.wekend.model.data.user.asynctask.ILoadUserInfoCallback;
@@ -53,6 +51,8 @@ import com.entuition.wekend.model.data.user.asynctask.IUploadResizedImageCallbac
 import com.entuition.wekend.model.data.user.asynctask.LoadUserInfoTask;
 import com.entuition.wekend.model.data.user.asynctask.UpdateUserInfoTask;
 import com.entuition.wekend.model.data.user.asynctask.UploadResizedImageTask;
+import com.entuition.wekend.model.data.user.observable.ChangeNicknameObservable;
+import com.entuition.wekend.model.data.user.observable.ChangeProfileImageObservable;
 import com.entuition.wekend.model.transfer.S3Utils;
 import com.entuition.wekend.view.common.BigSizeImageLoadingListener;
 import com.entuition.wekend.view.common.ImageUtilities;
@@ -142,6 +142,7 @@ public class SettingEditProfileActivity extends WekendAbstractActivity {
 
         editTextNickname = (EditText) findViewById(R.id.id_profile_nickname_edit);
         editTextNickname.addTextChangedListener(new NicknameTextWatcher());
+        editTextNickname.setEnabled(false);
         textViewAge = (TextView) findViewById(R.id.id_profile_age);
         textViewPoint = (TextView) findViewById(R.id.id_profile_pink_balloon);
 
@@ -152,6 +153,7 @@ public class SettingEditProfileActivity extends WekendAbstractActivity {
         buttonEditNickname = (Button) findViewById(R.id.id_setting_profile_button_edit_nickname);
         buttonEditNickname.setOnClickListener(new OnClickListeners());
         buttonEditNickname.setEnabled(false);
+        buttonEditNickname.setVisibility(View.GONE);
         editTextVerification = (EditText) findViewById(R.id.id_setting_profile_edittext_verification);
         editTextVerification.addTextChangedListener(new VerificationCodeTextWatcher());
         buttonRequestVerification = (Button) findViewById(R.id.id_setting_profile_button_request_verification);
@@ -178,8 +180,8 @@ public class SettingEditProfileActivity extends WekendAbstractActivity {
     }
 
     private void loadUserInfo() {
-        userId = UserInfoDaoImpl.getInstance().getUserId(this);
-        LoadUserInfoTask task = new LoadUserInfoTask();
+        userId = UserInfoDaoImpl.getInstance(this).getUserId();
+        LoadUserInfoTask task = new LoadUserInfoTask(this);
         task.setCallback(new ILoadUserInfoCallback() {
             @Override
             public void onSuccess(UserInfo result) {
@@ -566,7 +568,7 @@ public class SettingEditProfileActivity extends WekendAbstractActivity {
                         // TODO : update user Info
                         String newPhoneNumber = editTextPhoneNumber.getText().toString();
                         userInfo.setPhone(newPhoneNumber);
-                        UpdateUserInfoTask task = new UpdateUserInfoTask();
+                        UpdateUserInfoTask task = new UpdateUserInfoTask(SettingEditProfileActivity.this);
                         task.setCallback(new ISimpleTaskCallback() {
                             @Override
                             public void onPrepare() { }
@@ -609,7 +611,7 @@ public class SettingEditProfileActivity extends WekendAbstractActivity {
                 case R.id.id_setting_profile_button_edit_nickname :
                     String nickname = editTextNickname.getText().toString();
 
-                    new CheckNicknameTask(new CheckNicknameAvailableCallback()).execute(nickname);
+                    new CheckNicknameTask(SettingEditProfileActivity.this, new CheckNicknameAvailableCallback()).execute(nickname);
 
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -637,7 +639,7 @@ public class SettingEditProfileActivity extends WekendAbstractActivity {
                 final String newNickname = editTextNickname.getText().toString();
                 userInfo.setNickname(newNickname);
 
-                UpdateUserInfoTask task = new UpdateUserInfoTask();
+                UpdateUserInfoTask task = new UpdateUserInfoTask(SettingEditProfileActivity.this);
                 task.setCallback(new ISimpleTaskCallback() {
                     @Override
                     public void onPrepare() { }

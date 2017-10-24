@@ -1,4 +1,4 @@
-package com.entuition.wekend.model.data.mail;
+package com.entuition.wekend.model.data.mail.observable;
 
 import java.util.Observable;
 

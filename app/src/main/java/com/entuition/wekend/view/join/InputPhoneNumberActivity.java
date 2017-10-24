@@ -18,9 +18,8 @@ import com.entuition.wekend.controller.CognitoSyncClientManager;
 import com.entuition.wekend.model.Constants;
 import com.entuition.wekend.model.Utilities;
 import com.entuition.wekend.model.authentication.DeveloperAuthenticationProvider;
-import com.entuition.wekend.model.authentication.asynctask.IAuthenticationCallback;
 import com.entuition.wekend.model.authentication.asynctask.RequestVerificationCodeTask;
-import com.entuition.wekend.model.data.mail.asynctask.ISimpleTaskCallback;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.view.common.WekendAbstractActivity;
 
 /**
@@ -147,7 +146,7 @@ public class InputPhoneNumberActivity extends WekendAbstractActivity implements 
         RequestVerificationCodeTask.clearVerificationCode();
     }
 
-    private class RegisterAuthenticationCallback implements IAuthenticationCallback {
+    private class RegisterAuthenticationCallback implements ISimpleTaskCallback {
 
         @Override
         public void onPrepare() {
@@ -156,7 +155,7 @@ public class InputPhoneNumberActivity extends WekendAbstractActivity implements 
         }
 
         @Override
-        public void onSuccess() {
+        public void onSuccess(@Nullable Object object) {
             Log.d(TAG, "onSuccess > RegisterAuthencation");
             progressDialog.dismiss();
         }

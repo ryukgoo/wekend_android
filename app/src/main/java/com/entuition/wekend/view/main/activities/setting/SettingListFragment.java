@@ -12,7 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.entuition.wekend.R;
-import com.entuition.wekend.model.data.NoticeInfo;
+import com.entuition.wekend.model.data.user.NoticeInfo;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -113,7 +113,7 @@ public class CampaignDetailActivity extends WekendAbstractActivity implements Vi
         setContentView(R.layout.activity_campaign_detail);
 
         productId = getIntent().getIntExtra(Constants.PARAMETER_PRODUCT_ID, -1);
-        userId = UserInfoDaoImpl.getInstance().getUserId(this);
+        userId = UserInfoDaoImpl.getInstance(this).getUserId();
 
         // Facebook
 //        FacebookSdk.sdkInitialize(getApplicationContext());
@@ -407,7 +407,7 @@ public class CampaignDetailActivity extends WekendAbstractActivity implements Vi
         item.setUserId(userId);
         item.setProductId(productId);
 
-        LoadUserInfoAndProductInfoTask task = new LoadUserInfoAndProductInfoTask();
+        LoadUserInfoAndProductInfoTask task = new LoadUserInfoAndProductInfoTask(this);
         task.setCallback(new LoadUserInfoAndProductInfoCallback());
         task.execute(item);
     }
@@ -647,7 +647,7 @@ public class CampaignDetailActivity extends WekendAbstractActivity implements Vi
     private class AddLikeCallback implements IAddLikeProductCallback {
 
         @Override
-        public void onSuccess(int totalCount, int friendCount) {
+        public void onSuccess(int friendCount) {
             setLike(friendCount);
         }
 

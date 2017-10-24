@@ -13,6 +13,7 @@ import com.entuition.wekend.R;
 import com.entuition.wekend.controller.CognitoSyncClientManager;
 import com.entuition.wekend.model.Utilities;
 import com.entuition.wekend.model.authentication.DeveloperAuthenticationProvider;
+import com.entuition.wekend.model.common.ISimpleTaskCallback;
 import com.entuition.wekend.model.data.user.UserInfo;
 import com.entuition.wekend.model.data.user.UserInfoDaoImpl;
 import com.entuition.wekend.view.join.InsertPhotoActivity;
@@ -23,24 +24,23 @@ import java.util.ArrayList;
 /**
  * Created by ryukgoo on 2015. 12. 23..
  */
-public class AuthenticationTask extends AsyncTask<UserInfo, Void, Void> {
+public class LoginUserTask extends AsyncTask<UserInfo, Void, Void> {
 
     private final String TAG = getClass().getSimpleName();
 
     private final Context context;
-    private String userid;
+    private String userId;
     private boolean isTokenNull = false;
     private boolean isSuccessful;
-
     private boolean isNoPhotos;
 
-    private IAuthenticationCallback callback;
+    private ISimpleTaskCallback callback;
 
-    public AuthenticationTask(Context context) {
+    public LoginUserTask(Context context) {
         this.context = context;
     }
 
-    public void setCallback(IAuthenticationCallback callback) {
+    public void setCallback(ISimpleTaskCallback callback) {
         this.callback = callback;
     }
 
@@ -52,7 +52,7 @@ public class AuthenticationTask extends AsyncTask<UserInfo, Void, Void> {
     @Override
     protected Void doInBackground(UserInfo... params) {
 
-        Log.d(TAG, "AuthenticationTask > doInBackground");
+        Log.d(TAG, "LoginUserTask > doInBackground");
 
         LoginResponseModel responseModel = DeveloperAuthenticationProvider.getDevAuthClientInstance()
                 .login(params[0].getUsername(), params[0].getHashedPassword());
@@ -73,9 +73,9 @@ public class AuthenticationTask extends AsyncTask<UserInfo, Void, Void> {
             if (token == null) {
                 isTokenNull = true;
             } else {
-                userid = responseModel.getUserid();
+                userId = responseModel.getUserid();
 
-                UserInfo userInfo = UserInfoDaoImpl.getInstance().getUserInfo(userid);
+                UserInfo userInfo = UserInfoDaoImpl.getInstance(context).getUserInfo(userId);
                 if (userInfo.getPhotos() != null) {
                     ArrayList<String> photos = Utilities.asSortedArrayList(userInfo.getPhotos());
                     isNoPhotos = photos == null || photos.size() == 0;
@@ -121,7 +121,7 @@ public class AuthenticationTask extends AsyncTask<UserInfo, Void, Void> {
                 return;
             }
 
-            callback.onSuccess();
+            callback.onSuccess(null);
 
             if (isNoPhotos) {
                 Intent intent = new Intent(context, InsertPhotoActivity.class);

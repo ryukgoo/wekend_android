@@ -56,7 +56,7 @@ public class Utilities {
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 //    private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
     private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{6,}$";
-    private static final String NICKNAME_PATTERN = "^[가-힣a-z0-9_-]{2,15}$";
+    private static final String NICKNAME_PATTERN = "^[가-힣a-zA-Z0-9_-]{2,15}$";
     private static final String PHONENUMBER_PATTERN = "\\d{11}";
 
     public static String getDeviceUUID(final Context context) {
