@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="model"
+            type="com.entuition.wekend.view.main.store.viewmodel.StoreViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:gravity="center"
+                android:background="#eeadae"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                android:includeFontPadding="false"
+                android:text="@{@string/formatted_point(model.userInfo.balloon)}" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/store_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="12dp"
+                app:refreshStore="@{model.items}" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.4"
+            android:animateLayoutChanges="true"
+            android:background="@android:color/black"
+            android:visibility="@{model.isLoading ? View.VISIBLE : View.GONE}">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:alpha="0.4"
+                android:background="@android:color/black"
+                style="?android:attr/progressBarStyleLarge" />
+
+        </FrameLayout>
+
+    </FrameLayout>
+
+</layout>

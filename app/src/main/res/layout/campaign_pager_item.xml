@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/image_pager_item"
+    <data>
+        <variable
+            name="position"
+            type="int" />
+        <variable
+            name="productInfo"
+            type="com.entuition.wekend.data.source.product.ProductInfo" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/id_pager_item_button_edit"
-        android:layout_width="48dp"
-        android:layout_height="40dp"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/btn_icon_photo_shadow"
-        android:visibility="gone" />
+        <ImageView
+            android:id="@+id/image_pager_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            app:productImageDefault="@{productInfo}"
+            app:productImagePosition="@{position}" />
 
-</FrameLayout>
+    </FrameLayout>
+
+</layout>

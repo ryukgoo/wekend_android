@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="model"
+            type="com.entuition.wekend.view.join.viewmodel.SelectImageViewModel" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:weightSum="1"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/select_profile_image_please"
+            android:textColor="@color/colorTextLogin"
+            android:textSize="@dimen/login_static_text_big"
+            android:includeFontPadding="false" />
+
+        <ImageView
+            android:id="@+id/insert_profile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:layout_marginBottom="96dp"
+            android:layout_gravity="center"
+            android:src="@drawable/img_profile_thumb_b_1"
+            android:background="@drawable/img_profile_thumb_b_2"
+            android:onClick="@{model::onClickSelectImage}" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/next"
+            android:textSize="@dimen/button_text_big"
+            android:textColor="@drawable/selector_textcolor_button_dark"
+            android:background="@drawable/selector_button_white"
+            android:onClick="onClickNextButton"/>
+
+    </LinearLayout>
+
+</layout>

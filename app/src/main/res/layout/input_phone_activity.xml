@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.entuition.wekend.view.join.viewmodel.InputPhoneViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/input_mobile_number"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="@dimen/login_static_text_small"
+                android:includeFontPadding="false" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="33dp"
+                android:inputType="phone"
+                android:hint="@string/mobile_number_hint"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorTextLogin"
+                android:textSize="@dimen/login_input_text"
+                android:maxLines="1"
+                android:theme="@style/CustomEditTextStyle"
+                android:includeFontPadding="false"
+                android:text="@={viewModel.phone}"
+                android:afterTextChanged="@{(s) -> viewModel.onChangePhoneText()}" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="66dp"
+                android:text="@string/request_verification"
+                android:textSize="@dimen/button_text_big"
+                android:textColor="@drawable/selector_textcolor_button_dark"
+                android:background="@drawable/selector_button_white"
+                android:enabled="@{viewModel.isValidPhone}"
+                android:onClick="@{viewModel::onClickRequestCode}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/confirm_verification_comment"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="@dimen/login_static_text_small"
+                android:includeFontPadding="false" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="33dp"
+                android:inputType="number"
+                android:hint="@string/verification_hint"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorTextLogin"
+                android:textSize="@dimen/login_input_text"
+                android:maxLines="1"
+                android:theme="@style/CustomEditTextStyle"
+                android:includeFontPadding="false"
+                android:text="@={viewModel.code}"
+                android:afterTextChanged="@{(s) -> viewModel.onChangeCodeText()}" />
+
+            <Button
+                android:id="@+id/id_input_phone_button_next"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="@string/confirm_verification"
+                android:textSize="@dimen/button_text_big"
+                android:textColor="@drawable/selector_textcolor_button_dark"
+                android:background="@drawable/selector_button_white"
+                android:enabled="@{viewModel.isValidCode}"
+                android:onClick="@{viewModel::onClickValidateCode}" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</layout>

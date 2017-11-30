@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="model"
+            type="com.entuition.wekend.view.main.campaign.viewmodel.OptionFilterViewModel" />
+        <variable
+            name="listener"
+            type="com.entuition.wekend.view.main.campaign.viewmodel.OptionFilterListener" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:alpha="0.6"
+            android:visibility="@{model.isOpen ? View.VISIBLE : View.GONE}"
+            android:onClick="@{() -> model.close()}"/>
+
+        <SlidingDrawer
+            android:id="@+id/sliding_drawer"
+            android:layout_width="match_parent"
+            android:layout_height="284dp"
+            android:handle="@+id/id_button_campaign_filter"
+            android:content="@+id/content_layout_filters"
+            android:orientation="vertical"
+            android:rotation="180"
+            app:optionFilterOpen="@{model.isOpen}">
+
+            <TextView
+                android:id="@+id/id_button_campaign_filter"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:background="@color/colorPrimary"
+                android:rotation="180"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/content_layout_filters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="vertical"
+                android:rotation="180">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/colorPrimary">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="53dp"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:textSize="18sp"
+                            android:textColor="@color/colorPrimary"
+                            android:text="@string/campaign_sort_like"
+                            android:background="@drawable/background_filter_sort"
+                            android:selected="@{model.sortLikeSelected}"
+                            android:onClick="@{() -> model.onSelectLikeSort()}" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="53dp"
+                            android:layout_weight="0.5"
+                            android:gravity="center"
+                            android:textSize="18sp"
+                            android:textColor="@color/colorPrimary"
+                            android:text="@string/campaign_sort_recent"
+                            android:background="@drawable/background_filter_sort"
+                            android:selected="@{model.sortDateSelected}"
+                            android:onClick="@{() -> model.onSelectDateSort()}" />
+
+                    </LinearLayout>
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/spinner_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/spinner_background"
+                        android:dropDownVerticalOffset="53dp"
+                        android:onItemSelected="@{(parent, view, position, id) -> model.onSelectMainItem(position)}"
+                        app:spinnerDatas="@{model.mainCategories}" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#f1f1f1" />
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/spinner_sub"
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/spinner_background"
+                        android:dropDownVerticalOffset="53dp"
+                        android:enabled="@{model.isSubEnable}"
+                        android:onItemSelected="@{(parent, view, position, id) -> model.onSelectedSubItem(position)}"
+                        app:spinnerDatas="@{model.subCategories}" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#f1f1f1" />
+
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:id="@+id/spinner_region"
+                        android:layout_width="match_parent"
+                        android:layout_height="53dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/spinner_background"
+                        android:dropDownVerticalOffset="53dp"
+                        android:enabled="@{model.isRegionEnable}"
+                        android:onItemSelected="@{(parent, view, position, id) -> model.onSelectedRegion(position)}"
+                        app:spinnerDatas="@{model.regions}" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#f1f1f1" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginBottom="13dp"
+                        android:textSize="17sp"
+                        android:text="@string/done"
+                        android:textColor="@drawable/selector_textcolor_button"
+                        android:gravity="center"
+                        android:background="@drawable/selector_button_red"
+                        android:onClick="@{() -> listener.onClickFilter(model.filterOptions)}"/>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@drawable/toolbar_drop_shadow" />
+
+            </LinearLayout>
+
+        </SlidingDrawer>
+
+    </FrameLayout>
+
+</layout>

@@ -11,16 +11,8 @@
     </string-array>
 
     <string-array name="mailbox_titles">
-        <item>@string/mailbox_received</item>
+        <item>@string/mailbox_receive</item>
         <item>@string/mailbox_send</item>
-    </string-array>
-
-    <string-array name="store_price">
-        <item>1,000won</item>
-        <item>3,000won</item>
-        <item>5,000won</item>
-        <item>10,000won</item>
-        <item>30,000won</item>
     </string-array>
 
     <string-array name="store_bonus">

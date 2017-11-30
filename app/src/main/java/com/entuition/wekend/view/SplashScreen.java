@@ -1,100 +1,81 @@
 package com.entuition.wekend.view;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.entuition.wekend.R;
-import com.entuition.wekend.model.Constants;
-import com.entuition.wekend.model.authentication.asynctask.InitAuthenticationTask;
-import com.entuition.wekend.model.common.ISimpleTaskCallback;
+import com.entuition.wekend.data.source.authentication.AuthenticationRepository;
+import com.entuition.wekend.data.source.userinfo.UserInfoDataSource;
+import com.entuition.wekend.data.source.userinfo.UserInfoRepository;
+import com.entuition.wekend.databinding.SplashScreenActivityBinding;
+import com.entuition.wekend.util.Constants;
 import com.entuition.wekend.view.join.LoginActivity;
-import com.entuition.wekend.view.main.ContainerActivity;
-import com.entuition.wekend.view.main.activities.CampaignDetailActivity;
-
-import bolts.AppLinks;
+import com.entuition.wekend.view.join.viewmodel.LaunchNavigator;
+import com.entuition.wekend.view.join.viewmodel.LaunchViewModel;
+import com.entuition.wekend.view.main.campaign.CampaignDetailActivity;
+import com.entuition.wekend.view.main.container.ContainerActivity;
 
 /**
  * Created by Kim on 2015-08-04.
  */
-public class SplashScreen extends AppCompatActivity {
+public class SplashScreen extends AppCompatActivity implements LaunchNavigator {
 
-    private final String TAG = getClass().getSimpleName();
+    private static final String TAG = SplashScreen.class.getSimpleName();
 
-    private int startPosition;
+    private LaunchViewModel model;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
 
-        startPosition = getIntent().getIntExtra(Constants.START_ACTIVITY_POSITION, 0);
+        UserInfoDataSource userInfoDataSource = UserInfoRepository.getInstance(this);
 
-        Log.d(TAG, "density : " + getResources().getDisplayMetrics().density);
-        Log.d(TAG, "xdpi : " + getResources().getDisplayMetrics().xdpi);
-        Log.d(TAG, "ydpi : " + getResources().getDisplayMetrics().ydpi);
+        model = new LaunchViewModel(this, this, AuthenticationRepository.getInstance(), userInfoDataSource);
 
-        Log.d(TAG, "width : " + getWindowManager().getDefaultDisplay().getWidth());
-        Log.d(TAG, "height : " + getWindowManager().getDefaultDisplay().getHeight());
-        Log.d(TAG, "widthPixel : " + getResources().getDisplayMetrics().widthPixels);
-        Log.d(TAG, "heightPixel : " + getResources().getDisplayMetrics().heightPixels);
+        SplashScreenActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.splash_screen_activity);
+        binding.setModel(model);
 
-        Log.d(TAG, "widthDP : " + getResources().getConfiguration().screenWidthDp);
-        Log.d(TAG, "heightDP : " + getResources().getConfiguration().screenHeightDp);
-
-        InitAuthenticationTask task = new InitAuthenticationTask(this);
-        task.setCallback(new ISimpleTaskCallback() {
-
-            @Override
-            public void onPrepare() { }
-
-            @Override
-            public void onSuccess(@Nullable Object object) {
-                boolean isRegistered = (boolean) object;
-                Intent intent = null;
-                if (isRegistered) {
-                    String productId = getProductIdFromIntent();
-                    if (productId == null) {
-                        intent = new Intent(SplashScreen.this, ContainerActivity.class);
-                        intent.putExtra(Constants.START_ACTIVITY_POSITION, startPosition);
-                    } else {
-                        intent = new Intent(SplashScreen.this, CampaignDetailActivity.class);
-                        intent.putExtra(Constants.PARAMETER_PRODUCT_ID, Integer.parseInt(productId));
-                    }
-                } else {
-                    intent = new Intent(SplashScreen.this, LoginActivity.class);
-                }
-
-                startActivity(intent);
-            }
-
-            @Override
-            public void onFailed() {
-
-            }
-        });
-        task.execute();
+        model.parseIntent(getIntent());
+        model.onCreate();
     }
 
-    private String getProductIdFromIntent() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        model.onResume();
+    }
 
-        Uri uri = getIntent().getData();
-        if (uri != null) {
-            Log.d(TAG, "uri : " + uri.toString());
-            if (uri.getQueryParameter("productId") != null) {
-                return uri.getQueryParameter("productId");
-            }
-        }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        model.onPause();
+    }
 
-        Uri facebookUri = AppLinks.getTargetUrlFromInboundIntent(this, getIntent());
-        if (facebookUri != null) {
-            Log.d(TAG, "facebookUri : " + facebookUri);
-            return facebookUri.getQueryParameter("productId");
-        }
+    @Override
+    protected void onDestroy() {
+        model.onDestroy();
+        super.onDestroy();
+    }
 
-        return null;
+    @Override
+    public void onAutoLogin(int type) {
+        Intent intent = new Intent(this, ContainerActivity.class);
+        intent.putExtra(Constants.START_ACTIVITY_POSITION, type);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onLoginView() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onReceiveLink(int productId) {
+        Intent intent = new Intent(this, CampaignDetailActivity.class);
+        intent.putExtra(Constants.ExtraKeys.PRODUCT_ID, productId);
+        startActivity(intent);
     }
 }

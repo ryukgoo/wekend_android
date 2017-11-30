@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="mail"
+            type="com.entuition.wekend.data.source.mail.IMail" />
+        <variable
+            name="listener"
+            type="com.entuition.wekend.view.main.mailbox.adapter.MailBoxItemListener" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <com.daimajia.swipe.SwipeLayout
+            android:id="@+id/swipe_layout"
+            android:layout_width="match_parent"
+            android:layout_height="72dp">
+
+            <LinearLayout
+                android:id="@+id/id_recyclerview_item_delete"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_listitem_delete"
+                android:gravity="center"
+                android:onClick="@{() -> listener.onClickDeleteItem(mail)}">
+
+                <ImageView
+                    android:src="@drawable/btn_icon_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/item_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:onClick="@{() -> listener.onClickItem(mail)}">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:scaleType="centerCrop"
+                        android:background="@drawable/img_bg_thumb_s_logo"
+                        app:mailListImage="@{mail.friendId}" />
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_bg_thumb_s_1_1" />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="14dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:textSize="17sp"
+                            android:maxLines="2"
+                            android:ellipsize="end"
+                            android:includeFontPadding="false"
+                            app:setMailTitle="@{mail}" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="12sp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:includeFontPadding="false"
+                            android:text="@{mail.updatedTime}"
+                            app:setMailDate="@{mail.updatedTime}" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/id_recyclerview_item_newicon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/img_icon_new"
+                        android:visibility="@{mail.isRead == 0 ? View.VISIBLE : View.GONE}" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.daimajia.swipe.SwipeLayout>
+
+    </LinearLayout>
+
+</layout>

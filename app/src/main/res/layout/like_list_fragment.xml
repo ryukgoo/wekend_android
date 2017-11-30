@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="model"
+            type="com.entuition.wekend.view.main.likelist.viewmodel.LikeListViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/id_textview_likelist_no_result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/no_likeinfo_data"
+            android:visibility="@{model.isNoData ? View.VISIBLE : View.GONE}" />
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:refreshing="@{model.isRefreshing}"
+            app:onRefreshListener="@{() -> model.onRefresh()}">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/like_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:enabled="@{model.isLoading}"
+                app:refreshLikeInfos="@{model.likeInfos}" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.4"
+            android:animateLayoutChanges="true"
+            android:background="@android:color/black"
+            android:visibility="@{model.isLoading ? View.VISIBLE : View.GONE}">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:alpha="0.4"
+                android:background="@android:color/black"
+                style="?android:attr/progressBarStyleLarge" />
+
+        </FrameLayout>
+
+    </FrameLayout>
+
+</layout>

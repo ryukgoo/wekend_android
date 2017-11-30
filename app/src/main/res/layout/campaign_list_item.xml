@@ -1,80 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.percent.PercentFrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin">
-
-        <ImageView
-            android:id="@+id/id_campaign_list_image"
-            app:layout_aspectRatio="165%"
-            app:layout_widthPercent="100%"
-            android:background="#4d4d4d"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-            android:focusable="false"
-            android:layout_marginTop="@dimen/campaign_list_item_image_margin_top"
-            android:layout_marginBottom="@dimen/campaign_list_item_image_margin_bottom" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/id_campaign_list_like_button"
-            android:layout_gravity="top|right"
-            android:layout_marginTop="@dimen/campaign_list_item_like_margin_top"
-            android:layout_marginRight="@dimen/campaign_list_item_like_margin_right"
-            android:paddingBottom="@dimen/campaign_list_item_like_padding_bottom"
-            android:gravity="center"
-            android:background="@drawable/selector_heart_button"
-            android:textColor="@drawable/selector_textcolor_heart_button"
-            android:focusable="false"
-            android:textSize="@dimen/campaign_list_item_like_textsize"
-            android:text="00"
-            android:includeFontPadding="false" />
-    </android.support.percent.PercentFrameLayout>
+    <data>
+        <variable
+            name="product"
+            type="com.entuition.wekend.data.source.product.ProductInfo" />
+        <variable
+            name="listener"
+            type="com.entuition.wekend.view.main.campaign.adapter.CampaignItemListener" />
+        <variable
+            name="region"
+            type="String" />
+        <variable
+            name="isLiked"
+            type="boolean" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/campaign_list_item_title_height"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin">
+        android:onClick="@{() -> listener.onClickCampaignItem(product)}">
 
-        <TextView
+        <android.support.percent.PercentFrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/id_campaign_list_title"
-            android:focusable="false"
-            android:textColor="#4d4d4d"
-            android:maxLines="1"
-            android:textSize="@dimen/campaign_list_item_title_textsize"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/campaign_list_item_title_horizontal_margin"
-            android:layout_marginRight="@dimen/campaign_list_item_title_horizontal_margin"
-            android:includeFontPadding="false" />
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin">
 
-        <TextView
+            <ImageView
+                app:layout_aspectRatio="165%"
+                app:layout_widthPercent="100%"
+                android:background="#4d4d4d"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:focusable="false"
+                android:layout_marginTop="@dimen/campaign_list_item_image_margin_top"
+                android:layout_marginBottom="@dimen/campaign_list_item_image_margin_bottom"
+                app:campaignListImage="@{product.id}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/id_campaign_list_like_button"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="@dimen/campaign_list_item_like_margin_top"
+                android:layout_marginEnd="@dimen/campaign_list_item_like_margin_right"
+                android:paddingBottom="@dimen/campaign_list_item_like_padding_bottom"
+                android:gravity="center"
+                android:background="@drawable/selector_heart_button"
+                android:textColor="@drawable/selector_textcolor_heart_button"
+                android:focusable="false"
+                android:textSize="@dimen/campaign_list_item_like_textsize"
+                android:includeFontPadding="false"
+                android:selected="@{isLiked}"
+                android:onClick="@{() -> listener.onClickLikeCampaign(product)}"
+                app:campaignListLike="@{product.likeCount}" />
+        </android.support.percent.PercentFrameLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/id_campaign_list_subtitle"
-            android:text="SubTitle"
-            android:focusable="false"
-            android:textColor="#a2a2a2"
-            android:maxLines="1"
-            android:textSize="12sp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/campaign_list_item_title_horizontal_margin"
-            android:layout_marginRight="@dimen/campaign_list_item_title_horizontal_margin"
-            android:layout_marginTop="@dimen/campaign_list_item_subtitle_margin_top"
-            android:includeFontPadding="false" />
+            android:layout_height="@dimen/campaign_list_item_title_height"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:textColor="#4d4d4d"
+                android:singleLine="true"
+                android:textSize="@dimen/campaign_list_item_title_textsize"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/campaign_list_item_title_horizontal_margin"
+                android:layout_marginRight="@dimen/campaign_list_item_title_horizontal_margin"
+                android:includeFontPadding="false"
+                android:text="@{@string/campaign_item_title(region, product.titleKor)}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:textColor="#a2a2a2"
+                android:singleLine="true"
+                android:textSize="12sp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/campaign_list_item_title_horizontal_margin"
+                android:layout_marginRight="@dimen/campaign_list_item_title_horizontal_margin"
+                android:layout_marginTop="@dimen/campaign_list_item_subtitle_margin_top"
+                android:includeFontPadding="false"
+                android:text="@{product.subTitle}" />
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+</layout>

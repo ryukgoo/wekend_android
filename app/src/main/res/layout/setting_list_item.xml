@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="info"
+            type="com.entuition.wekend.data.source.noticeinfo.NoticeInfo" />
+        <variable
+            name="listener"
+            type="com.entuition.wekend.view.main.setting.viewmodel.SettingNoticeItemListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:onClick="@{() -> listener.onClickNoticeItem(info)}">
+
+            <TextView
+                android:id="@+id/id_setting_listitem_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/colorTextNormal"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:text="@{info.title}" />
+
+            <TextView
+                android:id="@+id/id_setting_listitem_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textSize="13sp"
+                android:textColor="@color/colorTextListSub"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:text="@{info.subTitle}" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

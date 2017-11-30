@@ -6,8 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.entuition.wekend.R;
-import com.entuition.wekend.model.Constants;
-import com.entuition.wekend.model.transfer.S3Utils;
+import com.entuition.wekend.util.ImageUtils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
@@ -22,7 +21,7 @@ import java.util.List;
 
 public class BigSizeImageLoadingListener extends SimpleImageLoadingListener {
 
-    private final String TAG = getClass().getSimpleName();
+    public static final String TAG = BigSizeImageLoadingListener.class.getSimpleName();
 
     private String filename;
     private DisplayImageOptions options;
@@ -45,7 +44,7 @@ public class BigSizeImageLoadingListener extends SimpleImageLoadingListener {
 
             Log.d(TAG, "onLoadingStarted > imaegUri : " + imageUri);
 
-            String photoUrl = S3Utils.getS3Url(Constants.PROFILE_THUMB_BUCKET_NAME, filename);
+            String photoUrl = ImageUtils.getHttpUrl(ImageUtils.PROFILE_THUMB_BUCKET_NAME, filename);
             ImageLoader.getInstance().displayImage(photoUrl, (ImageView) view, options, new ThumbImageLoadingListener(filename));
         } else {
             ((ImageView) view).setImageBitmap(cachedMemoryBitmaps.get(0));

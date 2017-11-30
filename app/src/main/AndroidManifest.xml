@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.entuition.wekend"
-    android:versionCode="1822"
-    android:versionName="0.1.0.1822">
+    android:versionCode="2819"
+    android:versionName="0.1.0.2819">
 
     <uses-sdk android:minSdkVersion="17" />
 
@@ -33,7 +33,6 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality. 
     -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:name="com.entuition.wekend.WekendApplication"
@@ -48,6 +47,7 @@
             android:name="com.entuition.wekend.view.SplashScreen"
             android:label="@string/app_name"
             android:noHistory="true"
+            android:theme="@style/SplashTheme"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -87,14 +87,14 @@
 
         <!-- Register Activity -->
         <activity
-            android:name="com.entuition.wekend.view.join.RegisterActivity"
+            android:name="com.entuition.wekend.view.join.SignUpActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Dark"
             android:screenOrientation="portrait" />
 
-        <!-- InsertUserInfoActivity -->
+        <!-- InputUserInfoActivityvity -->
         <activity
-            android:name="com.entuition.wekend.view.join.InsertUserInfoActivity"
+            android:name="com.entuition.wekend.view.join.InputUserInfoActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Dark"
             android:screenOrientation="portrait" />
@@ -114,14 +114,14 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.entuition.wekend.view.main.ContainerActivity"
+            android:name="com.entuition.wekend.view.main.container.ContainerActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.entuition.wekend.view.main.activities.CampaignDetailActivity"
+            android:name="com.entuition.wekend.view.main.campaign.CampaignDetailActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".view.main.ContainerActivity"
+            android:parentActivityName=".view.main.container.ContainerActivity"
             android:screenOrientation="portrait">
             <!--
             <intent-filter>
@@ -139,45 +139,27 @@
 
         <!-- RecommendFriendListActivity -->
         <activity
-            android:name="com.entuition.wekend.view.main.activities.RecommendFriendListActivity"
+            android:name="com.entuition.wekend.view.main.likelist.RecommendFriendListActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".view.main.mailbox.MailProfileActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.entuition.wekend.view.main.activities.SendProposeProfileActivity"
+            android:name=".view.main.setting.SettingProfileActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.entuition.wekend.view.main.activities.ReceiveProposeProfileActivity"
+            android:name=".view.main.setting.SettingAlarmActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.entuition.wekend.view.main.activities.setting.SettingProfileActivity"
+            android:name=".view.main.setting.SettingNoticeActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.entuition.wekend.view.main.activities.setting.SettingEditProfileActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.entuition.wekend.view.main.activities.setting.SettingAlarmActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.entuition.wekend.view.main.activities.setting.SettingNoticeActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.entuition.wekend.view.main.activities.setting.SettingSubListActivity"
-            android:screenOrientation="portrait" />
-
-        <activity android:name=".view.main.activities.setting.SettingHelpActivity"
             android:screenOrientation="portrait" />
 
         <!--
@@ -193,7 +175,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.entuition.wekend.view.main.activities.GoogleMapsActivity"
+            android:name="com.entuition.wekend.view.main.campaign.GoogleMapsActivity"
             android:label="@string/title_activity_google_maps" />
 
         <meta-data
@@ -207,7 +189,7 @@
 
         <!-- *************** RECEIVERS *************** -->
         <receiver
-            android:name="com.entuition.wekend.model.googleservice.gcm.ExternalReceiver"
+            android:name=".data.google.gcm.ExternalReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -221,7 +203,7 @@
             android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
             android:enabled="true" />
 
-        <service android:name="com.entuition.wekend.model.googleservice.gcm.MessageReceivingService">
+        <service android:name=".data.google.gcm.MessageReceivingService">
             <intent-filter>
                 <action android:name="com.entuition.wekend.model.gcm.ExternalReceiver" />
 

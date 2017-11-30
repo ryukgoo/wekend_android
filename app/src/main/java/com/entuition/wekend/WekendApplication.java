@@ -3,6 +3,7 @@ package com.entuition.wekend;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
+import com.entuition.wekend.data.CognitoSyncClientManager;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -32,6 +33,7 @@ public class WekendApplication extends MultiDexApplication {
 //                .writeDebugLogs();
 
         ImageLoader.getInstance().init(config.build());
+        CognitoSyncClientManager.init(getApplicationContext());
     }
 
     @Override

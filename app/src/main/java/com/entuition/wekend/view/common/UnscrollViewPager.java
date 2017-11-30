@@ -33,8 +33,4 @@ public class UnscrollViewPager extends ViewPager {
             return false;
         }
     }
-
-    public void setPagingEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
 }

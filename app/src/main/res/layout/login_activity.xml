@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="loginModel"
+            type="com.entuition.wekend.view.join.viewmodel.LoginViewModel" />
+        <variable
+            name="signUpModel"
+            type="com.entuition.wekend.view.join.viewmodel.SignUpViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:weightSum="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:background="@color/colorPrimaryDark"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="107dp"
+                    android:layout_height="107dp"
+                    android:src="@drawable/img_bi_logo" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="@dimen/login_static_text_small"
+                android:text="@string/email"
+                android:includeFontPadding="false" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:textSize="@dimen/login_input_text"
+                android:textColor="@color/colorPrimary"
+                android:hint="@string/email_hint"
+                android:textColorHint="@color/colorTextLogin"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:theme="@style/CustomEditTextStyle"
+                android:includeFontPadding="false"
+                android:text="@={loginModel.email}"
+                android:afterTextChanged="@{(s) -> loginModel.onChangeEmailText()}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="@dimen/login_static_text_small"
+                android:text="@string/password"
+                android:includeFontPadding="false" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:textSize="@dimen/login_input_text"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorTextLogin"
+                android:hint="@string/password_hint"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:theme="@style/CustomEditTextStyle"
+                android:includeFontPadding="false"
+                android:text="@={loginModel.password}"
+                android:afterTextChanged="@{(s) -> loginModel.onChangePasswordText()}" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="17dp"
+                android:text="@string/login"
+                android:textSize="17sp"
+                android:textColor="@drawable/selector_textcolor_button_dark"
+                android:background="@drawable/selector_button_white"
+                android:enabled="@{loginModel.isLoginButtonValid}"
+                android:onClick="@{loginModel::onClickLoginButton}" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="@string/signup"
+                android:textSize="@dimen/button_text_big"
+                android:textColor="@drawable/selector_textcolor_button_dark"
+                android:background="@drawable/selector_button_white"
+                android:onClick="@{signUpModel::onClickSignUpButton}" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="24dp"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="@string/signup_precautions"
+                android:textColor="@color/colorTextLogin"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.4"
+            android:animateLayoutChanges="true"
+            android:background="@android:color/black"
+            android:visibility="@{loginModel.isLoading ? View.VISIBLE : View.GONE}">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:alpha="0.4"
+                android:background="@android:color/black"
+                style="?android:attr/progressBarStyleLarge" />
+
+        </FrameLayout>
+
+    </FrameLayout>
+
+</layout>

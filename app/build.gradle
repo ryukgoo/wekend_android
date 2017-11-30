@@ -10,14 +10,14 @@ android {
             storePassword 'x1818588'
         }
     }
-    compileSdkVersion 24
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.entuition.wekend"
         minSdkVersion 17
-        targetSdkVersion 24
-        versionCode 42
-        versionName "1.1.5"
+        targetSdkVersion 26
+        versionCode 43
+        versionName "1.1.7"
         multiDexEnabled true
     }
     dexOptions {
@@ -41,39 +41,46 @@ android {
     configurations {
         all*.exclude module: 'exclude-dependencies'
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile group: 'com.kakao.sdk', name: 'kakaolink', version: '1.6.0' //project.KAKAO_SDK_VERSION
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:support-v13:24.2.0'
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:support-v4:24.2.0'
-    compile 'com.android.support:recyclerview-v7:24.2.0'
-    compile 'com.android.support:design:24.2.0'
-    compile 'com.android.support:percent:24.2.0'
-    compile 'com.amazonaws:aws-android-sdk-core:2.4.7'
-    compile 'com.amazonaws:aws-android-sdk-cognito:2.4.7'
-    compile 'com.amazonaws:aws-android-sdk-ddb:2.4.7'
-    compile 'com.amazonaws:aws-android-sdk-ddb-mapper:2.4.7'
-    compile 'com.amazonaws:aws-android-sdk-s3:2.4.7'
-    compile 'com.amazonaws:aws-android-sdk-lambda:2.4.7'
-    compile 'com.amazonaws:aws-android-sdk-apigateway-core:2.4.7'
-    compile 'com.google.android.gms:play-services-gcm:9.6.1'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile 'com.daimajia.swipelayout:library:1.2.0@aar'
-    compile 'jp.wasabeef:recyclerview-animators:2.2.3'
-    compile 'com.roughike:bottom-bar:1.4.0.1'
-    compile 'com.google.android.gms:play-services:9.6.1'
-    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation group: 'com.kakao.sdk', name: 'kakaolink', version: '1.6.0' //project.KAKAO_SDK_VERSION
+    implementation 'com.android.support:multidex:1.0.2'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.android.support:support-v13:26.1.0'
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:percent:26.1.0'
+    implementation 'com.amazonaws:aws-android-sdk-core:2.4.7'
+    implementation 'com.amazonaws:aws-android-sdk-cognito:2.4.7'
+    implementation 'com.amazonaws:aws-android-sdk-ddb:2.4.7'
+    implementation 'com.amazonaws:aws-android-sdk-ddb-mapper:2.4.7'
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.4.7'
+    implementation 'com.amazonaws:aws-android-sdk-apigateway-core:2.4.7'
+    //noinspection GradleCompatible
+    implementation 'com.google.android.gms:play-services-gcm:9.6.1'
+    implementation 'com.google.android.gms:play-services:9.6.1'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
+    implementation 'jp.wasabeef:recyclerview-animators:2.2.3'
+    implementation 'com.roughike:bottom-bar:1.4.0.1'
+    implementation 'com.facebook.android:facebook-android-sdk:4.28.0'
+
+    implementation 'android.arch.persistence.room:runtime:1.0.0'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
 
     // https://mvnrepository.com/artifact/commons-codec/commons-codec
-    compile group: 'commons-codec', name: 'commons-codec', version: '1.9'
+    implementation group: 'commons-codec', name: 'commons-codec', version: '1.9'
 
-    compile files('libs/Entuition-client-1.0.6.jar')
-    compile files('libs/Entuition-Notification-client-1.0.0.jar')
-    compile files('libs/surem_api.jar')
+    implementation files('libs/Entuition-client-1.0.6.jar')
+    implementation files('libs/Entuition-Notification-client-1.0.0.jar')
+    implementation files('libs/surem_api.jar')
 }
 
 task('increaseVersionCode') << {

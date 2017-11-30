@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="model"
+            type="com.entuition.wekend.view.main.setting.viewmodel.SettingAlarmViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/setting_toolbar"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:titleTextAppearance="@style/Toolbar.TitleText"
+            app:theme="@style/ToolbarTheme">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="7dp"
+                    android:text="@string/title_setting_alarm"
+                    android:singleLine="true"
+                    style="@style/Toolbar.TitleText" />
+
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.SwitchCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="26dp"
+                    android:text="@string/setting_alarm"
+                    android:textSize="20sp"
+                    android:theme="@style/CustomSwitch"
+                    android:checked="@={model.isAvailableAlarm}"
+                    android:onCheckedChanged="@{(switch, checked) -> model.onChangeAlarm(checked)}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorLineDraw" />
+
+                <android.support.v7.widget.SwitchCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="26dp"
+                    android:text="@string/setting_vibration"
+                    android:textSize="20sp"
+                    android:theme="@style/CustomSwitch"
+                    android:checked="@={model.isAvailableVibration}"
+                    android:onCheckedChanged="@{(switch, checked) -> model.onChangeVibration(checked)}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorLineDraw" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@drawable/toolbar_drop_shadow" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</layout>

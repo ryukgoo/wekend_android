@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="model"
+            type="com.entuition.wekend.view.join.viewmodel.InputUserInfoViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:text="@string/input_nickname"
+                android:textSize="@dimen/login_static_text_small"
+                android:textColor="@color/colorTextLogin"
+                android:maxLines="1"
+                android:includeFontPadding="false" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="49dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:layout_weight="1"
+                    android:inputType="textPersonName"
+                    android:textSize="@dimen/login_input_text"
+                    android:textColor="@color/colorPrimary"
+                    android:textColorHint="@color/colorTextLogin"
+                    android:hint="@string/signup_nickname_hint"
+                    android:maxLines="1"
+                    android:theme="@style/CustomEditTextStyle"
+                    android:includeFontPadding="false"
+                    android:text="@={model.nickname}"
+                    android:afterTextChanged="@{(s) -> model.onChangeNicknameText()}" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="27dp"
+                    android:text="@string/check_duplicate"
+                    android:textSize="14sp"
+                    android:textColor="@drawable/selector_textcolor_button_dark"
+                    android:background="@drawable/selector_button_white"
+                    android:maxLines="1"
+                    android:enabled="@{model.isValidNickname}"
+                    android:onClick="@{model::onClickCheckNicknameButton}"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="22dp"
+                android:text="@string/input_gender"
+                android:textSize="@dimen/login_static_text_small"
+                android:textColor="@color/colorTextLogin"
+                android:maxLines="1"
+                android:includeFontPadding="false" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="49dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <Button
+                    android:layout_width="134dp"
+                    android:layout_height="33dp"
+                    android:layout_marginEnd="62dp"
+                    android:text="@string/male"
+                    android:textColor="@drawable/selector_textcolor_button_dark_selected"
+                    android:background="@drawable/selector_button_white_selected"
+                    android:layout_weight="0.5"
+                    android:selected="@{model.isSelectedMale}"
+                    android:onClick="@{model::onClickMaleButton}" />
+
+                <Button
+                    android:layout_width="134dp"
+                    android:layout_height="33dp"
+                    android:text="@string/female"
+                    android:textColor="@drawable/selector_textcolor_button_dark_selected"
+                    android:background="@drawable/selector_button_white_selected"
+                    android:layout_weight="0.5"
+                    android:selected="@{model.isSelectedFemale}"
+                    android:onClick="@{model::onClickFemaleButton}" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_birth_year"
+                android:textSize="@dimen/login_static_text_small"
+                android:textColor="@color/colorTextLogin"
+                android:maxLines="1"
+                android:includeFontPadding="false" />
+
+            <com.entuition.wekend.view.common.CustomTextPicker
+                android:id="@+id/birth_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:orientation="vertical"
+                android:showDividers="none"
+                android:divider="@drawable/divider"
+                android:scaleX="0.9"
+                android:scaleY="0.9"
+                android:nestedScrollingEnabled="true" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="@string/next"
+                android:textSize="@dimen/button_text_big"
+                android:textColor="@drawable/selector_textcolor_button_dark"
+                android:background="@drawable/selector_button_white"
+                android:onClick="@{model::onClickNextButton}"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.4"
+            android:animateLayoutChanges="true"
+            android:background="@android:color/black"
+            android:visibility="@{model.isLoading ? View.VISIBLE : View.GONE}">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:alpha="0.4"
+                android:background="@android:color/black"
+                style="?android:attr/progressBarStyleLarge" />
+
+        </FrameLayout>
+
+    </FrameLayout>
+
+</layout>
