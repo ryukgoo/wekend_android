@@ -30,6 +30,7 @@ public class ReceiveMail implements IMail {
         public static final String SENDER_NICKNAME = "SenderNickname";
         public static final String RECEIVER_NICKNAME = "ReceiverNickname";
         public static final String PROPOSE_STATUS = "ProposeStatus";
+        public static final String MESSAGE = "Message";
         public static final String IS_READ = "IsRead";
     }
 
@@ -42,6 +43,7 @@ public class ReceiveMail implements IMail {
     private String senderNickname;
     private String receiverNickname;
     private String status;
+    private String message;
     private int isRead; // 0:read, 1:unread
 
     @Override
@@ -149,6 +151,15 @@ public class ReceiveMail implements IMail {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @DynamoDBAttribute(attributeName = Attribute.MESSAGE)
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @DynamoDBAttribute(attributeName = Attribute.IS_READ)

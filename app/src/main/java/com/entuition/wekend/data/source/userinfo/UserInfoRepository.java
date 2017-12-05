@@ -215,11 +215,9 @@ public class UserInfoRepository implements UserInfoDataSource {
 
     @Override
     public void registerEndpointArn(@Nullable String token, final RegisterEndpointCallback callback) {
-        Log.d(TAG, "registerEndpointArn start");
         String registrationToken = localDataSource.getRegistrationToken();
 
         if (TextUtils.isNullorEmptyString(registrationToken)) {
-            Log.d(TAG, "registerEndpointArn > Token is null");
             remoteDataSource.getRegistrationToken(new GetRegisterationIdCallback() {
                 @Override
                 public void onGetRegistrationId(String registrationId) {

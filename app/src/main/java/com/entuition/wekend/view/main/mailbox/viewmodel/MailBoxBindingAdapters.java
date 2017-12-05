@@ -35,6 +35,7 @@ public class MailBoxBindingAdapters {
         MailBoxListAdapter adapter = (MailBoxListAdapter) view.getAdapter();
         if (adapter != null) {
             adapter.replaceData(new ArrayList<IMail>(items));
+            adapter.closeAllItems();
         }
     }
 

@@ -15,7 +15,7 @@ public class Constants {
 
     public static final String DEVELOPER_PROVIDER_NAME = "login.entuition.picnic";
 
-    public static final String PLATFORM = "Android";
+    public static final String PLATFORM = "GCM";
 
     public static final Regions REGIONS = Regions.AP_NORTHEAST_1;
 

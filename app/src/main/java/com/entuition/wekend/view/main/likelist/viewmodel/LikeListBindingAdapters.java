@@ -45,6 +45,7 @@ public class LikeListBindingAdapters {
         if (adapter != null) {
             List<LikeInfo> newItems = new ArrayList<>(items);
             adapter.replaceData(newItems);
+            adapter.closeAllItems();
         }
     }
 

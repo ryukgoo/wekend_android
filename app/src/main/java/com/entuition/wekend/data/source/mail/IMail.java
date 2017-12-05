@@ -26,6 +26,8 @@ public interface IMail {
     void setReceiverNickname(String receiverNickname);
     String getStatus();
     void setStatus(String status);
+    String getMessage();
+    void setMessage(String message);
     int getIsRead();
     void setIsRead(int isRead);
 

@@ -1,6 +1,7 @@
 package com.entuition.wekend.view.main.mailbox.viewmodel;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
@@ -44,6 +45,7 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
     public final ObservableBoolean isStatusLoading = new ObservableBoolean();
     public final ObservableBoolean isButtonVisible = new ObservableBoolean();
     public final ObservableBoolean isMatchTextVisible = new ObservableBoolean();
+    public final ObservableBoolean isMessageVisible = new ObservableBoolean();
 
     public final ObservableField<MailType> mailType = new ObservableField<>();
     public final ObservableField<ProposeStatus> status = new ObservableField<>();
@@ -71,6 +73,7 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
         isStatusLoading.set(false);
         isButtonVisible.set(false);
         isMatchTextVisible.set(false);
+        isMessageVisible.set(false);
         status.set(ProposeStatus.notMade);
     }
 
@@ -150,33 +153,45 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
     }
 
     public void onClickProposeButton() {
-        navigator.get().confirmPropose();
+        navigator.get().confirmPropose(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                dialogInterface.dismiss();
+                if (which == DialogInterface.BUTTON_POSITIVE) {
+                    if (isEnoughRemainedPoint()) {
+                        navigator.get().showUserInputDialog();
+                    } else {
+                        navigator.get().showNotEnoughPoint();
+                    }
+                }
+            }
+        });
     }
 
-    public void propose() {
+    public void propose(final String message) {
+
         isStatusLoading.set(true);
-        userInfoDataSource.consumePoint(500, new UserInfoDataSource.ConsumePointCallback() {
+        SendMail sendMail = new SendMail();
+        sendMail.setUserId(userId);
+        sendMail.setSenderNickname(user.get().getNickname());
+        sendMail.setReceiverId(friendId);
+        sendMail.setReceiverNickname(friend.get().getNickname());
+        sendMail.setProductId(productId);
+        sendMail.setProductTitle(product.get().getTitleKor());
+        sendMail.setStatus(ProposeStatus.notMade.toString());
+        sendMail.setMessage(message);
+        sendMail.setIsRead(ReadState.read.ordinal());
+        sendMail.setUpdatedTime(Utilities.getTimestamp());
+        sendMail.setResponseTime(sendMail.getUpdatedTime());
+
+        mailDataSource.updateMail(sendMail, new MailDataSource.UpdateMailCallback() {
             @Override
-            public void onConsumePointComplete(UserInfo userInfo) {
-
-                user.set(userInfo);
-
-                SendMail sendMail = new SendMail();
-                sendMail.setUserId(userId);
-                sendMail.setSenderNickname(userInfo.getNickname());
-                sendMail.setReceiverId(friendId);
-                sendMail.setReceiverNickname(friend.get().getNickname());
-                sendMail.setProductId(productId);
-                sendMail.setProductTitle(product.get().getTitleKor());
-                sendMail.setStatus(ProposeStatus.notMade.toString());
-                sendMail.setIsRead(ReadState.read.ordinal());
-                sendMail.setUpdatedTime(Utilities.getTimestamp());
-                sendMail.setResponseTime(sendMail.getUpdatedTime());
-
-                mailDataSource.updateMail(sendMail, new MailDataSource.UpdateMailCallback() {
+            public void onCompleteUpdateMail(final IMail iMail) {
+                userInfoDataSource.consumePoint(500, new UserInfoDataSource.ConsumePointCallback() {
                     @Override
-                    public void onCompleteUpdateMail(IMail iMail) {
-                        Log.d(TAG, "onCompleteUpdateMail");
+                    public void onConsumePointComplete(UserInfo userInfo) {
+
+                        user.set(userInfo);
                         isStatusLoading.set(false);
 
                         mail.set(iMail);
@@ -186,24 +201,23 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
                     }
 
                     @Override
-                    public void onFailedUpdateMail() {
-                        Log.d(TAG, "onFailedUpdateMail");
+                    public void onPointNotEnough() {
                         isStatusLoading.set(false);
-                        // TODO : Error!!!! restore point????
+                        navigator.get().showNotEnoughPoint();
+                    }
+
+                    @Override
+                    public void onConsumeNotAvailable() {
+                        isStatusLoading.set(false);
+                        navigator.get().showTryAgain();
                     }
                 });
             }
 
             @Override
-            public void onPointNotEnough() {
-                navigator.get().showNotEnoughPoint();
+            public void onFailedUpdateMail() {
                 isStatusLoading.set(false);
-            }
-
-            @Override
-            public void onConsumeNotAvailable() {
                 navigator.get().showTryAgain();
-                isStatusLoading.set(false);
             }
         });
     }
@@ -266,11 +280,16 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
         boolean receiveAndNotMade = mailType.get() == MailType.receive && status.get() == ProposeStatus.notMade;
         isButtonVisible.set(receiveAndNotMade);
         isMatchTextVisible.set(!receiveAndNotMade);
+        isMessageVisible.set(status.get() != ProposeStatus.none);
 
         switch (status.get()) {
             case Made:
                 phone.set(friend.get().getPhone());
                 break;
         }
+    }
+
+    private boolean isEnoughRemainedPoint() {
+        return user.get().getBalloon() >= 500;
     }
 }

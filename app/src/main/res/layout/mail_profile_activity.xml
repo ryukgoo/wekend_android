@@ -93,6 +93,44 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
+                    android:orientation="vertical"
+                    android:visibility="@{model.isMessageVisible ? View.VISIBLE : View.GONE}">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:textSize="16sp"
+                            android:text="@string/message"
+                            android:gravity="start|center_vertical" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:minHeight="80dp"
+                            android:textSize="16sp"
+                            android:layout_weight="1"
+                            android:gravity="start|center_vertical"
+                            android:text="@{model.mail.message}" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:background="#dadada"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -215,8 +253,9 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
+                        android:paddingBottom="70dp"
                         android:layout_weight="1"
+                        android:textSize="16sp"
                         app:mailProfileDesc="@{model.product}" />
 
                 </LinearLayout>
