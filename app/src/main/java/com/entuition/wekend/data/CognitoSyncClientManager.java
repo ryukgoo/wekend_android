@@ -90,7 +90,7 @@ public class CognitoSyncClientManager {
      * get DynamoDBClient
      * @return AmazonDynamoDBClient instance
      */
-    public static AmazonDynamoDBClient getDynamoDBClient() {
+    private static AmazonDynamoDBClient getDynamoDBClient() {
         if (sDdbClient == null) {
             sDdbClient = new AmazonDynamoDBClient(credentialsProvider);
             sDdbClient.setRegion(Region.getRegion(REGION));

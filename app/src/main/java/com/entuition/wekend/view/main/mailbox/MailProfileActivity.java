@@ -105,7 +105,7 @@ public class MailProfileActivity extends AppCompatActivity implements MailProfil
     @Override
     public void onRejectComplete(String nickname) {
         String title = getString(R.string.propose_rejected);
-        String message = getString(R.string.propose_rejecte_message, nickname);
+        String message = getString(R.string.propose_reject_message, nickname);
         AlertUtils.showAlertDialog(this, title, message);
     }
 

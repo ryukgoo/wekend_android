@@ -18,6 +18,7 @@ import com.entuition.wekend.data.CognitoSyncClientManager;
 import com.entuition.wekend.data.source.userinfo.UserInfo;
 import com.entuition.wekend.data.source.userinfo.UserInfoDataSource;
 import com.entuition.wekend.util.Constants;
+import com.entuition.wekend.util.ImageUtils;
 import com.entuition.wekend.util.Utilities;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.surem.api.sms.SureSMSAPI;
@@ -137,7 +138,12 @@ public class UserInfoRemoteDataSource implements UserInfoDataSource {
     public boolean validateVerificationCode(@NonNull String code) { return false; }
 
     @Override
-    public void uploadProfileImage(@NonNull String filePath, UploadImageCallback callback) {}
+    public void uploadProfileImage(@NonNull String filePath, int index, UploadImageCallback callback) {}
+
+    @Override
+    public void deleteProfileImage(@NonNull String key, UpdateUserInfoCallback callback) {
+        new DeleteProfileImageTask().execute(key);
+    }
 
     @Override
     public void clearBadgeCount(String tag, UpdateUserInfoCallback callback) {}
@@ -265,6 +271,15 @@ public class UserInfoRemoteDataSource implements UserInfoDataSource {
                 Log.e(TAG, e.getMessage());
             }
 
+            return null;
+        }
+    }
+
+    private static class DeleteProfileImageTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... strings) {
+            CognitoSyncClientManager.getS3Client().deleteObject(ImageUtils.PROFILE_THUMB_BUCKET_NAME, strings[0]);
+            CognitoSyncClientManager.getS3Client().deleteObject(ImageUtils.PROFILE_IMAGE_BUCKET_NAME, strings[0]);
             return null;
         }
     }

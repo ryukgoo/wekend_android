@@ -11,6 +11,7 @@
     <string name="accept">수락</string>
     <string name="reject">거절</string>
     <string name="send">보내기</string>
+    <string name="delete">삭제</string>
     <string name="profile_edit">프로필 수정</string>
 
     <string name="unknown_error">Unknown Error</string>
@@ -28,7 +29,7 @@
     <string name="title_setting_cc">고객센터</string>
     <string name="title_setting_alarm">알람설정</string>
     <string name="title_map_view">지도보기</string>
-
+    <string name="title_edit_profile">정보수정</string>
 
     <!--*************
     ** View / Join **
@@ -147,6 +148,8 @@
     <string name="logout_app">위켄드 로그아웃</string>
     <string name="logout_app_message">로그아웃 하시면 로그인화면으로 돌아갑니다\n로그아웃 하시겠습니까?</string>
 
+    <string name="guide_no_more_show">다시보지않음</string>
+
     <!-- Campaign -->
     <string name="campaign">캠페인</string>
     <string name="campaign_sort_like">좋아요순</string>
@@ -194,6 +197,9 @@
     <string name="campaign_search_hint">상점명/지역명 등으로 검색</string>
     <string name="campaign_keyword_title" formatted="false">\"%s\" 로 검색</string>
 
+    <string name="kakao_talk">카카오톡</string>
+    <string name="facebook">페이스북</string>
+
     <!-- Campaign Detail -->
     <string name="campaign_price" formatted="false">가격대 : %s</string>
     <string name="campaign_parking" formatted="false">주차 : %s</string>
@@ -227,6 +233,14 @@
     <string name="nickname">닉네임</string>
     <string name="age">나이</string>
     <string name="mobile">휴대폰 번호</string>
+    <string name="introduce">자기소개</string>
+    <string name="introduce_hint">200자 내로 작성</string>
+    <string name="introduce_error_title">자기소개 작성오류</string>
+    <string name="introduce_error_message">자기소개는 200자를 넘을 수 없습니다</string>
+    <string name="company">직장</string>
+    <string name="company_hint">직장 입력</string>
+    <string name="school">학교</string>
+    <string name="school_hint">출신 학교 입력</string>
     <string name="formatted_point" formatted="false">보유포인트 %dP</string>
     <string name="profile_verification">인증요청</string>
     <string name="profile_verification_message">인증번호를 입력하고 확인을 눌러주세요.</string>
@@ -237,7 +251,7 @@
     <string name="edit_phone_failed">수정오류</string>
     <string name="edit_phone_failed_message">휴대폰 번호 수정에 실패하였습니다.\n다시 시도해 주시기 바랍니다.</string>
 
-    <string name="edit_nickname_hint">새로운 닉네임을 입력해 주세요</string>
+    <string name="edit_nickname_hint">새로운 닉네임 입력</string>
 
     <string name="edit_profile_image_failed">프로필 사진수정 실패</string>
     <string name="edit_profile_image_permission_denied">프로필 사진을 변경하려면 접근권한이 필요합니다</string>
@@ -246,7 +260,10 @@
     <string name="edit_nickname_done_message">닉네임이 수정되었습니다</string>
 
     <string name="edit_nickname_failed">수정오류</string>
-    <string name="edit_nickname_failed_message">닉네임 수정에 실패하였습니다.\n다시 시도해 주시기 바랍니다.</string>
+    <string name="edit_nickname_failed_message">닉네임 수정에 실패하였습니다\n다시 시도해 주시기 바랍니다</string>
+
+    <string name="update_user_failed">업데이트 오류</string>
+    <string name="update_user_failed_message">업데이트 중 오류가 발생했습니다\n다시 시도해 주시기 바랍니다</string>
 
     <string name="setting_alarm">알람</string>
     <string name="setting_vibration">진동</string>
@@ -262,7 +279,7 @@
 
     <string name="propose_success_message" formatted="false">%s님에게 함께가기를 신청하였습니다</string>
     <string name="propose_accepte_message" formatted="false">%s님과 함께가기를 수락하였습니다</string>
-    <string name="propose_rejecte_message" formatted="false">%s님과 함께가기를 거절하였습니다</string>
+    <string name="propose_reject_message" formatted="false">%s님이 함께가기를 거절하였습니다</string>
 
     <string name="propose_request_message" formatted="false">%s님과 함께가기 신청중입니다</string>
     <string name="propose_made_message" formatted="false">%s님과 함께가기가 성공하였습니다</string>

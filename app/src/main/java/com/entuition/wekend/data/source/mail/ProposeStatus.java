@@ -42,7 +42,7 @@ public enum ProposeStatus {
                     case Made:
                         return R.string.propose_made_message;
                     case reject:
-                        return R.string.propose_rejecte_message;
+                        return R.string.propose_reject_message;
                     case alreadyMade:
                         return R.string.propose_made_message;
                 }

@@ -1,4 +1,4 @@
-package com.entuition.wekend.view.join.viewmodel;
+package com.entuition.wekend.view.main.setting.viewmodel;
 
 import android.Manifest;
 import android.app.Activity;
@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.View;
 
 import com.entuition.wekend.data.source.userinfo.UserInfo;
 import com.entuition.wekend.data.source.userinfo.UserInfoDataSource;
@@ -26,15 +25,14 @@ public class SelectImageViewModel {
 
     public static final String TAG = SelectImageViewModel.class.getSimpleName();
 
-    private static final int REQUEST_PERMISSION_REQ_CODE = 34;
-    private static final int ACTION_REQUEST_GALLERY = 1003;
-    private static final int ACTION_REQUEST_CAMERA = 1004;
-    private static final int ACTION_REQUEST_CROP = 1005;
+    private final int REQUEST_PERMISSION_REQ_CODE = 34;
+    static final int ACTION_REQUEST_GALLERY = 1003;
+    static final int ACTION_REQUEST_CAMERA = 1004;
+    static final int ACTION_REQUEST_CROP = 1005;
 
     private final WeakReference<SelectImageNavigator> navigator;
     private final UserInfoDataSource userInfoDataSource;
 
-    private Uri tempImageUri;
     private File outputFile;
 
     public SelectImageViewModel(SelectImageNavigator navigator,
@@ -52,17 +50,19 @@ public class SelectImageViewModel {
     }
 
     public void onActivityResult(Activity context, int requestCode, int resultCode, Intent data) {
+
+        Log.d(TAG, "onActivityResult > resultCode : " + resultCode);
+
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case ACTION_REQUEST_GALLERY :
                 case ACTION_REQUEST_CAMERA :
-                    tempImageUri = data.getData();
                     outputFile = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
-                    Intent intent = ImageUtils.getCroppedImageIntent(context, outputFile, tempImageUri);
+                    Intent intent = ImageUtils.getCroppedImageIntent(context, outputFile, data.getData());
                     if (intent != null) context.startActivityForResult(intent, ACTION_REQUEST_CROP);
                     break;
                 case ACTION_REQUEST_CROP :
-                    uploadImage();
+                    uploadImage(0);
                     break;
                 default:
                     break;
@@ -84,25 +84,25 @@ public class SelectImageViewModel {
         }
     }
 
-    public void onClickSelectImage(View view) {
+    public void onClickSelectImage() {
         navigator.get().selectProfileImage();
     }
 
     public void selectPhotoFromGallery(Activity activity) {
-        selectImageFromGallery(activity);
+        startGalleryActivity(activity);
     }
 
-    private void selectImageFromGallery(Activity activity) {
+    private void startGalleryActivity(Activity activity) {
         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         activity.startActivityForResult(intent, ACTION_REQUEST_GALLERY);
     }
 
-    private void uploadImage() {
+    void uploadImage(final int index) {
         if (navigator.get() != null) navigator.get().onImageSelected(ImageUtils.decodeFile(outputFile));
         userInfoDataSource.getUserInfo(null, new UserInfoDataSource.GetUserInfoCallback() {
             @Override
             public void onUserInfoLoaded(UserInfo userInfo) {
-                userInfoDataSource.uploadProfileImage(Uri.fromFile(outputFile).getPath(),
+                userInfoDataSource.uploadProfileImage(Uri.fromFile(outputFile).getPath(), index,
                         new UserInfoDataSource.UploadImageCallback() {
                             @Override
                             public void onFailedUploadImage() {
@@ -137,6 +137,21 @@ public class SelectImageViewModel {
 
             @Override
             public void onDataNotAvailable() {}
+        });
+    }
+
+    public void deleteImage(int index) {
+        String userId = userInfoDataSource.getUserId();
+        String key = ImageUtils.getUploadedPhotoFileName(userId, index);
+
+        userInfoDataSource.deleteProfileImage(key, new UserInfoDataSource.UpdateUserInfoCallback() {
+            @Override
+            public void onUpdateComplete(UserInfo userInfo) {
+                navigator.get().onImageSelected(null);
+            }
+
+            @Override
+            public void onUpdateFailed() {}
         });
     }
 }

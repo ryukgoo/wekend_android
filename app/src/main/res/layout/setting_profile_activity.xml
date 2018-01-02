@@ -9,9 +9,6 @@
         <variable
             name="model"
             type="com.entuition.wekend.view.main.setting.viewmodel.SettingProfileViewModel" />
-        <variable
-            name="imageModel"
-            type="com.entuition.wekend.view.join.viewmodel.SelectImageViewModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -49,17 +46,6 @@
                             app:layout_widthPercent="100%"
                             android:background="@drawable/profile_default"
                             app:profileViewPager="@{model.photos}" />
-
-                        <Button
-                            android:id="@+id/id_pager_item_button_edit"
-                            android:layout_width="48dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="bottom|end"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/btn_icon_photo_shadow"
-                            android:visibility="@{model.isEditMode ? View.VISIBLE : View.GONE}"
-                            android:onClick="@{imageModel::onClickSelectImage}" />
 
                     </android.support.percent.PercentFrameLayout>
 
@@ -118,35 +104,20 @@
                         <TextView
                             android:layout_width="80dp"
                             android:layout_height="match_parent"
+                            android:gravity="center"
                             android:text="@string/nickname"
                             android:textColor="@color/colorTextNormal"
-                            android:textSize="16sp"
-                            android:gravity="start|center_vertical" />
+                            android:textSize="16sp" />
 
-                        <EditText
+                        <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:hint="@string/edit_nickname_hint"
-                            android:inputType="numberDecimal"
                             android:textSize="20sp"
                             android:textColor="@color/colorTextNormal"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:background="@android:color/transparent"
                             android:theme="@style/CustomEditTextStyle"
-                            android:text="@={model.nickname}"
-                            android:enabled="false"
-                            android:afterTextChanged="@{(s) -> model.onChangeNickname()}" />
-
-                        <Button
-                            android:layout_width="57dp"
-                            android:layout_height="27dp"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center"
-                            android:text="@string/edit"
-                            android:textColor="@drawable/selector_textcolor_button"
-                            android:background="@drawable/selector_button_red"
-                            android:visibility="gone" />
+                            android:text="@={model.user.nickname}" />
 
                     </LinearLayout>
 
@@ -172,10 +143,10 @@
                         <TextView
                             android:layout_width="80dp"
                             android:layout_height="match_parent"
+                            android:gravity="center"
                             android:text="@string/age"
-                            android:textSize="16sp"
                             android:textColor="@color/colorTextNormal"
-                            android:gravity="start|center_vertical" />
+                            android:textSize="16sp" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -184,7 +155,7 @@
                             android:textColor="@color/colorTextNormal"
                             android:layout_weight="1"
                             android:gravity="center"
-                            app:profileAge="@{model.birth}" />
+                            app:profileAge="@{model.user.birth}" />
 
                     </LinearLayout>
 
@@ -205,116 +176,26 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
                         android:layout_height="81dp">
 
                         <TextView
                             android:layout_width="80dp"
                             android:layout_height="match_parent"
+                            android:gravity="center"
                             android:text="@string/mobile"
-                            android:textSize="16sp"
                             android:textColor="@color/colorTextNormal"
-                            android:gravity="start|center_vertical" />
+                            android:textSize="16sp" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/edit_phone"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:textSize="20sp"
-                            android:textColor="@{model.isEditMode ? @color/colorAccent : @color/colorTextNormal}"
-                            android:hint="@string/mobile_number_hint"
-                            android:inputType="phone"
                             android:gravity="center"
                             android:background="@android:color/transparent"
                             android:theme="@style/CustomEditTextStyle"
-                            android:text="@={model.phone}"
-                            android:enabled="@{model.isEditMode}"
-                            android:onFocusChange="@{(view, isFocus) -> model.onFocusPhone(isFocus)}"
-                            android:afterTextChanged="@{(s) -> model.onChangePhone()}" />
-                        <!--
-                        <Button
-                            android:id="@+id/id_setting_profile_button_edit_phonenumber"
-                            android:layout_width="57dp"
-                            android:layout_height="27dp"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center"
-                            android:text="@string/button_edit"
-                            android:textColor="@drawable/selector_textcolor_button"
-                            android:background="@drawable/selector_button_red"
-                            android:visibility="@{model.isEditMode ? View.VISIBLE : View.GONE}"
-                            android:onClick="@{model::onClickEditPhone}" />
-                            -->
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:visibility="@{model.isEditMode ? View.VISIBLE : View.GONE}">
-
-                        <Button
-                            android:layout_width="122dp"
-                            android:layout_height="27dp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="@string/profile_verification"
-                            android:textSize="14sp"
-                            android:textColor="@drawable/selector_textcolor_button"
-                            android:background="@drawable/selector_button_red"
-                            android:enabled="@{model.isVaildPhone}"
-                            android:onClick="@{model::onClickRequestCode}"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="21dp"
-                            android:gravity="center"
-                            android:text="@string/profile_verification_message"
-                            android:textColor="#909090"
-                            android:textSize="12sp"
-                            android:includeFontPadding="false" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="15dp"
-                            android:layout_marginLeft="63dp"
-                            android:layout_marginRight="63dp"
-                            android:layout_marginBottom="16dp"
-                            android:focusable="true"
-                            android:focusableInTouchMode="true"
-                            android:orientation="horizontal">
-
-                            <EditText
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginEnd="24dp"
-                                android:singleLine="true"
-                                android:inputType="numberDecimal"
-                                android:gravity="center"
-                                android:textSize="12sp"
-                                android:theme="@style/CustomEditTextStyle"
-                                android:hint="@string/verification_hint"
-                                android:text="@={model.code}"
-                                android:afterTextChanged="@{(s) -> model.onChangeCode()}" />
-
-                            <Button
-                                android:layout_width="57dp"
-                                android:layout_height="27dp"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:text="@string/ok"
-                                android:textSize="14sp"
-                                android:textColor="@drawable/selector_textcolor_button"
-                                android:background="@drawable/selector_button_red"
-                                android:enabled="@{model.isValidCode}"
-                                android:onClick="@{model::onClickValidateCode}"/>
-
-                        </LinearLayout>
+                            android:text="@={model.user.phone}" />
 
                     </LinearLayout>
 
@@ -341,7 +222,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="@{@string/formatted_point(model.point)}"
+                        android:text="@{@string/formatted_point(model.user.balloon)}"
                         android:textColor="@color/colorTextNormal"
                         android:textSize="16sp" />
 
@@ -358,9 +239,9 @@
             android:gravity="center"
             android:textSize="17sp"
             android:textColor="@color/colorPrimary"
+            android:text="@string/profile_edit"
             android:background="@color/colorPrimaryDark"
-            android:text="@{model.isEditMode ? @string/done : @string/profile_edit}"
-            android:onClick="@{model::onClickButton}" />
+            android:onClick="@{model::onClickEditButton}" />
 
     </android.support.design.widget.CoordinatorLayout>
 

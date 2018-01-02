@@ -5,7 +5,7 @@
     <data>
         <variable
             name="model"
-            type="com.entuition.wekend.view.join.viewmodel.SelectImageViewModel" />
+            type="com.entuition.wekend.view.main.setting.viewmodel.SelectImageViewModel" />
     </data>
 
     <LinearLayout
@@ -35,7 +35,7 @@
             android:layout_gravity="center"
             android:src="@drawable/img_profile_thumb_b_1"
             android:background="@drawable/img_profile_thumb_b_2"
-            android:onClick="@{model::onClickSelectImage}" />
+            android:onClick="@{(v) -> model.onClickSelectImage()}" />
 
         <Button
             android:layout_width="match_parent"

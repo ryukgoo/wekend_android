@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.entuition.wekend.data.SharedPreferencesWrapper;
 import com.entuition.wekend.data.source.userinfo.UserInfo;
@@ -107,7 +106,10 @@ public class UserInfoLocalDataSource implements UserInfoDataSource {
     }
 
     @Override
-    public void uploadProfileImage(@NonNull String filePath, UploadImageCallback callback) {}
+    public void uploadProfileImage(@NonNull String filePath, int index, UploadImageCallback callback) {}
+
+    @Override
+    public void deleteProfileImage(@NonNull String key, UpdateUserInfoCallback callback) {}
 
     @Override
     public void clearBadgeCount(String tag, @Nullable UpdateUserInfoCallback callback) {
@@ -119,9 +121,6 @@ public class UserInfoLocalDataSource implements UserInfoDataSource {
     }
 
     public void clearProfileImageCache(String imagePath) {
-
-        Log.d(TAG, "clearProfileImageCache > imagePath : " + imagePath);
-
         String cachedPhotoKey = ImageUtils.getHttpUrl(ImageUtils.PROFILE_IMAGE_BUCKET_NAME, imagePath);
         String cachedThumbKey = ImageUtils.getHttpUrl(ImageUtils.PROFILE_THUMB_BUCKET_NAME, imagePath);
 

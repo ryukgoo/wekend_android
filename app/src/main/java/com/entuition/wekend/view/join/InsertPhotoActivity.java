@@ -15,10 +15,10 @@ import com.entuition.wekend.data.source.userinfo.UserInfoDataSource;
 import com.entuition.wekend.data.source.userinfo.UserInfoRepository;
 import com.entuition.wekend.databinding.InsertPhotoActivityBinding;
 import com.entuition.wekend.util.AlertUtils;
-import com.entuition.wekend.view.common.RoundedDrawable;
-import com.entuition.wekend.view.join.viewmodel.SelectImageNavigator;
-import com.entuition.wekend.view.join.viewmodel.SelectImageViewModel;
+import com.entuition.wekend.view.common.CircleDrawable;
 import com.entuition.wekend.view.main.container.ContainerActivity;
+import com.entuition.wekend.view.main.setting.viewmodel.SelectImageNavigator;
+import com.entuition.wekend.view.main.setting.viewmodel.SelectImageViewModel;
 
 /**
  * Created by Kim on 2015-08-17.
@@ -74,7 +74,7 @@ public class InsertPhotoActivity extends AppCompatActivity implements SelectImag
 
     @Override
     public void onImageSelected(Bitmap bitmap) {
-        binding.insertProfileImage.setBackground(new RoundedDrawable(bitmap, 20, 0, -4));
+        binding.insertProfileImage.setBackground(new CircleDrawable(bitmap, 20, 0, -4));
     }
 
     @Override

@@ -76,7 +76,9 @@ public interface UserInfoDataSource {
 
     boolean validateVerificationCode(@NonNull String code);
 
-    void uploadProfileImage(@NonNull String filePath, UploadImageCallback callback);
+    void uploadProfileImage(@NonNull String filePath, int index, UploadImageCallback callback);
+
+    void deleteProfileImage(@NonNull String key, UpdateUserInfoCallback callback);
 
     void clearBadgeCount(String tag, UpdateUserInfoCallback callback);
 }

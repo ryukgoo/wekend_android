@@ -31,6 +31,9 @@ public class UserInfo {
         static final String GENDER = "gender";
         static final String BIRTH = "birth";
         static final String PHONE = "phone";
+        static final String INTRODUCE = "introduce";
+        static final String COMPANY = "company";
+        static final String SCHOOL = "school";
         static final String PHOTOS = "photos";
         static final String BALLOON = "balloon";
         static final String ENDPOINT_ARN = "EndpointARN";
@@ -50,6 +53,9 @@ public class UserInfo {
     private String gender;
     private int birth;
     private String phone;
+    private String introduce;
+    private String company;
+    private String school;
     private Set<String> photos;
     private int balloon;
     private String endpointARN;
@@ -69,6 +75,9 @@ public class UserInfo {
         this.gender = origin.gender;
         this.birth = origin.birth;
         this.phone = origin.phone;
+        this.introduce = origin.introduce;
+        this.company = origin.company;
+        this.school = origin.school;
         this.photos = origin.photos;
         this.balloon = origin.balloon;
         this.endpointARN = origin.endpointARN;
@@ -159,6 +168,33 @@ public class UserInfo {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @DynamoDBAttribute(attributeName = Attribute.INTRODUCE)
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    @DynamoDBAttribute(attributeName = Attribute.COMPANY)
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    @DynamoDBAttribute(attributeName = Attribute.SCHOOL)
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
     }
 
     @DynamoDBAttribute(attributeName = Attribute.PHOTOS)

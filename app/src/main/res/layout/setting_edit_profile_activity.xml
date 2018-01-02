@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:grid="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="model"
+            type="com.entuition.wekend.view.main.setting.viewmodel.SettingEditProfileViewModel" />
+        <variable
+            name="imageModel"
+            type="com.entuition.wekend.view.main.setting.viewmodel.MultiSelectImageViewModel" />
+        <variable
+            name="activity"
+            type="com.entuition.wekend.view.main.setting.SettingEditProfileActivity" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/setting_toolbar"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:titleTextAppearance="@style/Toolbar.TitleText"
+            app:theme="@style/ToolbarTheme">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/id_toolbar_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="7dp"
+                android:text="@string/title_edit_profile"
+                android:singleLine="true"
+                style="@style/Toolbar.TitleText" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.percent.PercentFrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp">
+
+                        <android.support.v7.widget.GridLayout
+                            android:id="@+id/grid_layout"
+                            android:layout_gravity="center"
+                            app:layout_aspectRatio="100%"
+                            app:layout_widthPercent="100%"
+                            grid:useDefaultMargins="true"
+                            grid:alignmentMode="alignBounds"
+                            grid:columnCount="3"
+                            grid:orientation="horizontal">
+
+                            <com.entuition.wekend.view.main.setting.viewmodel.GridLayoutCell
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                grid:layout_rowSpan="2"
+                                grid:layout_columnSpan="2"
+                                grid:layout_gravity="fill"
+                                android:onClick="@{(v) -> activity.onClickSelectImage(v, 0)}"
+                                app:profileImageId="@{model.userId}"
+                                app:profileImageIndex="@{0}" />
+
+                            <com.entuition.wekend.view.main.setting.viewmodel.GridLayoutCell
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                grid:layout_gravity="fill"
+                                grid:layout_rowWeight="1"
+                                grid:layout_columnWeight="1"
+                                android:onClick="@{(v) -> activity.onClickSelectImage(v, 1)}"
+                                app:profileImageId="@{model.userId}"
+                                app:profileImageIndex="@{1}" />
+
+                            <com.entuition.wekend.view.main.setting.viewmodel.GridLayoutCell
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                grid:layout_gravity="fill"
+                                grid:layout_rowWeight="1"
+                                grid:layout_columnWeight="1"
+                                android:onClick="@{(v) -> activity.onClickSelectImage(v, 2)}"
+                                app:profileImageId="@{model.userId}"
+                                app:profileImageIndex="@{2}" />
+
+                            <com.entuition.wekend.view.main.setting.viewmodel.GridLayoutCell
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                grid:layout_gravity="fill"
+                                grid:layout_rowWeight="1"
+                                grid:layout_columnWeight="1"
+                                android:onClick="@{(v) -> activity.onClickSelectImage(v, 3)}"
+                                app:profileImageId="@{model.userId}"
+                                app:profileImageIndex="@{3}" />
+
+                            <com.entuition.wekend.view.main.setting.viewmodel.GridLayoutCell
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                grid:layout_gravity="fill"
+                                grid:layout_rowWeight="1"
+                                grid:layout_columnWeight="1"
+                                android:onClick="@{(v) -> activity.onClickSelectImage(v, 4)}"
+                                app:profileImageId="@{model.userId}"
+                                app:profileImageIndex="@{4}" />
+
+                            <com.entuition.wekend.view.main.setting.viewmodel.GridLayoutCell
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                grid:layout_gravity="fill"
+                                grid:layout_rowWeight="1"
+                                grid:layout_columnWeight="1"
+                                android:onClick="@{(v) -> activity.onClickSelectImage(v, 5)}"
+                                app:profileImageId="@{model.userId}"
+                                app:profileImageIndex="@{5}" />
+
+                        </android.support.v7.widget.GridLayout>
+
+                    </android.support.percent.PercentFrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="80dp"
+                                    android:layout_height="match_parent"
+                                    android:minHeight="80dp"
+                                    android:gravity="start|center_vertical"
+                                    android:text="@string/introduce"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/colorTextNormal"
+                                    android:textSize="16sp" />
+
+                                <EditText
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:minHeight="80dp"
+                                    android:layout_weight="1"
+                                    android:layout_gravity="fill_vertical"
+                                    android:textSize="16sp"
+                                    android:text="@={model.introduce}"
+                                    android:hint="@string/introduce_hint"
+                                    android:maxLength="200"
+                                    android:inputType="textMultiLine"
+                                    android:background="@android:color/transparent"
+                                    android:theme="@style/CustomEditTextStyle"
+                                    android:afterTextChanged="@{(s) -> model.onChangeIntroduce()}" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:background="#dadada"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="81dp">
+
+                                <TextView
+                                    android:layout_width="80dp"
+                                    android:layout_height="match_parent"
+                                    android:text="@string/company"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorTextNormal"
+                                    android:textAlignment="center"
+                                    android:gravity="start|center_vertical" />
+
+                                <EditText
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:textSize="20sp"
+                                    android:inputType="text"
+                                    android:text="@={model.company}"
+                                    android:hint="@string/company_hint"
+                                    android:textAlignment="center"
+                                    android:background="@android:color/transparent"
+                                    android:theme="@style/CustomEditTextStyle" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:background="#dadada"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="81dp">
+
+                                <TextView
+                                    android:layout_width="80dp"
+                                    android:layout_height="match_parent"
+                                    android:text="@string/school"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorTextNormal"
+                                    android:textAlignment="center"
+                                    android:gravity="start|center_vertical" />
+
+                                <EditText
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:text="@={model.school}"
+                                    android:hint="@string/school_hint"
+                                    android:textSize="20sp"
+                                    android:inputType="text"
+                                    android:textAlignment="center"
+                                    android:background="@android:color/transparent"
+                                    android:theme="@style/CustomEditTextStyle" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:background="#dadada"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp" />
+
+                        </LinearLayout>
+
+                        <!-- Nickname & Age Area
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:layout_height="81dp">
+
+                                <TextView
+                                    android:layout_width="80dp"
+                                    android:layout_height="match_parent"
+                                    android:text="@string/nickname"
+                                    android:textColor="@color/colorTextNormal"
+                                    android:textSize="16sp"
+                                    android:textAlignment="center"
+                                    android:gravity="start|center_vertical" />
+
+                                <EditText
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:hint="@string/edit_nickname_hint"
+                                    android:inputType="numberDecimal"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/colorTextNormal"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:background="@android:color/transparent"
+                                    android:theme="@style/CustomEditTextStyle"
+                                    android:text="@={model.nickname}"
+                                    android:afterTextChanged="@{(s) -> model.onChangeNickname()}" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:background="#dadada"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="81dp">
+
+                                <TextView
+                                    android:layout_width="80dp"
+                                    android:layout_height="match_parent"
+                                    android:text="@string/age"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorTextNormal"
+                                    android:textAlignment="center"
+                                    android:gravity="start|center_vertical" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/colorTextNormal"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    app:profileAge="@{model.user.birth}" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:background="#dadada"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp" />
+
+                        </LinearLayout>
+
+                        -->
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="81dp">
+
+                                <TextView
+                                    android:layout_width="80dp"
+                                    android:layout_height="match_parent"
+                                    android:text="@string/mobile"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorTextNormal"
+                                    android:textAlignment="center"
+                                    android:gravity="start|center_vertical" />
+
+                                <EditText
+                                    android:id="@+id/edit_phone"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:textSize="20sp"
+                                    android:hint="@string/mobile_number_hint"
+                                    android:inputType="phone"
+                                    android:gravity="center"
+                                    android:background="@android:color/transparent"
+                                    android:theme="@style/CustomEditTextStyle"
+                                    android:text="@={model.phone}"
+                                    android:afterTextChanged="@{(s) -> model.onChangePhone()}" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <Button
+                                    android:layout_width="122dp"
+                                    android:layout_height="27dp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:text="@string/profile_verification"
+                                    android:textSize="14sp"
+                                    android:textColor="@drawable/selector_textcolor_button"
+                                    android:background="@drawable/selector_button_red"
+                                    android:enabled="@{model.isVaildPhone}"
+                                    android:onClick="@{model::onClickRequestCode}"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="21dp"
+                                    android:gravity="center"
+                                    android:text="@string/profile_verification_message"
+                                    android:textColor="#909090"
+                                    android:textSize="14sp"
+                                    android:includeFontPadding="false" />
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_marginLeft="63dp"
+                                    android:layout_marginRight="63dp"
+                                    android:layout_marginBottom="16dp"
+                                    android:orientation="horizontal">
+
+                                    <EditText
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:layout_marginEnd="24dp"
+                                        android:singleLine="true"
+                                        android:inputType="numberDecimal"
+                                        android:gravity="center"
+                                        android:textSize="14sp"
+                                        android:theme="@style/CustomEditTextStyle"
+                                        android:hint="@string/verification_hint"
+                                        android:text="@={model.code}"
+                                        android:afterTextChanged="@{(s) -> model.onChangeCode()}" />
+
+                                    <Button
+                                        android:layout_width="57dp"
+                                        android:layout_height="27dp"
+                                        android:layout_gravity="center"
+                                        android:gravity="center"
+                                        android:text="@string/ok"
+                                        android:textSize="14sp"
+                                        android:textColor="@drawable/selector_textcolor_button"
+                                        android:background="@drawable/selector_button_red"
+                                        android:enabled="@{model.isValidCode}"
+                                        android:onClick="@{model::onClickValidateCode}"/>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <View
+                                android:background="#dadada"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@drawable/toolbar_drop_shadow" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</layout>

@@ -34,7 +34,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp"
             android:onClick="@{() -> model.onClickProfileImage()}"
-            app:profileImageMask="@{userInfo.photos}" />
+            app:profileImageMask="@{userInfo.userId}" />
 
         <ImageView
             android:layout_width="110dp"

@@ -6,12 +6,6 @@ package com.entuition.wekend.view.main.setting.viewmodel;
 
 public interface SettingProfileNavigator {
 
-//    void onEditProfileImage();
-
-    void showInvalidCode();
-    void showRequestCode();
-    void showRequestCodeFailed();
-    void showEditPhoneComplete();
-    void showEditPhoneFailed();
+    void gotoEditProfileView();
 
 }

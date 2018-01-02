@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <FrameLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/profile_default"
+            android:src="@drawable/profile_default"
+            android:scaleType="centerCrop" />
+
+        <ImageButton
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="4dp"
+            android:background="@drawable/img_icon_plus" />
+
+    </FrameLayout>
+
+</layout>

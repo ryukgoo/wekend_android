@@ -3,7 +3,6 @@ package com.entuition.wekend.view.main.container.viewmodel;
 import android.content.Context;
 import android.databinding.ObservableBoolean;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 
 import com.entuition.wekend.data.SharedPreferencesWrapper;
@@ -42,17 +41,11 @@ public class GuidePopupViewModel extends AbstractViewModel {
     public void onDestroy() {}
 
     public void onClickCloseButton(View view) {
-
-        Log.d(TAG, "onClickCloseButton > showNoMore : " + isCheckBox.get());
-
-        SharedPreferencesWrapper.setShowNoMoreGuide(PreferenceManager.getDefaultSharedPreferences(getApplication()), isCheckBox.get());
         navigator.get().dismissPopup();
     }
 
     public void onClickCheckBox(View view) {
         isCheckBox.set(!isCheckBox.get());
-
-        Log.d(TAG, "onClickCheckBox > showNoMore : " + isCheckBox.get());
 
         SharedPreferencesWrapper.setShowNoMoreGuide(PreferenceManager.getDefaultSharedPreferences(getApplication()), isCheckBox.get());
         navigator.get().dismissPopup();

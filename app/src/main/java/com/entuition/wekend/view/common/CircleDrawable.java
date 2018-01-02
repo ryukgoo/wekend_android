@@ -16,7 +16,7 @@ import android.graphics.drawable.Drawable;
  * Created by ryukgoo on 2017. 11. 1..
  */
 
-public class RoundedDrawable extends Drawable {
+public class CircleDrawable extends Drawable {
     private final Bitmap mBitmap;
     private final Paint mPaint;
     private final RectF mRectF;
@@ -30,7 +30,7 @@ public class RoundedDrawable extends Drawable {
     private int centerX;
     private int centerY;
 
-    public RoundedDrawable(Bitmap bitmap, int margin) {
+    public CircleDrawable(Bitmap bitmap, int margin) {
         mBitmap = bitmap;
         mRectF = new RectF();
         mPaint = new Paint();
@@ -46,7 +46,7 @@ public class RoundedDrawable extends Drawable {
         mBitmapRect = new RectF(margin, margin, bitmap.getWidth() - margin, bitmap.getHeight() - margin);
     }
 
-    public RoundedDrawable(Bitmap bitmap, int margin, int centerX, int centerY) {
+    public CircleDrawable(Bitmap bitmap, int margin, int centerX, int centerY) {
         this(bitmap, margin);
 
         this.centerX = centerX;

@@ -28,7 +28,7 @@
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1">
 
                     <android.support.v4.view.ViewPager
@@ -67,13 +67,13 @@
                         android:layout_height="wrap_content"
                         android:theme="@style/CheckBoxStyle"
                         android:visibility="@{model.isShowCheckbox ? View.VISIBLE : View.GONE}"
-                        android:checked="@={model.isCheckBox}" />
+                        android:onClick="@{model::onClickCheckBox}" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorPrimary"
-                        android:text="다시보지않음"
+                        android:text="@string/guide_no_more_show"
                         android:visibility="@{model.isShowCheckbox ? View.VISIBLE : View.GONE}"
                         android:onClick="@{model::onClickCheckBox}" />
 
@@ -85,9 +85,9 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/com_facebook_close"
-                android:layout_gravity="top|right"
+                android:layout_gravity="top|end"
                 android:onClick="@{model::onClickCloseButton}" />
 
         </FrameLayout>

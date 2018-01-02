@@ -106,7 +106,7 @@ public class MessageReceivingService extends IntentService {
         boolean isAvailableAlarm = SharedPreferencesWrapper.getNotificationAlarm(sharedPreferences);
         boolean isAvailableVibration = SharedPreferencesWrapper.getNotificationVibration(sharedPreferences);
 
-        int notificationDefault = Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
+        int notificationDefault = Notification.DEFAULT_LIGHTS;// | Notification.FLAG_AUTO_CANCEL;
         if (isAvailableAlarm) notificationDefault |= Notification.DEFAULT_SOUND;
         if (isAvailableVibration) notificationDefault |= Notification.DEFAULT_VIBRATE;
         notificationBuilder.setDefaults(notificationDefault);

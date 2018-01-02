@@ -73,6 +73,16 @@ public class SettingBindingAdapters {
         }
     }
 
+    @BindingAdapter({"profileImageId", "profileImageIndex"})
+    public static void loadImage(GridLayoutCell cell, @Nullable String id, int index) {
+        ImageView view = cell.findViewById(R.id.imageView);
+        if (id != null) {
+            String photo = ImageUtils.getUploadedPhotoFileName(id, index);
+            String imageUrl = ImageUtils.getHttpUrl(ImageUtils.PROFILE_IMAGE_BUCKET_NAME, photo);
+            ImageLoader.getInstance().displayImage(imageUrl, view, ImageOptions.PROFILE_DEFAULT, new BigSizeImageLoadingListener(photo));
+        }
+    }
+
     /**
      * set age from birth
      * @param view

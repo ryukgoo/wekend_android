@@ -1,4 +1,4 @@
-package com.entuition.wekend.view.join.viewmodel;
+package com.entuition.wekend.view.main.setting.viewmodel;
 
 import android.graphics.Bitmap;
 

@@ -7,7 +7,6 @@ import android.util.Log;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBQueryExpression;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.entuition.wekend.data.CognitoSyncClientManager;
 import com.entuition.wekend.data.source.noticeinfo.NoticeInfo;
 import com.entuition.wekend.data.source.noticeinfo.NoticeInfoDataSource;
@@ -35,8 +34,7 @@ public class NoticeInfoRemoteDataSource implements NoticeInfoDataSource {
     private DynamoDBMapper mapper;
 
     private NoticeInfoRemoteDataSource() {
-        AmazonDynamoDBClient client = CognitoSyncClientManager.getDynamoDBClient();
-        mapper = new DynamoDBMapper(client);
+        mapper = CognitoSyncClientManager.getDynamoDBMapper();
     }
 
     @Override

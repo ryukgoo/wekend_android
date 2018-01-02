@@ -260,10 +260,10 @@ public class UserInfoRepository implements UserInfoDataSource {
     }
 
     @Override
-    public void uploadProfileImage(@NonNull String filePath, final UploadImageCallback callback) {
+    public void uploadProfileImage(@NonNull String filePath, int index, final UploadImageCallback callback) {
 
         final String userId = getUserId();
-        final String imagePath = ImageUtils.getUploadedPhotoFileName(getUserId(), 0);
+        final String imagePath = ImageUtils.getUploadedPhotoFileName(userId, index);
 
         S3TransferUtilityManager.getInstance(context).setUploadListener(new TransferListener() {
             @Override
@@ -273,8 +273,9 @@ public class UserInfoRepository implements UserInfoDataSource {
                     UserInfo userInfo = cachedUserInfos.get(userId);
                     if (userInfo == null) callback.onErrorUnknown();
 
-                    Set<String> photos = new HashSet<String>();
-                    photos.add(imagePath);
+                    Set<String> photos = userInfo.getPhotos();
+                    if (photos == null) { photos = new HashSet<>(); }
+                    if (!photos.contains(imagePath)) { photos.add(imagePath); }
                     userInfo.setPhotos(photos);
 
                     remoteDataSource.updateUserInfo(userInfo, new UpdateUserInfoCallback() {
@@ -307,6 +308,38 @@ public class UserInfoRepository implements UserInfoDataSource {
         });
 
         S3TransferUtilityManager.getInstance(context).beginUpload(context, filePath, imagePath);
+    }
+
+    @Override
+    public void deleteProfileImage(@NonNull final String key, final UpdateUserInfoCallback callback) {
+        Log.d(TAG, "deleteProfileImage > key : " + key);
+        remoteDataSource.deleteProfileImage(key, callback);
+
+        getUserInfo(getUserId(), new GetUserInfoCallback() {
+            @Override
+            public void onUserInfoLoaded(UserInfo getInfo) {
+                if (getInfo.getPhotos().contains(key)) {
+                    getInfo.getPhotos().remove(key);
+                    remoteDataSource.updateUserInfo(getInfo, new UpdateUserInfoCallback() {
+                        @Override
+                        public void onUpdateComplete(UserInfo updatedInfo) {
+                            if (cachedUserInfos == null) cachedUserInfos = new LinkedHashMap<>();
+                            cachedUserInfos.put(updatedInfo.getUserId(), updatedInfo);
+                            localDataSource.clearProfileImageCache(key);
+                            callback.onUpdateComplete(updatedInfo);
+                        }
+
+                        @Override
+                        public void onUpdateFailed() {
+                            callback.onUpdateFailed();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onDataNotAvailable() {}
+        });
     }
 
     @Override

@@ -25,8 +25,13 @@
     </string-array>
 
     <string-array name="share_apps">
-        <item>Kakao Talk</item>
-        <item>Facebook</item>
+        <item>@string/kakao_talk</item>
+        <item>@string/facebook</item>
+    </string-array>
+
+    <string-array name="edit_profile_menu">
+        <item>@string/edit</item>
+        <item>@string/delete</item>
     </string-array>
 
 </resources>
