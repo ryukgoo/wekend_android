@@ -3,7 +3,6 @@ package com.entuition.wekend.view.main.setting;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -11,7 +10,6 @@ import com.entuition.wekend.R;
 import com.entuition.wekend.data.source.userinfo.UserInfoRepository;
 import com.entuition.wekend.databinding.SettingProfileActivityBinding;
 import com.entuition.wekend.view.main.setting.adapter.ProfileViewPagerAdapter;
-import com.entuition.wekend.view.main.setting.viewmodel.SelectImageViewModel;
 import com.entuition.wekend.view.main.setting.viewmodel.SettingProfileNavigator;
 import com.entuition.wekend.view.main.setting.viewmodel.SettingProfileViewModel;
 
@@ -26,7 +24,6 @@ public class SettingProfileActivity extends AppCompatActivity implements Setting
 
     private SettingProfileActivityBinding binding;
     private SettingProfileViewModel viewModel;
-    private SelectImageViewModel imageModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +53,6 @@ public class SettingProfileActivity extends AppCompatActivity implements Setting
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        imageModel.onRequestPermissionsResult(this, requestCode, permissions, grantResults);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        imageModel.onActivityResult(this, requestCode, resultCode, data);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
@@ -78,15 +65,15 @@ public class SettingProfileActivity extends AppCompatActivity implements Setting
     }
 
     private void setupToolbar() {
-        setSupportActionBar(binding.profileToolbar);
+        setSupportActionBar(binding.appBar.profileToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     private void setupViewPager() {
         ProfileViewPagerAdapter adapter = new ProfileViewPagerAdapter(binding.getModel(), new ArrayList<String>(0));
-        binding.profileViewPager.setAdapter(adapter);
-        binding.profileViewPager.addOnPageChangeListener(binding.indicator);
+        binding.appBar.profileViewPager.setAdapter(adapter);
+        binding.appBar.profileViewPager.addOnPageChangeListener(binding.appBar.indicator);
     }
 
     @Override

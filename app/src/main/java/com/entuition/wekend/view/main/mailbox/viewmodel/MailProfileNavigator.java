@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 public interface MailProfileNavigator {
 
     void confirmPropose(DialogInterface.OnClickListener listener);
+    void gotoCampaignDetail(int productId);
 
     void onProposeComplete(String nickname);
     void onAcceptComplete(String nickname);

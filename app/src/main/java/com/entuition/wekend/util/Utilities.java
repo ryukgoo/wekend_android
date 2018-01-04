@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -25,7 +27,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -34,8 +35,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.UUID;
 
 import javax.crypto.Mac;
@@ -50,8 +49,8 @@ public class Utilities {
 
     public static final String TAG = "Utilities";
 
-    public static final String ENCODING_FORMAT = "UTF8";
-    public static final String SIGNATURE_METHOD = "HmacSHA256";
+    static final String ENCODING_FORMAT = "UTF8";
+    static final String SIGNATURE_METHOD = "HmacSHA256";
     public static final String HTML_NEW_LINE = "<br />";
 
     public static String getDeviceUUID(final Context context) {
@@ -76,8 +75,7 @@ public class Utilities {
     public static String generateRandomString() {
         SecureRandom random = new SecureRandom();
         byte[] randomBytes = random.generateSeed(16);
-        String randomString = new String(Hex.encodeHex(randomBytes));
-        return randomString;
+        return new String(Hex.encodeHex(randomBytes));
     }
 
     public static String getTimestamp() {
@@ -126,11 +124,6 @@ public class Utilities {
         return map;
     }
 
-    public static ArrayList<String> asSortedArrayList(Set<String> stringSet) {
-        if (stringSet == null) return new ArrayList<String>();
-        else return new ArrayList<String>(new TreeSet<String>(stringSet));
-    }
-
     public static String getAgeFromBirthYear(int birthYear) {
         Date date = new Date();
         Calendar calendar = new GregorianCalendar();
@@ -147,6 +140,15 @@ public class Utilities {
         calendar.setTime(date);
 
         return calendar.get(Calendar.YEAR);
+    }
+
+    public static String getPhoneNumberFormat(String phone) {
+        if (phone == null) return phone;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return PhoneNumberUtils.formatNumber(phone, Locale.getDefault().getCountry());
+        } else {
+            return PhoneNumberUtils.formatNumber(phone);
+        }
     }
 
     public static int generateRandomVerificationCode() {
@@ -178,13 +180,14 @@ public class Utilities {
     }
 
     public static boolean isAppRunning(final Context context, final String packageName) {
-        final ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        final List<ActivityManager.RunningAppProcessInfo> procInfos = activityManager.getRunningAppProcesses();
-        if (procInfos != null)
-        {
-            for (final ActivityManager.RunningAppProcessInfo processInfo : procInfos) {
-                if (processInfo.processName.equals(packageName)) {
-                    return true;
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (activityManager != null) {
+            List<ActivityManager.RunningAppProcessInfo> procInfos = activityManager.getRunningAppProcesses();
+            if (procInfos != null) {
+                for (ActivityManager.RunningAppProcessInfo processInfo : procInfos) {
+                    if (processInfo.processName.equals(packageName)) {
+                        return true;
+                    }
                 }
             }
         }
@@ -233,13 +236,9 @@ public class Utilities {
         }
 
         @Override
-        protected void addSessionCredentials(Request<?> request, AWSSessionCredentials credentials) {
-
-        }
+        protected void addSessionCredentials(Request<?> request, AWSSessionCredentials credentials) {}
 
         @Override
-        public void sign(Request<?> request, AWSCredentials credentials) throws AmazonClientException {
-
-        }
+        public void sign(Request<?> request, AWSCredentials credentials) throws AmazonClientException {}
     }
 }

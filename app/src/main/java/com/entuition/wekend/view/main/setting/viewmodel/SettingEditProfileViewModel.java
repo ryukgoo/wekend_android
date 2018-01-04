@@ -56,6 +56,10 @@ public class SettingEditProfileViewModel extends AbstractViewModel {
             @Override
             public void onUserInfoLoaded(UserInfo result) {
                 user.set(result);
+                introduce.set(result.getIntroduce());
+                company.set(result.getCompany());
+                school.set(result.getSchool());
+                phone.set(result.getPhone());
             }
 
             @Override

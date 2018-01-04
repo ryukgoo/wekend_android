@@ -40,6 +40,8 @@ public class CampaignDetailActivity extends AppCompatActivity implements Campaig
         super.onCreate(savedInstanceState);
 
         int productId = getIntent().getIntExtra(Constants.ExtraKeys.PRODUCT_ID, -1);
+        boolean show = getIntent().getBooleanExtra(Constants.ExtraKeys.PRODUCT_SHOW, true);
+
         ProductInfoDataSource dataSource = ProductInfoRepository.getInstance(this);
 
         binding = DataBindingUtil.setContentView(this, R.layout.campaign_detail_activity);
@@ -51,6 +53,7 @@ public class CampaignDetailActivity extends AppCompatActivity implements Campaig
         setupMapView(savedInstanceState);
 
         binding.setModel(model);
+        binding.setIsShow(show);
         model.setFacebookShare(this);
         mapView.getMapAsync(model);
 

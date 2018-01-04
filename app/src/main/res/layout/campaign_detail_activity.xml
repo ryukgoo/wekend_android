@@ -10,6 +10,9 @@
         <variable
             name="model"
             type="com.entuition.wekend.view.main.campaign.viewmodel.CampaignDetailViewModel" />
+        <variable
+            name="isShow"
+            type="boolean" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -227,7 +230,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:animateLayoutChanges="true">
+            android:animateLayoutChanges="true"
+            android:visibility="@{isShow ? View.VISIBLE : View.GONE}">
 
             <TextView
                 android:layout_width="match_parent"

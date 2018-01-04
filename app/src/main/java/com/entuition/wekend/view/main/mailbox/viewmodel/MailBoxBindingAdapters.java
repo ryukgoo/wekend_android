@@ -3,15 +3,12 @@ package com.entuition.wekend.view.main.mailbox.viewmodel;
 import android.databinding.BindingAdapter;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.entuition.wekend.R;
 import com.entuition.wekend.data.source.mail.IMail;
 import com.entuition.wekend.data.source.mail.ProposeStatus;
-import com.entuition.wekend.data.source.product.ProductInfo;
 import com.entuition.wekend.util.ImageOptions;
 import com.entuition.wekend.util.ImageUtils;
 import com.entuition.wekend.util.Utilities;
@@ -61,19 +58,6 @@ public class MailBoxBindingAdapters {
             view.setTextColor(Color.parseColor(mail.getHighlightColor()));
         } else {
             view.setTextColor(Color.parseColor("#43434a"));
-        }
-    }
-
-    @BindingAdapter("mailProfileDesc")
-    public static void setMailProfileProductDesc(TextView view, ProductInfo info) {
-
-        Log.d(TAG, "setMailProfileProductDesc");
-
-        if (info != null) {
-            Log.d(TAG, "setMailProfileProductDesc > info : " + info.getTitleKor());
-            String description = info.getTitleKor() + Utilities.HTML_NEW_LINE + Utilities.HTML_NEW_LINE
-                    + info.getDescription();
-            view.setText(Html.fromHtml(description));
         }
     }
 

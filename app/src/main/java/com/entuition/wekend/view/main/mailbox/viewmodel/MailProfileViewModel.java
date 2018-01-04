@@ -152,6 +152,10 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
         mailType.set(MailType.valueOf(intent.getStringExtra(Constants.ExtraKeys.MAIL_TYPE)));
     }
 
+    public void onClickShowProduct() {
+        navigator.get().gotoCampaignDetail(productId);
+    }
+
     public void onClickProposeButton() {
         navigator.get().confirmPropose(new DialogInterface.OnClickListener() {
             @Override
@@ -255,7 +259,7 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
         if (mail.get().getMailType() == MailType.receive) {
 
             ReceiveMail receiveMail = (ReceiveMail) mail.get();
-            receiveMail.setStatus(ProposeStatus.Made.toString());
+            receiveMail.setStatus(ProposeStatus.reject.toString());
             receiveMail.setIsRead(ReadState.read.ordinal());
             receiveMail.setResponseTime(Utilities.getTimestamp());
 

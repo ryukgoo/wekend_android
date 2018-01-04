@@ -38,12 +38,12 @@ public class Constants {
         public static final String GENDER = "gender";
         public static final String BIRTH = "birth";
         public static final String PRODUCT_ID = "product_id";
+        public static final String PRODUCT_SHOW = "product_show";
         public static final String PRODUCT_TITLE = "product_title";
         public static final String USER_ID = "userId";
         public static final String FRIEND_ID = "friendId";
         public static final String MAIL_TYPE = "mailType";
         public static final String MAP_ADDRESS = "map_address";
-        public static final String CELL_INDEX = "cell_index";
     }
 
     public enum GenderValue {

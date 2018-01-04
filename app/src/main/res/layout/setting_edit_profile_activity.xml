@@ -72,6 +72,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp">
 
+                        <!-- Grid Layout -->
                         <android.support.v7.widget.GridLayout
                             android:id="@+id/grid_layout"
                             android:layout_gravity="center"
@@ -151,6 +152,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
+                        <!-- About(Introduce) -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -180,8 +182,9 @@
                                     android:layout_weight="1"
                                     android:layout_gravity="fill_vertical"
                                     android:textSize="16sp"
+                                    android:textColor="@color/colorTextHint"
                                     android:text="@={model.introduce}"
-                                    android:hint="@string/introduce_hint"
+                                    android:hint="@{@string/introduce_hint}"
                                     android:maxLength="200"
                                     android:inputType="textMultiLine"
                                     android:background="@android:color/transparent"
@@ -197,6 +200,7 @@
 
                         </LinearLayout>
 
+                        <!-- Company -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -222,7 +226,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:textSize="20sp"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorTextHint"
                                     android:inputType="text"
                                     android:text="@={model.company}"
                                     android:hint="@string/company_hint"
@@ -239,6 +244,7 @@
 
                         </LinearLayout>
 
+                        <!-- School -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -266,7 +272,8 @@
                                     android:layout_weight="1"
                                     android:text="@={model.school}"
                                     android:hint="@string/school_hint"
-                                    android:textSize="20sp"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorTextHint"
                                     android:inputType="text"
                                     android:textAlignment="center"
                                     android:background="@android:color/transparent"
@@ -282,7 +289,6 @@
                         </LinearLayout>
 
                         <!-- Nickname & Age Area
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -367,9 +373,9 @@
                                 android:layout_height="1dp" />
 
                         </LinearLayout>
-
                         -->
 
+                        <!-- Phone -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -396,7 +402,8 @@
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:textSize="20sp"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorTextHint"
                                     android:hint="@string/mobile_number_hint"
                                     android:inputType="phone"
                                     android:gravity="center"

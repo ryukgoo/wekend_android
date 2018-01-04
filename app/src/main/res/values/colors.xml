@@ -12,6 +12,7 @@
     <color name="controlActivated">#0000FF</color>
 
     <color name="colorTextNormal">#43434a</color>
+    <color name="colorTextHint">#909090</color>
     <color name="colorTextLogin">#FFD5D6</color>
     <color name="colorTextListSub">#707278</color>
     <color name="colorTextDisable">#cccccc</color>

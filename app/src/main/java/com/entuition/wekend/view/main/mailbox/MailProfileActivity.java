@@ -2,11 +2,13 @@ package com.entuition.wekend.view.main.mailbox;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 
@@ -21,6 +23,7 @@ import com.entuition.wekend.databinding.MailProfileActivityBinding;
 import com.entuition.wekend.databinding.UserInputDialogBinding;
 import com.entuition.wekend.util.AlertUtils;
 import com.entuition.wekend.util.Constants;
+import com.entuition.wekend.view.main.campaign.CampaignDetailActivity;
 import com.entuition.wekend.view.main.mailbox.viewmodel.MailProfileNavigator;
 import com.entuition.wekend.view.main.mailbox.viewmodel.MailProfileViewModel;
 import com.entuition.wekend.view.main.mailbox.viewmodel.UserInputDialogListener;
@@ -89,6 +92,15 @@ public class MailProfileActivity extends AppCompatActivity implements MailProfil
     }
 
     @Override
+    public void gotoCampaignDetail(int productId) {
+        Log.d(TAG, "gotoCampaignDetail > productId : " + productId);
+        Intent intent = new Intent(this, CampaignDetailActivity.class);
+        intent.putExtra(Constants.ExtraKeys.PRODUCT_ID, productId);
+        intent.putExtra(Constants.ExtraKeys.PRODUCT_SHOW, false);
+        startActivity(intent);
+    }
+
+    @Override
     public void onProposeComplete(String nickname) {
         String title = getString(R.string.propose_success);
         String message = getString(R.string.propose_success_message, nickname);
@@ -127,14 +139,14 @@ public class MailProfileActivity extends AppCompatActivity implements MailProfil
     }
 
     private void setupToolbar() {
-        setSupportActionBar(binding.profileToolbar);
+        setSupportActionBar(binding.appBar.profileToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     private void setupViewPager() {
         ProfileViewPagerAdapter adapter = new ProfileViewPagerAdapter(model, new ArrayList<String>(0));
-        binding.profileViewPager.setAdapter(adapter);
+        binding.appBar.profileViewPager.setAdapter(adapter);
     }
 
     @SuppressLint("RestrictedApi")

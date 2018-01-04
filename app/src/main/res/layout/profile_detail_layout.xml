@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View" />
+        <import type="com.entuition.wekend.util.Utilities" />
+        <variable
+            name="user"
+            type="com.entuition.wekend.data.source.userinfo.UserInfo" />
+        <variable
+            name="isShowPhone"
+            type="boolean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24sp"
+                    android:text='@{user.nickname == null ? "" : @string/nickname_age(user.nickname, Utilities.getAgeFromBirthYear(user.birth))}' />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:text="@{user.company}"
+                    android:visibility="@{user.company != null ? View.VISIBLE : View.GONE}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:text="@{user.school}"
+                    android:visibility="@{user.school != null ? View.VISIBLE : View.GONE}" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:textSize="18sp"
+                    android:visibility="@{isShowPhone ? View.VISIBLE : View.GONE}"
+                    android:text='@{Utilities.getPhoneNumberFormat(user.phone) ?? ""}' />
+
+            </LinearLayout>
+
+            <View
+                android:background="#dadada"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="@{user.introduce != null ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:textSize="16sp"
+                android:text="@{user.introduce}" />
+
+            <View
+                android:background="#dadada"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

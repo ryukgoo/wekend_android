@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="android.view.View" />
@@ -17,67 +17,104 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:fitsSystemWindows="true">
-
-            <android.support.design.widget.CollapsingToolbarLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-                android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorPrimary"
-                app:expandedTitleMarginStart="48dp"
-                app:expandedTitleMarginEnd="64dp">
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_collapseMode="parallax">
-
-                    <android.support.percent.PercentFrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <android.support.v4.view.ViewPager
-                            android:id="@+id/profile_view_pager"
-                            app:layout_aspectRatio="100%"
-                            app:layout_widthPercent="100%"
-                            android:background="@drawable/profile_default"
-                            app:profileViewPager="@{model.photos}" />
-
-                    </android.support.percent.PercentFrameLayout>
-
-                    <com.entuition.wekend.view.common.PagerIndicator
-                        android:id="@+id/profile_indicator"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="8dp"
-                        android:layout_gravity="center_horizontal|bottom"
-                        app:profilePagerIndicator="@{model.photos}" />
-
-                </FrameLayout>
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/profile_toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@drawable/campaign_detail_toolbar_background"
-                    app:popupTheme="@style/ToolbarTheme"
-                    app:layout_collapseMode="pin" />
-
-            </android.support.design.widget.CollapsingToolbarLayout>
-
-        </android.support.design.widget.AppBarLayout>
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/profile_app_bar_layout"
+            bind:user="@{model.friend}" />
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="@{model.mail.message == null ? View.GONE : View.VISIBLE}">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp">
+
+                            <TextView
+                                android:layout_width="54dp"
+                                android:layout_height="match_parent"
+                                android:textSize="16sp"
+                                android:text="@string/message"
+                                android:gravity="start|center_vertical" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginBottom="15dp"
+                                android:textSize="16sp"
+                                android:layout_weight="1"
+                                android:gravity="start|center_vertical"
+                                android:text="@{model.mail.message}" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:background="#dadada"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp" />
+
+                    </LinearLayout>
+
+                    <include
+                        android:id="@+id/user_info"
+                        layout="@layout/profile_detail_layout"
+                        bind:user="@{model.friend}"
+                        bind:isShowPhone="@{model.status == ProposeStatus.Made}" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp">
+
+                        <TextView
+                            android:layout_width="54dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/campaign"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:gravity="start|top" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="70dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:text="@{@string/show_product(model.product.titleKor)}"
+                            android:onClick="@{() -> model.onClickShowProduct()}" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@drawable/toolbar_drop_shadow" />
+
+                <!--
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -261,6 +298,9 @@
                 </LinearLayout>
 
             </LinearLayout>
+            -->
+
+            </FrameLayout>
 
         </android.support.v4.widget.NestedScrollView>
 
