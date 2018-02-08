@@ -45,6 +45,8 @@ import com.roughike.bottombar.BottomBarBadge;
 import java.util.HashMap;
 import java.util.Map;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
+
 /**
  * Created by ryukgoo on 2016. 6. 28..
  */
@@ -98,6 +100,8 @@ public class ContainerActivity extends AppCompatActivity implements ContainerNav
     protected void onResume() {
         super.onResume();
         model.onResume();
+
+        ShortcutBadger.removeCount(getApplicationContext());
     }
 
     @Override
@@ -235,7 +239,7 @@ public class ContainerActivity extends AppCompatActivity implements ContainerNav
 
     @Override
     public void showLogoutDialog() {
-        AlertUtils.showAlertDialog(this, R.string.logout_app, R.string.logout,
+        AlertUtils.showAlertDialog(this, R.string.logout_app, R.string.logout_app_message,
                 true, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

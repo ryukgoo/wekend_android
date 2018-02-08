@@ -109,7 +109,9 @@ public class MailBoxListViewModel extends AbstractViewModel {
             mailDataSource.readMail(mail);
         }
 
-        navigator.get().gotoMailProfileView(mail);
+        if (navigator.get() != null) {
+            navigator.get().gotoMailProfileView(mail);
+        }
     }
 
     public void onClickDeleteItem(IMail mail, final int position, final SwipeLayout layout) {
@@ -117,13 +119,17 @@ public class MailBoxListViewModel extends AbstractViewModel {
         mailDataSource.deleteMail(mail, new MailDataSource.DeleteMailCallback() {
             @Override
             public void onCompleteDeleteMail(IMail mail, int remain) {
-                navigator.get().onCompleteDeleteMail(position, layout);
+                if (navigator.get() != null) {
+                    navigator.get().onCompleteDeleteMail(position, layout);
+                }
                 if (remain == 0) isNoData.set(true);
             }
 
             @Override
             public void onFailedDeleteMail() {
-                navigator.get().onFailedDeleteMail();
+                if (navigator.get() != null) {
+                    navigator.get().onFailedDeleteMail();
+                }
             }
         });
     }

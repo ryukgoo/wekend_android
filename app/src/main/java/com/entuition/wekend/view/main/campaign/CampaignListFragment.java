@@ -181,6 +181,15 @@ public class CampaignListFragment extends AbstractFragment implements CampaignLi
                 model.filterProductInfos(options);
                 containerViewModel.title.set(model.getTitle());
             }
+
+            @Override
+            public void onClickShowAll() {
+                filterViewModel.reset();
+                filterViewModel.close();
+                ProductFilterOptions options = new ProductFilterOptions.Builder().build();
+                model.filterProductInfos(options);
+                containerViewModel.title.set(model.getTitle());
+            }
         });
 
         filterViewModel.onCreate();

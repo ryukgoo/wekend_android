@@ -141,6 +141,42 @@
                         android:layout_height="1dp"
                         android:background="#f1f1f1" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginBottom="13dp">
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1"
+                            android:textSize="17sp"
+                            android:text="@string/title_campaign"
+                            android:textColor="@drawable/selector_textcolor_button"
+                            android:gravity="center"
+                            android:background="@drawable/selector_button_red"
+                            android:onClick="@{() -> listener.onClickShowAll()}"/>
+
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:textSize="17sp"
+                            android:text="@string/done"
+                            android:textColor="@drawable/selector_textcolor_button"
+                            android:gravity="center"
+                            android:background="@drawable/selector_button_red"
+                            android:onClick="@{() -> listener.onClickFilter(model.filterOptions)}"/>
+
+                    </LinearLayout>
+
+                    <!--
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
@@ -153,7 +189,7 @@
                         android:textColor="@drawable/selector_textcolor_button"
                         android:gravity="center"
                         android:background="@drawable/selector_button_red"
-                        android:onClick="@{() -> listener.onClickFilter(model.filterOptions)}"/>
+                        android:onClick="@{() -> listener.onClickFilter(model.filterOptions)}"/> -->
 
                 </LinearLayout>
 

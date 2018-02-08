@@ -59,17 +59,23 @@ public class InputAccountViewModel extends AbstractViewModel {
     public void onClickButton(View view) {
         if (TextUtils.isNullorEmptyString(passwordConfirm.get()) ||
                 !password.get().equals(passwordConfirm.get())) {
-            navigator.get().showNotEqualConfirm();
+            if (navigator.get() != null) {
+                navigator.get().showNotEqualConfirm();
+            }
         } else {
             userInfoDataSource.searchUserInfoFromUsername(email.get(), new UserInfoDataSource.GetUserInfoCallback() {
                 @Override
                 public void onUserInfoLoaded(UserInfo userInfo) {
-                    navigator.get().showDuplicatedEmail();
+                    if (navigator.get() != null) {
+                        navigator.get().showDuplicatedEmail();
+                    }
                 }
 
                 @Override
                 public void onDataNotAvailable() {
-                    navigator.get().gotoInputUserInfo(email.get(), password.get());
+                    if (navigator.get() != null) {
+                        navigator.get().gotoInputUserInfo(email.get(), password.get());
+                    }
                 }
             });
         }

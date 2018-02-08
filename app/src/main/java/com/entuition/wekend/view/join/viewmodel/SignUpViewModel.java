@@ -35,6 +35,8 @@ public class SignUpViewModel extends AbstractViewModel {
     public void onDestroy() {}
 
     public void onClickSignUpButton(View view) {
-        navigator.get().onShowAgreement();
+        if (navigator.get() != null) {
+            navigator.get().onShowAgreement();
+        }
     }
 }

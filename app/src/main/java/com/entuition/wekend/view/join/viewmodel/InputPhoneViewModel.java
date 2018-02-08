@@ -81,12 +81,16 @@ public class InputPhoneViewModel extends AbstractViewModel {
             @Override
             public void onReceiveCode(@NonNull String code) {
                 isValidPhone.set(false);
-                navigator.get().showRequestCode();
+                if (navigator.get() != null) {
+                    navigator.get().showRequestCode();
+                }
             }
 
             @Override
             public void onFailedRequest() {
-                navigator.get().showRequestCodeFailed();
+                if (navigator.get() != null) {
+                    navigator.get().showRequestCodeFailed();
+                }
             }
         });
     }
@@ -94,7 +98,9 @@ public class InputPhoneViewModel extends AbstractViewModel {
     public void onClickValidateCode(View view) {
         Log.d(TAG, "onClickValidateCode");
         if (userInfoDataSource.validateVerificationCode(code.get())) {
-            navigator.get().showStartRegister();
+            if (navigator.get() != null) {
+                navigator.get().showStartRegister();
+            }
             authenticationDataSource.register(username, password, nickname, gender, birth, phone.get(),
                     new AuthenticationDataSource.RegisterCallback() {
                 @Override

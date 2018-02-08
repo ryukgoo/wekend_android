@@ -98,7 +98,12 @@ public enum ProductRegion implements IProductEnum {
         if (stringMap == null) {
             stringMap = getStringResourceMap();
         }
-        int resourceId = stringMap.get(identifier);
-        return context.getString(resourceId);
+
+        if (stringMap.containsKey(identifier)) {
+            int resourceId = stringMap.get(identifier);
+            return context.getString(resourceId);
+        } else {
+            return context.getString(R.string.no_region);
+        }
     }
 }

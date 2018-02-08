@@ -24,6 +24,8 @@ import com.entuition.wekend.util.Constants;
 import com.entuition.wekend.util.Constants.NotificationType;
 import com.entuition.wekend.view.SplashScreen;
 
+import me.leolin.shortcutbadger.ShortcutBadger;
+
 /**
  * Created by ryukgoo on 2016. 5. 17..
  */
@@ -83,6 +85,8 @@ public class MessageReceivingService extends IntentService {
 
     private static void postNotification(Intent intentAction, Context context, NotificationType type, String message, int badge) {
 
+        Log.d(TAG, "postNotification > message : " + message + ", badge : " + badge);
+
         intentAction.putExtra(Constants.START_ACTIVITY_POSITION, getTabIndexFromType(type));
 
         final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -96,6 +100,8 @@ public class MessageReceivingService extends IntentService {
                 .setContentTitle(context.getString(R.string.app_name))
                 .setContentText(message)
                 .setContentIntent(pendingIntent)
+//                .setBadgeIconType(R.drawable.app_icon)
+//                .setChannelId("1234")
                 .setTicker(message)
                 .setNumber(badge)
                 .setAutoCancel(true)
@@ -121,6 +127,9 @@ public class MessageReceivingService extends IntentService {
                 break;
 
         }
+
+//        sendIconBadge(context, badge);
+        ShortcutBadger.applyCount(context, badge);
     }
 
     private static int getTabIndexFromType(Constants.NotificationType type) {
@@ -146,4 +155,31 @@ public class MessageReceivingService extends IntentService {
         }
         return null;
     }
+
+    /*
+    private static void sendIconBadge(Context context, int badge) {
+        Intent intent = new Intent("android.intent.action.BADGE_COUNT_UPDATE");
+        intent.putExtra("badge_count_package_name", context.getPackageName());
+        intent.putExtra("badge_count_class_name", getLauncherClassName(context));
+        intent.putExtra("badge_count", badge);
+        context.sendBroadcast(intent);
+    }
+
+    private static String getLauncherClassName(Context context) {
+        PackageManager pm = context.getPackageManager();
+
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+
+        List<ResolveInfo> resolveInfos = pm.queryIntentActivities(intent, 0);
+        for (ResolveInfo resolveInfo : resolveInfos) {
+            String pkgName = resolveInfo.activityInfo.applicationInfo.packageName;
+            if (pkgName.equalsIgnoreCase(context.getPackageName())) {
+                String className = resolveInfo.activityInfo.name;
+                return className;
+            }
+        }
+        return null;
+    }
+    */
 }

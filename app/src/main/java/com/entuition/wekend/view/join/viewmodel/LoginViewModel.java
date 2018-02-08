@@ -74,13 +74,17 @@ public class LoginViewModel extends AbstractViewModel {
                         @Override
                         public void onUserInfoLoaded(UserInfo userInfo) {
                             isLoading.set(false);
-                            navigator.get().onCompleteLogin();
+                            if (navigator.get() != null) {
+                                navigator.get().onCompleteLogin();
+                            }
                         }
 
                         @Override
                         public void onDataNotAvailable() {
                             isLoading.set(false);
-                            navigator.get().showFailedLogin();
+                            if (navigator.get() != null) {
+                                navigator.get().showFailedLogin();
+                            }
                         }
                     });
                 }
@@ -88,17 +92,24 @@ public class LoginViewModel extends AbstractViewModel {
                 @Override
                 public void onFailedLogin() {
                     isLoading.set(false);
-                    navigator.get().showFailedLogin();
+                    if (navigator.get() != null) {
+                        navigator.get().showFailedLogin();
+                    }
                 }
 
                 @Override
                 public void onExpiredToken() {
                     isLoading.set(false);
-                    navigator.get().showExpiredToken();
+                    if (navigator.get() != null) {
+                        navigator.get().showExpiredToken();
+                    }
                 }
             });
         } else {
-            navigator.get().showInvalidInput();
+            isLoading.set(false);
+            if (navigator.get() != null) {
+                navigator.get().showInvalidInput();
+            }
         }
     }
 
@@ -110,7 +121,7 @@ public class LoginViewModel extends AbstractViewModel {
         isLoginButtonValid.set(isValidInput());
     }
 
-    private boolean isValidInput() {
+    protected boolean isValidInput() {
         boolean isValidEmail = !TextUtils.isNullorEmptyString(email.get()) && TextUtils.isValidEmailExpression(email.get());
         boolean isValidPassword = !TextUtils.isNullorEmptyString(password.get()) && TextUtils.isValidPasswordExpression(password.get());
         return isValidEmail && isValidPassword;

@@ -55,6 +55,6 @@ public class SettingNoticeViewModel extends AbstractViewModel implements Setting
 
     @Override
     public void onClickNoticeItem(NoticeInfo info) {
-        navigator.get().showDetail(info);
+        if (navigator.get() != null) navigator.get().showDetail(info);
     }
 }

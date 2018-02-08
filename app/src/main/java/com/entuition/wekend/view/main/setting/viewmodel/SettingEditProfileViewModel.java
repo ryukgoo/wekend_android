@@ -30,6 +30,7 @@ public class SettingEditProfileViewModel extends AbstractViewModel {
     public final ObservableField<String> introduce = new ObservableField<>();
     public final ObservableField<String> company = new ObservableField<>();
     public final ObservableField<String> school = new ObservableField<>();
+    public final ObservableField<String> area = new ObservableField<>();
     public final ObservableField<String> phone = new ObservableField<>();
     public final ObservableField<String> code = new ObservableField<>();
 
@@ -45,6 +46,8 @@ public class SettingEditProfileViewModel extends AbstractViewModel {
         this.userInfoDataSource = userInfoDataSource;
         this.navigator = new WeakReference<SettingEditProfileNavigator>(navigator);
 
+        this.user.set(new UserInfo());
+
         isVaildPhone.set(false);
         isValidCode.set(false);
     }
@@ -59,6 +62,7 @@ public class SettingEditProfileViewModel extends AbstractViewModel {
                 introduce.set(result.getIntroduce());
                 company.set(result.getCompany());
                 school.set(result.getSchool());
+                area.set(result.getArea());
                 phone.set(result.getPhone());
             }
 
@@ -80,17 +84,22 @@ public class SettingEditProfileViewModel extends AbstractViewModel {
         user.get().setIntroduce(introduce.get());
         user.get().setCompany(company.get());
         user.get().setSchool(school.get());
+        user.get().setArea(area.get());
 
         userInfoDataSource.updateUserInfo(user.get(), new UserInfoDataSource.UpdateUserInfoCallback() {
             @Override
             public void onUpdateComplete(UserInfo userInfo) {
                 user.set(userInfo);
-                navigator.get().dismiss();
+                if (navigator.get() != null) {
+                    navigator.get().dismiss();
+                }
             }
 
             @Override
             public void onUpdateFailed() {
-                navigator.get().showUpdateError();
+                if (navigator.get() != null) {
+                    navigator.get().showUpdateError();
+                }
             }
         });
     }
@@ -106,7 +115,7 @@ public class SettingEditProfileViewModel extends AbstractViewModel {
     public void onChangeIntroduce() {
         if (introduce.get() != null) {
             if (introduce.get().length() >= INTRODUCE_MAX_COUNT) {
-                navigator.get().showTooLongIntroduce();
+                if (navigator.get() != null) navigator.get().showTooLongIntroduce();
             }
         }
     }
@@ -116,12 +125,12 @@ public class SettingEditProfileViewModel extends AbstractViewModel {
             @Override
             public void onReceiveCode(@NonNull String code) {
                 isVaildPhone.set(false);
-                navigator.get().showRequestCode();
+                if (navigator.get() != null) navigator.get().showRequestCode();
             }
 
             @Override
             public void onFailedRequest() {
-                navigator.get().showRequestCodeFailed();
+                if (navigator.get() != null) navigator.get().showRequestCodeFailed();
             }
         });
     }
@@ -134,16 +143,16 @@ public class SettingEditProfileViewModel extends AbstractViewModel {
                 public void onUpdateComplete(UserInfo userInfo) {
                     isValidCode.set(false);
                     code.set("");
-                    navigator.get().showEditPhoneComplete();
+                    if (navigator.get() != null) navigator.get().showEditPhoneComplete();
                 }
 
                 @Override
                 public void onUpdateFailed() {
-                    navigator.get().showEditPhoneFailed();
+                    if (navigator.get() != null) navigator.get().showEditPhoneFailed();
                 }
             });
         } else {
-            navigator.get().showInvalidCode();
+            if (navigator.get() != null) navigator.get().showInvalidCode();
         }
     }
 }

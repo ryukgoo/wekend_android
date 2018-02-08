@@ -51,16 +51,7 @@ public class OptionFilterViewModel extends AbstractViewModel {
 
     @Override
     public void onCreate() {
-
-        if (filterOptions.getSortType() == ProductFilterOptions.ORDER_BY_DATE) {
-            sortDateSelected.set(true);
-        } else {
-            sortLikeSelected.set(true);
-        }
-
-        mainCategories.addAll(Category.asList());
-        subCategories.addAll(Food.asList());
-        regions.addAll(ProductRegion.asList());
+        init();
     }
 
     @Override
@@ -156,10 +147,29 @@ public class OptionFilterViewModel extends AbstractViewModel {
         filterOptions.setProductRegion(item);
     }
 
+    public void reset() {
+        mainCategories.clear();
+        subCategories.clear();
+        regions.clear();
+        init();
+    }
+
     public void close() {
         if (isOpen.get()) {
             isOpen.set(false);
         }
+    }
+
+    private void init() {
+        if (filterOptions.getSortType() == ProductFilterOptions.ORDER_BY_DATE) {
+            sortDateSelected.set(true);
+        } else {
+            sortLikeSelected.set(true);
+        }
+
+        mainCategories.addAll(Category.asList());
+        subCategories.addAll(Food.asList());
+        regions.addAll(ProductRegion.asList());
     }
 
     // TODO : restore filter options

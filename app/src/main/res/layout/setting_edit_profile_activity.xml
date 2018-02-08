@@ -7,6 +7,7 @@
 
     <data>
         <import type="android.view.View" />
+        <import type="com.entuition.wekend.util.Utilities" />
         <variable
             name="model"
             type="com.entuition.wekend.view.main.setting.viewmodel.SettingEditProfileViewModel" />
@@ -22,7 +23,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusableInTouchMode="true">
+        android:focusableInTouchMode="true"
+        android:weightSum="1">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/setting_toolbar"
@@ -56,7 +58,8 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -152,7 +155,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <!-- About(Introduce) -->
+                        <!-- Nickname & Age Area -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -161,35 +164,68 @@
                             android:orientation="vertical">
 
                             <LinearLayout
+                                android:orientation="horizontal"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:layout_height="81dp">
 
                                 <TextView
                                     android:layout_width="80dp"
                                     android:layout_height="match_parent"
-                                    android:minHeight="80dp"
-                                    android:gravity="start|center_vertical"
-                                    android:text="@string/introduce"
-                                    android:textAlignment="center"
+                                    android:text="@string/nickname"
                                     android:textColor="@color/colorTextNormal"
-                                    android:textSize="16sp" />
-
-                                <EditText
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:minHeight="80dp"
-                                    android:layout_weight="1"
-                                    android:layout_gravity="fill_vertical"
                                     android:textSize="16sp"
-                                    android:textColor="@color/colorTextHint"
-                                    android:text="@={model.introduce}"
-                                    android:hint="@{@string/introduce_hint}"
-                                    android:maxLength="200"
-                                    android:inputType="textMultiLine"
-                                    android:background="@android:color/transparent"
-                                    android:theme="@style/CustomEditTextStyle"
-                                    android:afterTextChanged="@{(s) -> model.onChangeIntroduce()}" />
+                                    android:textAlignment="center"
+                                    android:gravity="start|center_vertical" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/colorTextNormal"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="@={model.user.nickname}" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:background="#dadada"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="81dp">
+
+                                <TextView
+                                    android:layout_width="80dp"
+                                    android:layout_height="match_parent"
+                                    android:text="@string/age"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorTextNormal"
+                                    android:textAlignment="center"
+                                    android:gravity="start|center_vertical" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:textSize="20sp"
+                                    android:textColor="@color/colorTextNormal"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="@{Utilities.getAgeFromBirthYear(model.user.birth)}" />
 
                             </LinearLayout>
 
@@ -288,7 +324,6 @@
 
                         </LinearLayout>
 
-                        <!-- Nickname & Age Area
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -299,32 +334,29 @@
                             <LinearLayout
                                 android:orientation="horizontal"
                                 android:layout_width="match_parent"
-                                android:focusable="true"
-                                android:focusableInTouchMode="true"
                                 android:layout_height="81dp">
 
                                 <TextView
                                     android:layout_width="80dp"
                                     android:layout_height="match_parent"
-                                    android:text="@string/nickname"
-                                    android:textColor="@color/colorTextNormal"
+                                    android:text="@string/user_area"
                                     android:textSize="16sp"
+                                    android:textColor="@color/colorTextNormal"
                                     android:textAlignment="center"
                                     android:gravity="start|center_vertical" />
 
                                 <EditText
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
-                                    android:hint="@string/edit_nickname_hint"
-                                    android:inputType="numberDecimal"
-                                    android:textSize="20sp"
-                                    android:textColor="@color/colorTextNormal"
                                     android:layout_weight="1"
-                                    android:gravity="center"
+                                    android:text="@={model.area}"
+                                    android:hint="@string/user_area_hint"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorTextHint"
+                                    android:inputType="text"
+                                    android:textAlignment="center"
                                     android:background="@android:color/transparent"
-                                    android:theme="@style/CustomEditTextStyle"
-                                    android:text="@={model.nickname}"
-                                    android:afterTextChanged="@{(s) -> model.onChangeNickname()}" />
+                                    android:theme="@style/CustomEditTextStyle" />
 
                             </LinearLayout>
 
@@ -335,6 +367,7 @@
 
                         </LinearLayout>
 
+                        <!-- About(Introduce) -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -343,27 +376,35 @@
                             android:orientation="vertical">
 
                             <LinearLayout
-                                android:orientation="horizontal"
                                 android:layout_width="match_parent"
-                                android:layout_height="81dp">
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:layout_width="80dp"
                                     android:layout_height="match_parent"
-                                    android:text="@string/age"
-                                    android:textSize="16sp"
-                                    android:textColor="@color/colorTextNormal"
+                                    android:minHeight="80dp"
+                                    android:gravity="start|center_vertical"
+                                    android:text="@string/introduce"
                                     android:textAlignment="center"
-                                    android:gravity="start|center_vertical" />
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:textSize="20sp"
                                     android:textColor="@color/colorTextNormal"
+                                    android:textSize="16sp" />
+
+                                <EditText
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:minHeight="80dp"
                                     android:layout_weight="1"
-                                    android:gravity="center"
-                                    app:profileAge="@{model.user.birth}" />
+                                    android:layout_gravity="fill_vertical"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/colorTextHint"
+                                    android:text="@={model.introduce}"
+                                    android:hint="@{@string/introduce_hint}"
+                                    android:maxLength="200"
+                                    android:inputType="textMultiLine"
+                                    android:background="@android:color/transparent"
+                                    android:theme="@style/CustomEditTextStyle"
+                                    android:afterTextChanged="@{(s) -> model.onChangeIntroduce()}" />
 
                             </LinearLayout>
 
@@ -373,7 +414,8 @@
                                 android:layout_height="1dp" />
 
                         </LinearLayout>
-                        -->
+
+
 
                         <!-- Phone -->
                         <LinearLayout
@@ -480,11 +522,6 @@
                                 </LinearLayout>
 
                             </LinearLayout>
-
-                            <View
-                                android:background="#dadada"
-                                android:layout_width="match_parent"
-                                android:layout_height="1dp" />
 
                         </LinearLayout>
 

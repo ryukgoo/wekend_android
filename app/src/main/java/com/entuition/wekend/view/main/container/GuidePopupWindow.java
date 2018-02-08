@@ -70,6 +70,7 @@ public class GuidePopupWindow extends PopupWindow implements GuidePopupNavigator
             this.context = context;
 
             resources = new ArrayList<>();
+            resources.add(R.drawable.help_06);
             resources.add(R.drawable.help_01);
             resources.add(R.drawable.help_00);
             resources.add(R.drawable.help_02);

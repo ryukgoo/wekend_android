@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -66,24 +65,20 @@ public class SettingEditProfileActivity extends AppCompatActivity implements Sel
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar_done, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
             case android.R.id.home :
-                onBackPressed();
-                return true;
-            case R.id.action_done :
                 model.editDone();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        model.editDone();
     }
 
     public void onClickSelectImage(View view, final int index) {
@@ -145,7 +140,7 @@ public class SettingEditProfileActivity extends AppCompatActivity implements Sel
 
     @Override
     public void dismiss() {
-        onBackPressed();
+        super.onBackPressed();
     }
 
     @Override

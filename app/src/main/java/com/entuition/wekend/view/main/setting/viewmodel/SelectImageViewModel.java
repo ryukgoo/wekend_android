@@ -77,7 +77,9 @@ public class SelectImageViewModel {
                     selectPhotoFromGallery(activity);
                 } else {
                     // denied
-                    navigator.get().onPermissionDenied();
+                    if (navigator.get() != null) {
+                        navigator.get().onPermissionDenied();
+                    }
                 }
                 break;
             }
@@ -85,7 +87,9 @@ public class SelectImageViewModel {
     }
 
     public void onClickSelectImage() {
-        navigator.get().selectProfileImage();
+        if (navigator.get() != null) {
+            navigator.get().selectProfileImage();
+        }
     }
 
     public void selectPhotoFromGallery(Activity activity) {
@@ -147,7 +151,9 @@ public class SelectImageViewModel {
         userInfoDataSource.deleteProfileImage(key, new UserInfoDataSource.UpdateUserInfoCallback() {
             @Override
             public void onUpdateComplete(UserInfo userInfo) {
-                navigator.get().onImageSelected(null);
+                if (navigator.get() != null) {
+                    navigator.get().onImageSelected(null);
+                }
             }
 
             @Override

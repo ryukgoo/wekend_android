@@ -72,7 +72,9 @@ public class RecommendFriendViewModel extends AbstractViewModel {
         likeInfoDataSource.readFriend(info);
 
         String userId = userInfoDataSource.getUserId();
-        navigator.get().gotoProfileView(userId, info.getUserId(), info.getProductId());
+        if (navigator.get() != null) {
+            navigator.get().gotoProfileView(userId, info.getUserId(), info.getProductId());
+        }
     }
 
     private void loadFriends() {

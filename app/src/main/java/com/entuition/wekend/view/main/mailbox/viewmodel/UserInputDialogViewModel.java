@@ -33,7 +33,7 @@ public class UserInputDialogViewModel implements DialogInterface.OnClickListener
     @Override
     public void onClick(DialogInterface dialogInterface, int which) {
         dialogInterface.dismiss();
-        if (which == DialogInterface.BUTTON_POSITIVE) {
+        if (which == DialogInterface.BUTTON_POSITIVE && listener.get() != null) {
             listener.get().onCompleteInputMessage(message.get());
         }
     }

@@ -105,7 +105,9 @@ public class CampaignListViewModel extends AbstractViewModel {
 
     public void onClickCampaignItem(ProductInfo info) {
         if (!isListEnable.get()) return;
-        navigator.get().gotoCampaignDetail(info.getId());
+        if (navigator.get() != null) {
+            navigator.get().gotoCampaignDetail(info.getId());
+        }
     }
 
     public void onClickLikeCampaign(ProductInfo info, int position) {
@@ -185,7 +187,9 @@ public class CampaignListViewModel extends AbstractViewModel {
                     @Override
                     public void onFailedAddLike() {
                         isListEnable.set(true);
-                        navigator.get().onFailedAddLike();
+                        if (navigator.get() != null) {
+                            navigator.get().onFailedAddLike();
+                        }
                     }
                 });
             }
@@ -193,7 +197,9 @@ public class CampaignListViewModel extends AbstractViewModel {
             @Override
             public void onDataNotAvailable() {
                 isListEnable.set(true);
-                navigator.get().onFailedAddLike();
+                if (navigator.get() != null) {
+                    navigator.get().onFailedAddLike();
+                }
             }
         });
     }
@@ -213,7 +219,9 @@ public class CampaignListViewModel extends AbstractViewModel {
                     @Override
                     public void onFailedDeleteLike() {
                         isListEnable.set(true);
-                        navigator.get().onFailedDeleteLike();
+                        if (navigator.get() != null) {
+                            navigator.get().onFailedDeleteLike();
+                        }
                     }
                 });
             }
@@ -221,7 +229,9 @@ public class CampaignListViewModel extends AbstractViewModel {
             @Override
             public void onDataNotAvailable() {
                 isListEnable.set(true);
-                navigator.get().onFailedDeleteLike();
+                if (navigator.get() != null) {
+                    navigator.get().onFailedDeleteLike();
+                }
             }
         });
     }
@@ -235,7 +245,9 @@ public class CampaignListViewModel extends AbstractViewModel {
                 @Override
                 public void onFriendCountLoaded(int count) {
                     ProductInfo.setLikeCountToInfo(productInfo, count);
-                    navigator.get().onNotifyItemChanged(position);
+                    if (navigator.get() != null) {
+                        navigator.get().onNotifyItemChanged(position);
+                    }
                 }
 
                 @Override

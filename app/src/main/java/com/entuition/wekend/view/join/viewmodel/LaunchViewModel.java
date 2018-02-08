@@ -26,8 +26,8 @@ public class LaunchViewModel extends AbstractViewModel {
     private final UserInfoDataSource userInfoDataSource;
 
     @Nullable
-    private String linkProductId;
-    private int notificationType = 0;
+    String linkProductId;
+    int notificationType = 0;
 
     public LaunchViewModel(Context context, LaunchNavigator navigator,
                            AuthenticationDataSource authenticationDataSource,
@@ -48,22 +48,30 @@ public class LaunchViewModel extends AbstractViewModel {
                     @Override
                     public void onUserInfoLoaded(UserInfo userInfo) {
                         if (linkProductId == null) {
-                            navigator.get().onAutoLogin(notificationType);
+                            if (navigator.get() != null) {
+                                navigator.get().onAutoLogin(notificationType);
+                            }
                         } else {
-                            navigator.get().onReceiveLink(Integer.parseInt(linkProductId));
+                            if (navigator.get() != null) {
+                                navigator.get().onReceiveLink(Integer.parseInt(linkProductId));
+                            }
                         }
                     }
 
                     @Override
                     public void onDataNotAvailable() {
-                        navigator.get().onLoginView();
+                        if (navigator.get() != null) {
+                            navigator.get().onLoginView();
+                        }
                     }
                 });
             }
 
             @Override
             public void onFailedGetToken() {
-                navigator.get().onLoginView();
+                if (navigator.get() != null) {
+                    navigator.get().onLoginView();
+                }
             }
         });
     }

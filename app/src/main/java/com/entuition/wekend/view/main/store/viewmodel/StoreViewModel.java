@@ -134,25 +134,25 @@ public class StoreViewModel extends AbstractViewModel implements GoogleBillingCo
     public void onQueryFailed() {
         Log.d(TAG, "onQueryFailed");
         isLoading.set(false);
-        navigator.get().onQueryInventoryFailed();
+        if (navigator.get() != null) navigator.get().onQueryInventoryFailed();
     }
 
     @Override
     public void onPurchaseFailed() {
         Log.d(TAG, "onPurchaseFailed");
         isLoading.set(false);
-        navigator.get().onPurchaseFailed();
+        if (navigator.get() != null) navigator.get().onPurchaseFailed();
     }
 
     @Override
     public void onConsumeFailed() {
         Log.d(TAG, "onConsumeFailed");
         isLoading.set(false);
-        navigator.get().onPurchaseFailed();
+        if (navigator.get() != null) navigator.get().onPurchaseFailed();
     }
 
     public void onClickItem(int position) {
-        navigator.get().purchaseItem(position);
+        if (navigator.get() != null) navigator.get().purchaseItem(position);
     }
 
     public String getBonusForSku(String sku) {

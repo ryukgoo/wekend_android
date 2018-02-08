@@ -31,6 +31,8 @@ public class Constants {
         return System.getProperty("APP_NAME", "Wekend").toLowerCase();
     }
 
+    public static final int    CONSUME_POINT = 1000;
+
     public static class ExtraKeys {
         public static final String USERNAME = "username";
         public static final String PASSWORD = "password";

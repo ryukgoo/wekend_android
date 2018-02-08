@@ -120,12 +120,16 @@ public class CampaignDetailViewModel extends AbstractViewModel implements OnMapR
 
             @Override
             public void onCancel() {
-                navigator.get().onCancelFacebookLink();
+                if (navigator.get() != null) {
+                    navigator.get().onCancelFacebookLink();
+                }
             }
 
             @Override
             public void onError(FacebookException error) {
-                navigator.get().onErrorFacebookLink();
+                if (navigator.get() != null) {
+                    navigator.get().onErrorFacebookLink();
+                }
             }
         });
     }
@@ -203,16 +207,22 @@ public class CampaignDetailViewModel extends AbstractViewModel implements OnMapR
 
     // Click Listeners
     public void onClickPhone() {
-        navigator.get().call(productInfo.get().getTelephone());
+        if (navigator.get() != null) {
+            navigator.get().call(productInfo.get().getTelephone());
+        }
     }
 
     public void onClickAddress() {
-        navigator.get().gotoGoogleMapView(productInfo.get().getTitleKor(), productInfo.get().getAddress());
+        if (navigator.get() != null) {
+            navigator.get().gotoGoogleMapView(productInfo.get().getTitleKor(), productInfo.get().getAddress());
+        }
     }
 
     public void onClickLikeButton() {
         if (isLikeProduct) {
-            navigator.get().gotoRecommendFriendView(productInfo.get().getId());
+            if (navigator.get() != null) {
+                navigator.get().gotoRecommendFriendView(productInfo.get().getId());
+            }
         } else {
             isStateLoading.set(true);
             userInfoDataSource.getUserInfo(null, new UserInfoDataSource.GetUserInfoCallback() {
@@ -226,7 +236,9 @@ public class CampaignDetailViewModel extends AbstractViewModel implements OnMapR
 
                         @Override
                         public void onFailedAddLike() {
-                            navigator.get().onFailedAddLike();
+                            if (navigator.get() != null) {
+                                navigator.get().onFailedAddLike();
+                            }
                             isStateLoading.set(false);
                         }
                     });
@@ -234,7 +246,9 @@ public class CampaignDetailViewModel extends AbstractViewModel implements OnMapR
 
                 @Override
                 public void onDataNotAvailable() {
-                    navigator.get().onFailedAddLike();
+                    if (navigator.get() != null) {
+                        navigator.get().onFailedAddLike();
+                    }
                     isStateLoading.set(false);
                 }
             });
@@ -272,14 +286,18 @@ public class CampaignDetailViewModel extends AbstractViewModel implements OnMapR
                 googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                     @Override
                     public void onMapClick(LatLng latLng) {
-                        navigator.get().gotoGoogleMapView(productInfo.get().getTitleKor(), address);
+                        if (navigator.get() != null) {
+                            navigator.get().gotoGoogleMapView(productInfo.get().getTitleKor(), address);
+                        }
                     }
                 });
 
                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
-                        navigator.get().gotoGoogleMapView(productInfo.get().getTitleKor(), address);
+                        if (navigator.get() != null) {
+                            navigator.get().gotoGoogleMapView(productInfo.get().getTitleKor(), address);
+                        }
                         return false;
                     }
                 });
@@ -287,7 +305,9 @@ public class CampaignDetailViewModel extends AbstractViewModel implements OnMapR
                 googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                     @Override
                     public void onInfoWindowClick(Marker marker) {
-                        navigator.get().gotoGoogleMapView(productInfo.get().getTitleKor(), address);
+                        if (navigator.get() != null) {
+                            navigator.get().gotoGoogleMapView(productInfo.get().getTitleKor(), address);
+                        }
                     }
                 });
 
@@ -296,7 +316,9 @@ public class CampaignDetailViewModel extends AbstractViewModel implements OnMapR
 
             @Override
             public void onAddressNotAvailable() {
-                navigator.get().showLoadMapFailed();
+                if (navigator.get() != null) {
+                    navigator.get().showLoadMapFailed();
+                }
             }
         });
     }

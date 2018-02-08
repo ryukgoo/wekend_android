@@ -69,6 +69,8 @@ public class AgreementViewModel extends AbstractViewModel {
     }
 
     public void onClickButton(View view) {
-        navigator.get().onConfirmAgreement();
+        if (navigator.get() != null) {
+            navigator.get().onConfirmAgreement();
+        }
     }
 }

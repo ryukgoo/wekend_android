@@ -83,11 +83,15 @@ public class ContainerViewModel extends AbstractViewModel implements OnMenuTabCl
     }
 
     public void onClickTitle() {
-        navigator.get().onClickTitle();
+        if (navigator.get() != null) {
+            navigator.get().onClickTitle();
+        }
     }
 
     public void onClickProfileImage() {
-        navigator.get().gotoProfileView();
+        if (navigator.get() != null) {
+            navigator.get().gotoProfileView();
+        }
     }
 
     public void onAttachedToWindow() {
@@ -97,31 +101,35 @@ public class ContainerViewModel extends AbstractViewModel implements OnMenuTabCl
         Log.d(TAG, "onAttachedToWindow > showNoMore : " + showNoMore);
 
         if (!showNoMore) {
-            navigator.get().showGuidePopup(true);
+            if (navigator.get() != null) {
+                navigator.get().showGuidePopup(true);
+            }
         }
     }
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.menu_drawer_notice:
-                navigator.get().gotoNoticeView();
-                break;
-            case R.id.menu_drawer_help:
-                navigator.get().showGuidePopup(false);
-                break;
-            case R.id.menu_drawer_profile:
-                navigator.get().gotoProfileView();
-                break;
-            case R.id.menu_drawer_cc:
-                navigator.get().sendMailToDeveloper();
-                break;
-            case R.id.menu_drawer_setting:
-                navigator.get().gotoAlarmSetting();
-                break;
-            case R.id.menu_drawer_logout:
-                navigator.get().showLogoutDialog();
-                break;
+        if (navigator.get() != null) {
+            switch (item.getItemId()) {
+                case R.id.menu_drawer_notice:
+                    navigator.get().gotoNoticeView();
+                    break;
+                case R.id.menu_drawer_help:
+                    navigator.get().showGuidePopup(false);
+                    break;
+                case R.id.menu_drawer_profile:
+                    navigator.get().gotoProfileView();
+                    break;
+                case R.id.menu_drawer_cc:
+                    navigator.get().sendMailToDeveloper();
+                    break;
+                case R.id.menu_drawer_setting:
+                    navigator.get().gotoAlarmSetting();
+                    break;
+                case R.id.menu_drawer_logout:
+                    navigator.get().showLogoutDialog();
+                    break;
+            }
         }
         return true;
     }
@@ -131,9 +139,13 @@ public class ContainerViewModel extends AbstractViewModel implements OnMenuTabCl
         Log.d(TAG, "onMenuTagbSelected");
         String tag = getTagFromId(menuItemId);
         if (tag == null) {
-            navigator.get().onToggleDrawerLayout();
+            if (navigator.get() != null) {
+                navigator.get().onToggleDrawerLayout();
+            }
         } else {
-            navigator.get().onSelectedBottomBar(tag);
+            if (navigator.get() != null) {
+                navigator.get().onSelectedBottomBar(tag);
+            }
             title.set(getTitleFromTag(tag));
 
             if (tag.equals(CampaignListFragment.TAG)) {
@@ -146,7 +158,9 @@ public class ContainerViewModel extends AbstractViewModel implements OnMenuTabCl
                 userInfoDataSource.clearBadgeCount(tag, new UserInfoDataSource.UpdateUserInfoCallback() {
                     @Override
                     public void onUpdateComplete(UserInfo userInfo) {
-                        navigator.get().onUserInfoLoaded(userInfo);
+                        if (navigator.get() != null) {
+                            navigator.get().onUserInfoLoaded(userInfo);
+                        }
                     }
 
                     @Override
@@ -161,9 +175,13 @@ public class ContainerViewModel extends AbstractViewModel implements OnMenuTabCl
         Log.d(TAG, "onMenuTabReSelected");
         String tag = getTagFromId(menuItemId);
         if (tag == null) {
-            navigator.get().onToggleDrawerLayout();
+            if (navigator.get() != null) {
+                navigator.get().onToggleDrawerLayout();
+            }
         } else {
-            navigator.get().onReSelectedBottomBar(tag);
+            if (navigator.get() != null) {
+                navigator.get().onReSelectedBottomBar(tag);
+            }
         }
     }
 
@@ -175,7 +193,9 @@ public class ContainerViewModel extends AbstractViewModel implements OnMenuTabCl
         userInfoDataSource.getUserInfo(userInfoDataSource.getUserId(), new UserInfoDataSource.GetUserInfoCallback() {
             @Override
             public void onUserInfoLoaded(UserInfo userInfo) {
-                navigator.get().onUserInfoLoaded(userInfo);
+                if (navigator.get() != null) {
+                    navigator.get().onUserInfoLoaded(userInfo);
+                }
             }
 
             @Override

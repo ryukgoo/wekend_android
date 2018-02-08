@@ -84,11 +84,9 @@ public class MailProfileActivity extends AppCompatActivity implements MailProfil
 
     @Override
     public void confirmPropose(DialogInterface.OnClickListener listener) {
-        AlertUtils.showAlertDialog(this,
-                R.string.consume_point,
-                R.string.consume_point_message,
-                true,
-                listener);
+        String title = getString(R.string.consume_point);
+        String message = getString(R.string.consume_point_message, Constants.CONSUME_POINT);
+        AlertUtils.showAlertDialog(this, title, message, true, listener);
     }
 
     @Override
@@ -147,6 +145,7 @@ public class MailProfileActivity extends AppCompatActivity implements MailProfil
     private void setupViewPager() {
         ProfileViewPagerAdapter adapter = new ProfileViewPagerAdapter(model, new ArrayList<String>(0));
         binding.appBar.profileViewPager.setAdapter(adapter);
+        binding.appBar.profileViewPager.addOnPageChangeListener(binding.appBar.indicator);
     }
 
     @SuppressLint("RestrictedApi")

@@ -41,13 +41,17 @@ public class GuidePopupViewModel extends AbstractViewModel {
     public void onDestroy() {}
 
     public void onClickCloseButton(View view) {
-        navigator.get().dismissPopup();
+        if (navigator.get() != null) {
+            navigator.get().dismissPopup();
+        }
     }
 
     public void onClickCheckBox(View view) {
         isCheckBox.set(!isCheckBox.get());
 
         SharedPreferencesWrapper.setShowNoMoreGuide(PreferenceManager.getDefaultSharedPreferences(getApplication()), isCheckBox.get());
-        navigator.get().dismissPopup();
+        if (navigator.get() != null) {
+            navigator.get().dismissPopup();
+        }
     }
 }

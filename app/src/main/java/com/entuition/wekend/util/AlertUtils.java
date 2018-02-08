@@ -52,6 +52,15 @@ public class AlertUtils {
     }
 
     @SuppressLint("RestrictedApi")
+    public static void showAlertDialog(Context context, String title, String message, DialogInterface.OnClickListener listener) {
+        new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.CustomAlertDialog))
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(R.string.ok, listener)
+                .show();
+    }
+
+    @SuppressLint("RestrictedApi")
     public static void showAlertDialog(Context context, int titleId, int messageId, boolean needsNegative, DialogInterface.OnClickListener listener) {
         if (needsNegative) {
             new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.CustomAlertDialog))
@@ -62,6 +71,20 @@ public class AlertUtils {
                     .show();
         } else {
             showAlertDialog(context, titleId, messageId, listener);
+        }
+    }
+
+    @SuppressLint("RestrictedApi")
+    public static void showAlertDialog(Context context, String title, String message, boolean needsNegative, DialogInterface.OnClickListener listener) {
+        if (needsNegative) {
+            new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.CustomAlertDialog))
+                    .setTitle(title)
+                    .setMessage(message)
+                    .setPositiveButton(R.string.ok, listener)
+                    .setNegativeButton(R.string.cancel, listener)
+                    .show();
+        } else {
+            showAlertDialog(context, title, message, listener);
         }
     }
 }

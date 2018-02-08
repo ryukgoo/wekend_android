@@ -20,7 +20,7 @@ public class SharedPreferencesWrapper {
     private static final String NOTIFICATION_MAIL_NUM = "NOTIFICATION_MAIL_NUM";
     private static final String NOTIFICATION_ALARM = "NOTIFICATION_ALARM";
     private static final String NOTIFICATION_VIBRATION = "NOTIFICATION_VIBRATION";
-    private static final String NO_MORE_GUIDE = "NO_MORE_GUIDE";
+    private static final String NO_MORE_GUIDE = "NO_MORE_GUIDE_RE";
 
     public static void wipe(SharedPreferences sharedPreferences) {
         SharedPreferencesWrapper.storeValueInSharedPreferences(sharedPreferences, DEVIDE_UID, null);

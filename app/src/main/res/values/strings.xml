@@ -176,6 +176,7 @@
     <string name="sub_category_leisure_1">스포츠</string>
 
     <string name="region_all">전체 지역</string>
+    <string name="no_region">지역정보없음</string>
     <string name="region_0">압구정/청담/신사</string>
     <string name="region_1">서래마을/서초/방배</string>
     <string name="region_2">도곡/대치/양재</string>
@@ -242,6 +243,8 @@
     <string name="company_hint">직장 입력</string>
     <string name="school">학교</string>
     <string name="school_hint">출신 학교 입력</string>
+    <string name="user_area">지역</string>
+    <string name="user_area_hint">주거 지역 입력</string>
     <string name="formatted_point" formatted="false">보유포인트 %dP</string>
     <string name="profile_verification">인증요청</string>
     <string name="profile_verification_message">인증번호를 입력하고 확인을 눌러주세요.</string>
@@ -289,7 +292,7 @@
     <string name="propose_receive_message" formatted="false">%s님으로부터 함께가기 신청이 왔습니다</string>
 
     <string name="consume_point">함께가기 신청</string>
-    <string name="consume_point_message">함께가기를 신청하려면 500포인트가 차감됩니다.\n진행하시겠습니까?</string>
+    <string name="consume_point_message" formatted="false">함께가기를 신청하려면 %d포인트가 차감됩니다.\n진행하시겠습니까?</string>
 
     <string name="not_enough_point">함께가기 신청실패</string>
     <string name="not_enough_point_message">보유포인트가 부족합니다</string>

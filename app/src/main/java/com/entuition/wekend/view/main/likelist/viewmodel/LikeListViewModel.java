@@ -90,7 +90,9 @@ public class LikeListViewModel extends AbstractViewModel {
 
     public void onClickItem(LikeInfo info) {
         likeInfoDataSource.readLike(info);
-        navigator.get().gotoCampaignDetail(info.getProductId());
+        if (navigator.get() != null) {
+            navigator.get().gotoCampaignDetail(info.getProductId());
+        }
     }
 
     public void onClickDeleteItem(LikeInfo info, final int position, final SwipeLayout layout) {
@@ -98,13 +100,17 @@ public class LikeListViewModel extends AbstractViewModel {
         likeInfoDataSource.deleteLike(info, new LikeInfoDataSource.DeleteLikeCallback() {
             @Override
             public void onCompleteDeleteLike(LikeInfo info, int remainCount) {
-                navigator.get().onRemoveSwipeLayout(layout);
+                if (navigator.get() != null) {
+                    navigator.get().onRemoveSwipeLayout(layout);
+                }
                 if (remainCount == 0) isNoData.set(true);
             }
 
             @Override
             public void onFailedDeleteLike() {
-                navigator.get().onDeleteLikeItemFailed();
+                if (navigator.get() != null) {
+                    navigator.get().onDeleteLikeItemFailed();
+                }
             }
         });
     }
@@ -150,7 +156,7 @@ public class LikeListViewModel extends AbstractViewModel {
 
     private void deleteLikeItem(LikeInfo likeInfo) {
         int position = likeInfos.indexOf(likeInfo);
-        if (position >= 0) navigator.get().onDeleteLikeItem(position);
+        if (position >= 0 && navigator.get() != null) navigator.get().onDeleteLikeItem(position);
     }
 
     private void validateNoData() {

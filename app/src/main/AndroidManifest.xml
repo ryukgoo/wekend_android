@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.entuition.wekend"
-    android:versionCode="3179"
-    android:versionName="0.1.0.3179">
+    android:versionCode="3597"
+    android:versionName="0.1.0.3597">
 
     <uses-sdk android:minSdkVersion="17" />
 

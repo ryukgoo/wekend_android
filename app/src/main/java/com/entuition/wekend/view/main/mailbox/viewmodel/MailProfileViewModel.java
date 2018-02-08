@@ -153,23 +153,27 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
     }
 
     public void onClickShowProduct() {
-        navigator.get().gotoCampaignDetail(productId);
+        if (navigator.get() != null) {
+            navigator.get().gotoCampaignDetail(productId);
+        }
     }
 
     public void onClickProposeButton() {
-        navigator.get().confirmPropose(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-                dialogInterface.dismiss();
-                if (which == DialogInterface.BUTTON_POSITIVE) {
-                    if (isEnoughRemainedPoint()) {
-                        navigator.get().showUserInputDialog();
-                    } else {
-                        navigator.get().showNotEnoughPoint();
+        if (navigator.get() != null) {
+            navigator.get().confirmPropose(new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int which) {
+                    dialogInterface.dismiss();
+                    if (which == DialogInterface.BUTTON_POSITIVE) {
+                        if (isEnoughRemainedPoint()) {
+                            navigator.get().showUserInputDialog();
+                        } else {
+                            navigator.get().showNotEnoughPoint();
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     public void propose(final String message) {
@@ -191,7 +195,7 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
         mailDataSource.updateMail(sendMail, new MailDataSource.UpdateMailCallback() {
             @Override
             public void onCompleteUpdateMail(final IMail iMail) {
-                userInfoDataSource.consumePoint(500, new UserInfoDataSource.ConsumePointCallback() {
+                userInfoDataSource.consumePoint(Constants.CONSUME_POINT, new UserInfoDataSource.ConsumePointCallback() {
                     @Override
                     public void onConsumePointComplete(UserInfo userInfo) {
 
@@ -201,19 +205,25 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
                         mail.set(iMail);
                         status.set(ProposeStatus.valueOf(iMail.getStatus()));
                         validateStatus();
-                        navigator.get().onProposeComplete(iMail.getFriendNickname());
+                        if (navigator.get() != null) {
+                            navigator.get().onProposeComplete(iMail.getFriendNickname());
+                        }
                     }
 
                     @Override
                     public void onPointNotEnough() {
                         isStatusLoading.set(false);
-                        navigator.get().showNotEnoughPoint();
+                        if (navigator.get() != null) {
+                            navigator.get().showNotEnoughPoint();
+                        }
                     }
 
                     @Override
                     public void onConsumeNotAvailable() {
                         isStatusLoading.set(false);
-                        navigator.get().showTryAgain();
+                        if (navigator.get() != null) {
+                            navigator.get().showTryAgain();
+                        }
                     }
                 });
             }
@@ -221,7 +231,9 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
             @Override
             public void onFailedUpdateMail() {
                 isStatusLoading.set(false);
-                navigator.get().showTryAgain();
+                if (navigator.get() != null) {
+                    navigator.get().showTryAgain();
+                }
             }
         });
     }
@@ -236,13 +248,17 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
             receiveMail.setIsRead(ReadState.read.ordinal());
             receiveMail.setResponseTime(Utilities.getTimestamp());
 
+            Log.d(TAG, "onClickAcceptButton > message : " + mail.get().getMessage());
+
             mailDataSource.updateMail(mail.get(), new MailDataSource.UpdateMailCallback() {
                 @Override
                 public void onCompleteUpdateMail(IMail iMail) {
                     mail.set(iMail);
                     status.set(ProposeStatus.valueOf(iMail.getStatus()));
                     validateStatus();
-                    navigator.get().onAcceptComplete(mail.get().getFriendNickname());
+                    if (navigator.get() != null) {
+                        navigator.get().onAcceptComplete(mail.get().getFriendNickname());
+                    }
                 }
 
                 @Override
@@ -269,7 +285,9 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
                     mail.set(iMail);
                     status.set(ProposeStatus.valueOf(iMail.getStatus()));
                     validateStatus();
-                    navigator.get().onRejectComplete(mail.get().getFriendNickname());
+                    if (navigator.get() != null) {
+                        navigator.get().onRejectComplete(mail.get().getFriendNickname());
+                    }
                 }
 
                 @Override
@@ -294,6 +312,6 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
     }
 
     private boolean isEnoughRemainedPoint() {
-        return user.get().getBalloon() >= 500;
+        return user.get().getBalloon() >= Constants.CONSUME_POINT;
     }
 }

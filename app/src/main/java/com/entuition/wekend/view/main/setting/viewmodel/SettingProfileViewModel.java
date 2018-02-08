@@ -49,7 +49,7 @@ public class SettingProfileViewModel extends AbstractViewModel implements Profil
     public void onClickPagerItem(String photo) {}
 
     public void onClickEditButton() {
-        navigator.get().gotoEditProfileView();
+        if (navigator.get() != null) navigator.get().gotoEditProfileView();
     }
 
     private void loadUserInfo() {

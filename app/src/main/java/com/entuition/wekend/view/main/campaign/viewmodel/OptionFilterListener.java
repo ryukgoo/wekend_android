@@ -8,4 +8,5 @@ import com.entuition.wekend.data.source.product.ProductFilterOptions;
 
 public interface OptionFilterListener {
     void onClickFilter(ProductFilterOptions options);
+    void onClickShowAll();
 }

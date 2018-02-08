@@ -34,6 +34,7 @@ public class UserInfo {
         static final String INTRODUCE = "introduce";
         static final String COMPANY = "company";
         static final String SCHOOL = "school";
+        static final String AREA = "area";
         static final String PHOTOS = "photos";
         static final String BALLOON = "balloon";
         static final String ENDPOINT_ARN = "EndpointARN";
@@ -56,6 +57,7 @@ public class UserInfo {
     private String introduce;
     private String company;
     private String school;
+    private String area;
     private Set<String> photos;
     private int balloon;
     private String endpointARN;
@@ -78,6 +80,7 @@ public class UserInfo {
         this.introduce = origin.introduce;
         this.company = origin.company;
         this.school = origin.school;
+        this.area = origin.area;
         this.photos = origin.photos;
         this.balloon = origin.balloon;
         this.endpointARN = origin.endpointARN;
@@ -195,6 +198,15 @@ public class UserInfo {
 
     public void setSchool(String school) {
         this.school = school;
+    }
+
+    @DynamoDBAttribute(attributeName = Attribute.AREA)
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     @DynamoDBAttribute(attributeName = Attribute.PHOTOS)

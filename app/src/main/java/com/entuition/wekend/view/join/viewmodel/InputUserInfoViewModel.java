@@ -63,21 +63,28 @@ public class InputUserInfoViewModel extends AbstractViewModel {
     public void onClickCheckNicknameButton(View view) {
         Log.d(TAG, "onClickCheckNicknameButton");
 
-        navigator.get().hideKeyboard();
+        if (navigator.get() != null) {
+            navigator.get().hideKeyboard();
+        }
 
         isLoading.set(true);
         dataSource.searchUserInfoFromNickname(nickname.get(), new UserInfoDataSource.GetUserInfoCallback() {
             @Override
             public void onUserInfoLoaded(UserInfo userInfo) {
                 isLoading.set(false);
-                navigator.get().showDuplicatedNickname();
+                isAvailableNickname = false;
+                if (navigator.get() != null) {
+                    navigator.get().showDuplicatedNickname();
+                }
             }
 
             @Override
             public void onDataNotAvailable() {
                 isLoading.set(false);
-                navigator.get().showAvailableNickname();
                 isAvailableNickname = true;
+                if (navigator.get() != null) {
+                    navigator.get().showAvailableNickname();
+                }
             }
         });
     }
@@ -96,10 +103,14 @@ public class InputUserInfoViewModel extends AbstractViewModel {
         Log.d(TAG, "onClickNextButton");
 
         if (!isAvailableNickname) {
-            navigator.get().showInvalidNickname();
+            if (navigator.get() != null) {
+                navigator.get().showInvalidNickname();
+            }
         } else {
             String gender = isSelectedMale.get() ? Constants.GenderValue.male.toString() : Constants.GenderValue.female.toString();
-            navigator.get().onClickNextButton(nickname.get(), gender);
+            if (navigator.get() != null) {
+                navigator.get().onClickNextButton(nickname.get(), gender);
+            }
         }
     }
 }
