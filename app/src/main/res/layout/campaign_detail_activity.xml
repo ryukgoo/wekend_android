@@ -2,8 +2,7 @@
 
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:map="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="android.view.View" />
@@ -189,6 +188,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:layout_marginEnd="33dp"
+                        android:layout_gravity="center_vertical"
                         android:src="@drawable/img_icon_location" />
 
                     <TextView
@@ -203,6 +203,14 @@
                         android:includeFontPadding="false"
                         android:text="@{model.productInfo.totalAddress}" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="15dp"
+                        android:gravity="center"
+                        android:text="지도보기"
+                        android:textColor="@color/colorPrimaryDark" />
+
                 </LinearLayout>
 
                 <View
@@ -210,17 +218,8 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginBottom="45dp"
                     android:background="#dadada" />
-
-                <com.google.android.gms.maps.MapView
-                    android:id="@+id/campaign_map"
-                    android:layout_width="match_parent"
-                    android:layout_height="167dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="75dp"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    map:liteMode="true" />
 
             </LinearLayout>
 

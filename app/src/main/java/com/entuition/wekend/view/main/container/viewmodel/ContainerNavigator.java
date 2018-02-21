@@ -17,7 +17,7 @@ public interface ContainerNavigator {
     void showGuidePopup(boolean isShowCheckBox);
     void gotoNoticeView();
     void gotoProfileView();
-    void sendMailToDeveloper();
+    void sendMailToDeveloper(String username);
     void gotoAlarmSetting();
     void showLogoutDialog();
 }

@@ -143,12 +143,14 @@ public class Utilities {
     }
 
     public static String getPhoneNumberFormat(String phone) {
-        if (phone == null) return phone;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            return PhoneNumberUtils.formatNumber(phone, Locale.getDefault().getCountry());
-        } else {
-            return PhoneNumberUtils.formatNumber(phone);
+        if (phone != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                return PhoneNumberUtils.formatNumber(phone, Locale.getDefault().getCountry());
+            } else {
+                return PhoneNumberUtils.formatNumber(phone);
+            }
         }
+        return null;
     }
 
     public static int generateRandomVerificationCode() {

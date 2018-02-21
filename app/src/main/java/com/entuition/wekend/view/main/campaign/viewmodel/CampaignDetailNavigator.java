@@ -6,7 +6,6 @@ package com.entuition.wekend.view.main.campaign.viewmodel;
 
 public interface CampaignDetailNavigator {
 
-    void showLoadMapFailed();
     void gotoGoogleMapView(String title, String address);
     void gotoRecommendFriendView(int productId);
 

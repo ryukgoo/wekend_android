@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 
 import com.entuition.wekend.data.source.userinfo.UserInfo;
@@ -25,6 +26,7 @@ public class SettingEditProfileViewModel extends AbstractViewModel {
 
     public final ObservableBoolean isVaildPhone = new ObservableBoolean();
     public final ObservableBoolean isValidCode = new ObservableBoolean();
+    public final ObservableBoolean isShowEditPhone = new ObservableBoolean();
 
     public final ObservableField<UserInfo> user = new ObservableField<>();
     public final ObservableField<String> introduce = new ObservableField<>();
@@ -50,6 +52,7 @@ public class SettingEditProfileViewModel extends AbstractViewModel {
 
         isVaildPhone.set(false);
         isValidCode.set(false);
+        isShowEditPhone.set(false);
     }
 
     @Override
@@ -102,6 +105,15 @@ public class SettingEditProfileViewModel extends AbstractViewModel {
                 }
             }
         });
+    }
+
+    public void onFocusPhone(boolean focus) {
+
+        Log.d(TAG, "onFocusPhone > focus :" + focus);
+
+        if (focus) {
+            isShowEditPhone.set(true);
+        }
     }
 
     public void onChangePhone() {

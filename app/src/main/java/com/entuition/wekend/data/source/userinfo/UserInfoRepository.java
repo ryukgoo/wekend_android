@@ -347,6 +347,8 @@ public class UserInfoRepository implements UserInfoDataSource {
 
         UserInfo userInfo = cachedUserInfos.get(getUserId());
 
+        if (userInfo == null) { callback.onUpdateFailed(); }
+
         localDataSource.clearBadgeCount(tag, null);
 
         if (tag.equals(LikeListFragment.TAG)) {

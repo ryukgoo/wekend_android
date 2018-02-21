@@ -44,6 +44,8 @@ public class ContainerViewModel extends AbstractViewModel implements OnMenuTabCl
     private final UserInfoDataSource userInfoDataSource;
     private final ProductInfoDataSource productInfoDataSource;
 
+    private String username;
+
     public ContainerViewModel(Context context, ContainerNavigator navigator,
                               UserInfoDataSource userInfoDataSource,
                               ProductInfoDataSource productInfoDataSource) {
@@ -121,7 +123,7 @@ public class ContainerViewModel extends AbstractViewModel implements OnMenuTabCl
                     navigator.get().gotoProfileView();
                     break;
                 case R.id.menu_drawer_cc:
-                    navigator.get().sendMailToDeveloper();
+                    navigator.get().sendMailToDeveloper(username);
                     break;
                 case R.id.menu_drawer_setting:
                     navigator.get().gotoAlarmSetting();
@@ -193,6 +195,7 @@ public class ContainerViewModel extends AbstractViewModel implements OnMenuTabCl
         userInfoDataSource.getUserInfo(userInfoDataSource.getUserId(), new UserInfoDataSource.GetUserInfoCallback() {
             @Override
             public void onUserInfoLoaded(UserInfo userInfo) {
+                username = userInfo.getUsername();
                 if (navigator.get() != null) {
                     navigator.get().onUserInfoLoaded(userInfo);
                 }

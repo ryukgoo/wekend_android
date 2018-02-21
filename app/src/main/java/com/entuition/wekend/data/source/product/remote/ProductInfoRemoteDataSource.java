@@ -277,6 +277,7 @@ public class ProductInfoRemoteDataSource implements ProductInfoDataSource {
                 }
             } catch (Exception e) {
                 Log.e(TAG, e.toString());
+                return null;
             }
 
             return null;

@@ -52,6 +52,13 @@
 
     <string name="signup_precautions">회원가입을 하면 위켄드의 서비스 약관, 결제 서비스 약관, 개인정보 보호정책, 환불 정책, 보호 프로그램 이용약관에 동의하는 것으로 간주됩니다.</string>
 
+    <string name="find_account_password"><u>이메일계정/비밀번호 찾기</u></string>
+    <string name="find_account_comment">회원정보에 등록한 휴대전화 번호를 입력해주세요</string>
+
+    <string name="find_account_menu_email">이메일 찾기</string>
+    <string name="find_account_menu_password">비밀번호 찾기</string>
+    <string name="find_account_menu_cc">문의하기</string>
+
     <!-- Signup -->
     <string name="input_account_info">이메일주소와 비밀번호를 입력해 주세요</string>
     <string name="signup_email_hint">이메일주소를 입력해 주세요</string>
@@ -273,7 +280,7 @@
     <string name="setting_vibration">진동</string>
 
     <string name="setting_cc_mail_subject">고객센터 문의메일</string>
-    <string name="setting_cc_mail_text">계정이메일:\n문의내용:</string>
+    <string name="setting_cc_mail_text" formatted="false">계정이메일: %s\n문의내용:</string>
 
     <string name="setting_fragment_prev_button">전단계로</string>
 

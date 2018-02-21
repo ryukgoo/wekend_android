@@ -80,7 +80,10 @@ public class LikeInfoRepository implements LikeInfoDataSource {
 
     @Override
     public void getLikeInfo(String userId, int productId, @NonNull final GetLikeInfoCallback callback) {
-        if (cachedLikeInfoMap != null && cachedLikeInfoMap.get(productId) != null) {
+
+        if (cachedLikeInfoMap == null) {
+            cachedLikeInfoMap = new LinkedHashMap<>();
+        } else if (cachedLikeInfoMap.get(productId) != null) {
             callback.onLikeInfoLoaded(cachedLikeInfoMap.get(productId));
         }
 
@@ -276,10 +279,14 @@ public class LikeInfoRepository implements LikeInfoDataSource {
         for (LikeInfo info : likeInfos) {
             if (info.getGender().equals(Constants.GenderValue.male.toString())) {
                 ProductReadState readState = readStateMap.get(info.getProductId());
-                info.setProductLikedTime(readState.getFemaleLikeTime());
+                if (readState != null && readState.getFemaleLikeTime() != null) {
+                    info.setProductLikedTime(readState.getFemaleLikeTime());
+                }
             } else {
                 ProductReadState readState = readStateMap.get(info.getProductId());
-                info.setProductLikedTime(readState.getMaleLikeTime());
+                if (readState != null && readState.getMaleLikeTime() != null) {
+                    info.setProductLikedTime(readState.getMaleLikeTime());
+                }
             }
 
             Date updatedTime = DateUtils.parseISO8601Date(info.getUpdatedTime());

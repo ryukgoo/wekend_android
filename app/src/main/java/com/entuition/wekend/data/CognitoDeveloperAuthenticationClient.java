@@ -49,24 +49,9 @@ public class CognitoDeveloperAuthenticationClient {
 
     /**
      *
-     * @param username
-     * @param password
+     * @param requestModel
      * @return
      */
-    public RegisterResponseModel register(String username, String password, String nickname, String gender, int birth, String phone) {
-        Log.d(TAG, "username : " + username + ", password : " + password);
-
-        RegisterRequestModel requestModel = new RegisterRequestModel();
-        requestModel.setUsername(username);
-        requestModel.setPassword(password);
-        requestModel.setNickname(nickname);
-        requestModel.setGender(gender);
-        requestModel.setBirth(birth);
-        requestModel.setPhone(phone);
-
-        return register(requestModel);
-    }
-
     public RegisterResponseModel register(RegisterRequestModel requestModel) {
 
         ApiClientFactory apiClientFactory = new ApiClientFactory();

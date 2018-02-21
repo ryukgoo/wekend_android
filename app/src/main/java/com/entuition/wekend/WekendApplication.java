@@ -8,6 +8,7 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by Kim on 2015-08-25.
@@ -22,6 +23,13 @@ public class WekendApplication extends MultiDexApplication {
         Log.d(TAG, "onCreate!!!!!");
 
         super.onCreate();
+
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            Log.d(TAG, "LeakCanary > isInAnalyzerProcess return");
+            return;
+        }
+
+        LeakCanary.install(this);
 
         ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(getApplicationContext())
                 .memoryCacheExtraOptions(1200, 1200) // ?? -> default : (480. 800) device screen dimensions
@@ -39,9 +47,6 @@ public class WekendApplication extends MultiDexApplication {
     @Override
     public void onTerminate() {
         Log.d(TAG, "Application onTerminated!!!");
-//        ImageLoader.getInstance().clearMemoryCache();
-//        ImageLoader.getInstance().clearDiskCache();
-
         super.onTerminate();
     }
 

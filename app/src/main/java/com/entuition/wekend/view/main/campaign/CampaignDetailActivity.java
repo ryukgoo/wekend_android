@@ -22,7 +22,6 @@ import com.entuition.wekend.view.main.campaign.adapter.CampaignDetailAdapter;
 import com.entuition.wekend.view.main.campaign.viewmodel.CampaignDetailNavigator;
 import com.entuition.wekend.view.main.campaign.viewmodel.CampaignDetailViewModel;
 import com.entuition.wekend.view.main.likelist.RecommendFriendListActivity;
-import com.google.android.gms.maps.MapView;
 
 /**
  * Created by ryukgoo on 2016. 8. 4..
@@ -33,7 +32,6 @@ public class CampaignDetailActivity extends AppCompatActivity implements Campaig
 
     private CampaignDetailActivityBinding binding;
     private CampaignDetailViewModel model;
-    private MapView mapView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,12 +48,10 @@ public class CampaignDetailActivity extends AppCompatActivity implements Campaig
 
         setupToolbar();
         setupViewPager();
-        setupMapView(savedInstanceState);
 
         binding.setModel(model);
         binding.setIsShow(show);
         model.setFacebookShare(this);
-        mapView.getMapAsync(model);
 
         model.onCreate();
     }
@@ -103,18 +99,12 @@ public class CampaignDetailActivity extends AppCompatActivity implements Campaig
     @Override
     protected void onResume() {
         super.onResume();
-        if (mapView != null) {
-            mapView.onResume();
-        }
         model.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (mapView != null) {
-            mapView.onPause();
-        }
         model.onPause();
     }
 
@@ -122,22 +112,6 @@ public class CampaignDetailActivity extends AppCompatActivity implements Campaig
     protected void onDestroy() {
         model.onDestroy();
         super.onDestroy();
-        if (mapView != null) {
-            mapView.onDestroy();
-        }
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        if (mapView != null) {
-            mapView.onLowMemory();
-        }
-    }
-
-    @Override
-    public void showLoadMapFailed() {
-
     }
 
     @Override
@@ -188,10 +162,5 @@ public class CampaignDetailActivity extends AppCompatActivity implements Campaig
         CampaignDetailAdapter adapter = new CampaignDetailAdapter(new ProductInfo());
         binding.campaignDetailViewpager.setAdapter(adapter);
         binding.campaignDetailViewpager.addOnPageChangeListener(binding.campaignDetailIndicator);
-    }
-
-    private void setupMapView(@Nullable Bundle savedInstanceState) {
-        mapView = binding.campaignMap;
-        mapView.onCreate(savedInstanceState);
     }
 }

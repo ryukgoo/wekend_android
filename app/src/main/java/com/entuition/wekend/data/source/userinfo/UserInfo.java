@@ -61,9 +61,9 @@ public class UserInfo {
     private Set<String> photos;
     private int balloon;
     private String endpointARN;
-    private int newLikeCount;
-    private int newSendCount;
-    private int newReceiveCount;
+    private int newLikeCount = 0;
+    private int newSendCount = 0;
+    private int newReceiveCount = 0;
 
     public UserInfo() {}
 

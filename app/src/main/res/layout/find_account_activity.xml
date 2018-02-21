@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.entuition.wekend.view.join.viewmodel.InputPhoneViewModel" />
+            type="com.entuition.wekend.view.join.viewmodel.FindAccountViewModel" />
     </data>
 
     <LinearLayout
@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
-            android:text="@string/input_mobile_number"
+            android:text="@string/find_account_comment"
             android:textColor="@color/colorTextLogin"
             android:textSize="@dimen/login_static_text_small"
             android:includeFontPadding="false" />
@@ -91,3 +91,4 @@
     </LinearLayout>
 
 </layout>
+

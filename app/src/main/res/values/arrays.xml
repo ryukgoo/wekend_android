@@ -34,4 +34,10 @@
         <item>@string/delete</item>
     </string-array>
 
+    <string-array name="find_account_menu">
+        <item>@string/find_account_menu_email</item>
+        <item>@string/find_account_menu_password</item>
+        <item>@string/find_account_menu_cc</item>
+    </string-array>
+
 </resources>

@@ -18,8 +18,8 @@ public class SharedPreferencesWrapper {
     private static final String REGISTRATION_ID = "REGISTRATION_ID";
     private static final String NOTIFICATION_LIKE_NUM = "NOTIFICATION_LIKE_NUM";
     private static final String NOTIFICATION_MAIL_NUM = "NOTIFICATION_MAIL_NUM";
-    private static final String NOTIFICATION_ALARM = "NOTIFICATION_ALARM";
-    private static final String NOTIFICATION_VIBRATION = "NOTIFICATION_VIBRATION";
+    private static final String NOTIFICATION_ALARM = "NOTIFICATION_ALARM_BOOL";
+    private static final String NOTIFICATION_VIBRATION = "NOTIFICATION_VIBRATION_BOOL";
     private static final String NO_MORE_GUIDE = "NO_MORE_GUIDE_RE";
 
     public static void wipe(SharedPreferences sharedPreferences) {

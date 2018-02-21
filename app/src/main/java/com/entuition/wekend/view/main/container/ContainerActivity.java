@@ -223,11 +223,11 @@ public class ContainerActivity extends AppCompatActivity implements ContainerNav
     }
 
     @Override
-    public void sendMailToDeveloper() {
+    public void sendMailToDeveloper(String username) {
         Uri uri = Uri.parse("mailto:entuitiondevelop@gmail.com");
         Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
         intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.setting_cc_mail_subject));
-        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.setting_cc_mail_text));
+        intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.setting_cc_mail_text, username));
         startActivity(intent);
     }
 

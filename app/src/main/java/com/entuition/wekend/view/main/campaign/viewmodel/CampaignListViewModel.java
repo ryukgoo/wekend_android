@@ -252,7 +252,9 @@ public class CampaignListViewModel extends AbstractViewModel {
 
                 @Override
                 public void onDataNotAvailable() {
-                    navigator.get().onNotifyItemChanged(position);
+                    if (navigator.get() != null) {
+                        navigator.get().onNotifyItemChanged(position);
+                    }
                 }
             });
         }

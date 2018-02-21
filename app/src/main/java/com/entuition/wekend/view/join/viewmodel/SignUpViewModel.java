@@ -1,6 +1,7 @@
 package com.entuition.wekend.view.join.viewmodel;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import com.entuition.wekend.view.common.AbstractViewModel;
@@ -37,6 +38,13 @@ public class SignUpViewModel extends AbstractViewModel {
     public void onClickSignUpButton(View view) {
         if (navigator.get() != null) {
             navigator.get().onShowAgreement();
+        }
+    }
+
+    public void onClickFindAccount() {
+        Log.d(TAG, "onClickFindAccount");
+        if (navigator.get() != null) {
+            navigator.get().onFindAccount();
         }
     }
 }

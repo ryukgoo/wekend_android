@@ -58,7 +58,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1">
 
             <ScrollView
@@ -415,8 +415,6 @@
 
                         </LinearLayout>
 
-
-
                         <!-- Phone -->
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -452,6 +450,7 @@
                                     android:background="@android:color/transparent"
                                     android:theme="@style/CustomEditTextStyle"
                                     android:text="@={model.phone}"
+                                    android:onFocusChange="@{(view, bool) -> model.onFocusPhone(bool)}"
                                     android:afterTextChanged="@{(s) -> model.onChangePhone()}" />
 
                             </LinearLayout>

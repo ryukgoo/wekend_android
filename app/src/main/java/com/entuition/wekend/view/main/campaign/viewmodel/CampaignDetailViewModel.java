@@ -24,12 +24,6 @@ import com.facebook.share.model.ShareOpenGraphAction;
 import com.facebook.share.model.ShareOpenGraphContent;
 import com.facebook.share.model.ShareOpenGraphObject;
 import com.facebook.share.widget.ShareDialog;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.kakao.kakaolink.v2.KakaoLinkResponse;
 import com.kakao.kakaolink.v2.KakaoLinkService;
 import com.kakao.message.template.ButtonObject;
@@ -46,7 +40,7 @@ import java.lang.ref.WeakReference;
  * Created by ryukgoo on 2017. 11. 12..
  */
 
-public class CampaignDetailViewModel extends AbstractViewModel implements OnMapReadyCallback {
+public class CampaignDetailViewModel extends AbstractViewModel {
 
     public static final String TAG = CampaignDetailViewModel.class.getSimpleName();
 
@@ -253,74 +247,6 @@ public class CampaignDetailViewModel extends AbstractViewModel implements OnMapR
                 }
             });
         }
-    }
-
-    @Override
-    public void onMapReady(final GoogleMap googleMap) {
-        if (productInfo.get() == null) {
-            productInfoDataSource.getProductInfo(productId, new ProductInfoDataSource.GetProductCallback() {
-                @Override
-                public void onProductInfoLoaded(ProductInfo info) {
-                    productInfo.set(info);
-                    setMapListener(googleMap);
-                }
-                @Override
-                public void onDataNotAvailable() {}
-            });
-        } else {
-            setMapListener(googleMap);
-        }
-    }
-
-    private void setMapListener(final GoogleMap googleMap) {
-
-        final String address = productInfo.get().getAddress();
-
-        productInfoDataSource.getProductLocation(address, new ProductInfoDataSource.GetLocationCallback() {
-            @Override
-            public void onProductLocationLoaded(LatLng location) {
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, ProductInfo.GOOGLE_MAP_ZOOM));
-                Marker marker = googleMap.addMarker(new MarkerOptions().position(location));
-                marker.showInfoWindow();
-
-                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                    @Override
-                    public void onMapClick(LatLng latLng) {
-                        if (navigator.get() != null) {
-                            navigator.get().gotoGoogleMapView(productInfo.get().getTitleKor(), address);
-                        }
-                    }
-                });
-
-                googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                    @Override
-                    public boolean onMarkerClick(Marker marker) {
-                        if (navigator.get() != null) {
-                            navigator.get().gotoGoogleMapView(productInfo.get().getTitleKor(), address);
-                        }
-                        return false;
-                    }
-                });
-
-                googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-                    @Override
-                    public void onInfoWindowClick(Marker marker) {
-                        if (navigator.get() != null) {
-                            navigator.get().gotoGoogleMapView(productInfo.get().getTitleKor(), address);
-                        }
-                    }
-                });
-
-                googleMap.getUiSettings().setMapToolbarEnabled(false);
-            }
-
-            @Override
-            public void onAddressNotAvailable() {
-                if (navigator.get() != null) {
-                    navigator.get().showLoadMapFailed();
-                }
-            }
-        });
     }
 
     private void loadLikeStatus(final int productId) {

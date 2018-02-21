@@ -3,8 +3,10 @@ package com.entuition.wekend.view.join;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.widget.LinearLayout;
@@ -75,6 +77,11 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator, 
     protected void onDestroy() {
         loginViewModel.onDestroy();
         signUpViewModel.onDestroy();
+
+        if (popupWindow != null) {
+            popupWindow = null;
+        }
+
         super.onDestroy();
     }
 
@@ -113,6 +120,30 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator, 
         popupWindow = new PopupWindow(binding.getRoot(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         popupWindow.setAnimationStyle(-1);
         popupWindow.showAtLocation(binding.getRoot(), Gravity.CENTER, 0, 0);
+    }
+
+    @Override
+    public void onFindAccount() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setItems(R.array.find_account_menu, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int which) {
+                if (which == 0) {
+                    Intent intent = new Intent(LoginActivity.this, FindAccountActivity.class);
+                    startActivity(intent);
+                } else if (which == 1) {
+                    Intent intent = new Intent(LoginActivity.this, FindAccountActivity.class);
+                    startActivity(intent);
+                } else if (which == 2) {
+                    Uri uri = Uri.parse("mailto:entuitiondevelop@gmail.com");
+                    Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+                    intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.setting_cc_mail_subject));
+                    intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.setting_cc_mail_text, ""));
+                    startActivity(intent);
+                }
+            }
+        });
+        builder.show();
     }
 
     @Override

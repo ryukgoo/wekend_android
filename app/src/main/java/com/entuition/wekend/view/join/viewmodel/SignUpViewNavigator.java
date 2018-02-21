@@ -7,5 +7,6 @@ package com.entuition.wekend.view.join.viewmodel;
 public interface SignUpViewNavigator {
 
     void onShowAgreement();
+    void onFindAccount();
 
 }

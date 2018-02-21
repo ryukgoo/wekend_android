@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.entuition.wekend"
-    android:versionCode="3597"
-    android:versionName="0.1.0.3597">
+    android:versionCode="3731"
+    android:versionName="0.1.0.3731">
 
     <uses-sdk android:minSdkVersion="17" />
 
@@ -16,8 +16,10 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!--<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="com.google.android.c2dm.permission.REGISTER" />
+
     <uses-permission android:name="com.entuition.wekend.permission.C2D_MESSAGE" />
 
     <uses-permission android:name="com.android.vending.BILLING" />
@@ -85,6 +87,13 @@
             android:theme="@style/AppTheme.Dark"
             android:screenOrientation="portrait" />
 
+        <!-- FindAccount Activity -->
+        <activity
+            android:name="com.entuition.wekend.view.join.FindAccountActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Dark"
+            android:screenOrientation="portrait" />
+
         <!-- Register Activity -->
         <activity
             android:name="com.entuition.wekend.view.join.SignUpActivity"
@@ -116,7 +125,8 @@
         <activity
             android:name="com.entuition.wekend.view.main.container.ContainerActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name="com.entuition.wekend.view.main.campaign.CampaignDetailActivity"
@@ -198,7 +208,6 @@
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
                 <category android:name="com.entuition.wekend" />
             </intent-filter>
         </receiver>
@@ -211,7 +220,6 @@
         <service android:name=".data.google.gcm.MessageReceivingService">
             <intent-filter>
                 <action android:name="com.entuition.wekend.model.gcm.ExternalReceiver" />
-
                 <category android:name="com.entuition.wekend" />
             </intent-filter>
         </service>
