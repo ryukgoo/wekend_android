@@ -86,17 +86,16 @@
                 android:text="@={loginModel.password}"
                 android:afterTextChanged="@{(s) -> loginModel.onChangePasswordText()}" />
 
-            <!--
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
+                android:layout_gravity="end"
                 android:textSize="@dimen/login_input_text"
                 android:textColor="@color/colorTextLogin"
                 android:textAlignment="textEnd"
                 android:text="@string/find_account_password"
-                android:onClick="@{() -> signUpModel.onClickFindAccount()}"/>
-                -->
+                android:onClick="@{() -> signUpModel.onClickFindAccount()}" />
 
             <Button
                 android:layout_width="match_parent"

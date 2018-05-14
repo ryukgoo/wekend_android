@@ -3,6 +3,8 @@ package com.entuition.wekend.view.main.setting.viewmodel;
 import android.content.Context;
 import android.databinding.ObservableField;
 
+import com.entuition.wekend.R;
+import com.entuition.wekend.data.google.billing.GoogleBillingController;
 import com.entuition.wekend.data.source.userinfo.UserInfo;
 import com.entuition.wekend.data.source.userinfo.UserInfoDataSource;
 import com.entuition.wekend.view.common.AbstractViewModel;
@@ -19,6 +21,7 @@ public class SettingProfileViewModel extends AbstractViewModel implements Profil
     public static final String TAG = SettingProfileViewModel.class.getSimpleName();
 
     public final ObservableField<UserInfo> user = new ObservableField<>();
+    public final ObservableField<String> subscription = new ObservableField<>();
 
     private final UserInfoDataSource userInfoDataSource;
     private final WeakReference<SettingProfileNavigator> navigator;
@@ -56,10 +59,26 @@ public class SettingProfileViewModel extends AbstractViewModel implements Profil
         final String userId = userInfoDataSource.getUserId();
         userInfoDataSource.getUserInfo(userId, new UserInfoDataSource.GetUserInfoCallback() {
             @Override
-            public void onUserInfoLoaded(UserInfo result) { user.set(result); }
+            public void onUserInfoLoaded(UserInfo result) {
+                user.set(result);
+            }
 
             @Override
             public void onDataNotAvailable() {}
+
+            @Override
+            public void onError() {}
+        });
+
+        GoogleBillingController.getInstance(getApplication()).checkSubcribing(new GoogleBillingController.OnValidateSubcribe() {
+            @Override
+            public void onValidateSubcribed(boolean isSubcribed, UserInfo userInfo) {
+                if (isSubcribed) {
+                    subscription.set(getApplication().getString(R.string.subscription_enabled));
+                } else {
+                    subscription.set("");
+                }
+            }
         });
     }
 }

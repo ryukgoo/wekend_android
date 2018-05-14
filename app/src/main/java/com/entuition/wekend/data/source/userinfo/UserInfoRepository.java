@@ -52,7 +52,7 @@ public class UserInfoRepository implements UserInfoDataSource {
     private final UserInfoLocalDataSource localDataSource;
 
     Map<String, UserInfo> cachedUserInfos;
-    private String verficationCode = null;
+    private String verificationCode = null;
     private boolean isCacheDirty = false;
 
     private UserInfoRepository(Context context) {
@@ -72,6 +72,11 @@ public class UserInfoRepository implements UserInfoDataSource {
     @Override
     public String getUserId() {
         return localDataSource.getUserId();
+    }
+
+    @Override
+    public String getUsernameFromDevice() {
+        return localDataSource.getUsernameFromDevice();
     }
 
     @Override
@@ -98,8 +103,8 @@ public class UserInfoRepository implements UserInfoDataSource {
     }
 
     @Override
-    public void searchUserInfoFromNickname(@NonNull String nickname, final GetUserInfoCallback callback) {
-        remoteDataSource.searchUserInfoFromNickname(nickname, new GetUserInfoCallback() {
+    public void searchUserInfoByNickname(@NonNull String nickname, final GetUserInfoCallback callback) {
+        remoteDataSource.searchUserInfoByNickname(nickname, new GetUserInfoCallback() {
             @Override
             public void onUserInfoLoaded(UserInfo userInfo) {
                 callback.onUserInfoLoaded(new UserInfo(userInfo));
@@ -109,12 +114,15 @@ public class UserInfoRepository implements UserInfoDataSource {
             public void onDataNotAvailable() {
                 callback.onDataNotAvailable();
             }
+
+            @Override
+            public void onError() {}
         });
     }
 
     @Override
-    public void searchUserInfoFromUsername(@NonNull String username, final GetUserInfoCallback callback) {
-        remoteDataSource.searchUserInfoFromUsername(username, new GetUserInfoCallback() {
+    public void searchUserInfoByUsername(@NonNull String username, final GetUserInfoCallback callback) {
+        remoteDataSource.searchUserInfoByUsername(username, new GetUserInfoCallback() {
             @Override
             public void onUserInfoLoaded(UserInfo userInfo) {
                 callback.onUserInfoLoaded(new UserInfo(userInfo));
@@ -124,11 +132,37 @@ public class UserInfoRepository implements UserInfoDataSource {
             public void onDataNotAvailable() {
                 callback.onDataNotAvailable();
             }
+
+            @Override
+            public void onError() {}
+        });
+    }
+
+    @Override
+    public void searchUserInfoByPhone(@NonNull String phone, final GetUserInfoCallback callback) {
+        remoteDataSource.searchUserInfoByPhone(phone, new GetUserInfoCallback() {
+            @Override
+            public void onUserInfoLoaded(UserInfo userInfo) {
+                callback.onUserInfoLoaded(new UserInfo((userInfo)));
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                callback.onDataNotAvailable();
+            }
+
+            @Override
+            public void onError() {}
         });
     }
 
     @Override
     public void updateUserInfo(@NonNull UserInfo userInfo, final UpdateUserInfoCallback callback) {
+
+        if (userInfo.getPhotos() != null && userInfo.getPhotos().isEmpty()) {
+            userInfo.setPhotos(null);
+        }
+
         remoteDataSource.updateUserInfo(userInfo, new UpdateUserInfoCallback() {
             @Override
             public void onUpdateComplete(UserInfo userInfo) {
@@ -169,6 +203,9 @@ public class UserInfoRepository implements UserInfoDataSource {
             public void onDataNotAvailable() {
                 callback.onUpdateFailed();
             }
+
+            @Override
+            public void onError() {}
         });
     }
 
@@ -200,6 +237,9 @@ public class UserInfoRepository implements UserInfoDataSource {
             public void onDataNotAvailable() {
                 callback.onConsumeNotAvailable();
             }
+
+            @Override
+            public void onError() {}
         });
     }
 
@@ -214,36 +254,26 @@ public class UserInfoRepository implements UserInfoDataSource {
     }
 
     @Override
-    public void registerEndpointArn(@Nullable String token, final RegisterEndpointCallback callback) {
-        String registrationToken = localDataSource.getRegistrationToken();
+    public void registerEndpointArn(@Nullable String token, RegisterEndpointCallback callback) {
+        if (token != null) {
+            localDataSource.registerEndpointArn(token, callback);
+        }
 
-        if (TextUtils.isNullorEmptyString(registrationToken)) {
-            remoteDataSource.getRegistrationToken(new GetRegisterationIdCallback() {
-                @Override
-                public void onGetRegistrationId(String registrationId) {
-                    localDataSource.registerEndpointArn(registrationId, null);
-                    remoteDataSource.registerEndpointArn(localDataSource.getUserId(), registrationId, callback);
-                }
+        String storedToken = localDataSource.getRegistrationToken();
 
-                @Override
-                public void onFailedRegistrationId() {
-                    callback.onRegisterFailed();
-                }
-            });
-        } else {
-            Log.d(TAG, "registerEndpointArn > Token : " + registrationToken);
-            remoteDataSource.registerEndpointArn(localDataSource.getUserId(), registrationToken, null);
+        if (localDataSource.getUserId() != null && storedToken != null) {
+            remoteDataSource.registerEndpointArn(localDataSource.getUserId(), storedToken, callback);
         }
     }
 
     @Override
     public void requestVerificationCode(@NonNull String phone, final RequestCodeCallback callback) {
-        if (verficationCode != null) clearVerificationCode();
+        if (verificationCode != null) clearVerificationCode();
 
         remoteDataSource.requestVerificationCode(phone, new RequestCodeCallback() {
             @Override
             public void onReceiveCode(@NonNull String code) {
-                verficationCode = code;
+                verificationCode = code;
                 callback.onReceiveCode(code);
             }
 
@@ -256,7 +286,9 @@ public class UserInfoRepository implements UserInfoDataSource {
 
     @Override
     public boolean validateVerificationCode(@NonNull String code) {
-        return code.equals(verficationCode);
+        Log.d(TAG, "validateVerificationCode : verification Code : " + verificationCode + ", code : " + code);
+
+        return code.equals(verificationCode);
     }
 
     @Override
@@ -274,8 +306,14 @@ public class UserInfoRepository implements UserInfoDataSource {
                     if (userInfo == null) callback.onErrorUnknown();
 
                     Set<String> photos = userInfo.getPhotos();
-                    if (photos == null) { photos = new HashSet<>(); }
-                    if (!photos.contains(imagePath)) { photos.add(imagePath); }
+                    if (photos == null) {
+                        Log.d(TAG, "uploadProfileImage > photos is null");
+                        photos = new HashSet<>();
+                        photos.add(imagePath);
+                    } else if (!photos.contains(imagePath)) {
+                        Log.d(TAG, "uploadProfileImage > not contain key");
+                        photos.add(imagePath);
+                    }
                     userInfo.setPhotos(photos);
 
                     remoteDataSource.updateUserInfo(userInfo, new UpdateUserInfoCallback() {
@@ -318,8 +356,12 @@ public class UserInfoRepository implements UserInfoDataSource {
         getUserInfo(getUserId(), new GetUserInfoCallback() {
             @Override
             public void onUserInfoLoaded(UserInfo getInfo) {
-                if (getInfo.getPhotos().contains(key)) {
+                if (getInfo.getPhotos() != null && getInfo.getPhotos().contains(key)) {
                     getInfo.getPhotos().remove(key);
+
+                    Log.d(TAG, "userInfo's photos count : " + getInfo.getPhotos().isEmpty());
+                    if (getInfo.getPhotos().isEmpty()) { getInfo.setPhotos(null); }
+
                     remoteDataSource.updateUserInfo(getInfo, new UpdateUserInfoCallback() {
                         @Override
                         public void onUpdateComplete(UserInfo updatedInfo) {
@@ -334,11 +376,20 @@ public class UserInfoRepository implements UserInfoDataSource {
                             callback.onUpdateFailed();
                         }
                     });
+                } else {
+                    callback.onUpdateFailed();
                 }
             }
 
             @Override
-            public void onDataNotAvailable() {}
+            public void onDataNotAvailable() {
+                callback.onUpdateFailed();
+            }
+
+            @Override
+            public void onError() {
+                callback.onUpdateFailed();
+            }
         });
     }
 
@@ -368,8 +419,30 @@ public class UserInfoRepository implements UserInfoDataSource {
         remoteDataSource.updateUserInfo(userInfo, callback);
     }
 
+    @Override
+    public void validatePurchase(final String userId, String purchaseId, String token, final ValidatePurchaseCallback callback) {
+        remoteDataSource.validatePurchase(userId, purchaseId, token, new ValidatePurchaseCallback() {
+            @Override
+            public void onValidateComplete() {
+                getUserInfoFromRemoteDataSource(userId, new GetUserInfoCallback() {
+                    @Override
+                    public void onUserInfoLoaded(UserInfo userInfo) { callback.onValidateComplete(); }
+
+                    @Override
+                    public void onDataNotAvailable() { callback.onValidateFailed(); }
+
+                    @Override
+                    public void onError() { callback.onValidateFailed(); }
+                });
+            }
+
+            @Override
+            public void onValidateFailed() { callback.onValidateFailed(); }
+        });
+    }
+
     private void clearVerificationCode() {
-        verficationCode = null;
+        verificationCode = null;
     }
 
     private void getUserInfoFromRemoteDataSource(@NonNull String userId, final GetUserInfoCallback callback) {
@@ -385,6 +458,9 @@ public class UserInfoRepository implements UserInfoDataSource {
             public void onDataNotAvailable() {
                 callback.onDataNotAvailable();
             }
+
+            @Override
+            public void onError() {}
         });
     }
 

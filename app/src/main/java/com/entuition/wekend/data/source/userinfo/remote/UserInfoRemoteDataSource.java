@@ -10,9 +10,12 @@ import com.amazonaws.mobileconnectors.apigateway.ApiClientException;
 import com.amazonaws.mobileconnectors.apigateway.ApiClientFactory;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBQueryExpression;
+import com.entuition.clientsdk.AuthenticationAPIClient;
 import com.entuition.clientsdk.NotificationAPIClient;
 import com.entuition.clientsdk.model.CreateEndpointARNRequestModel;
 import com.entuition.clientsdk.model.CreateEndpointARNResponseModel;
+import com.entuition.clientsdk.model.VerifyPurchaseRequest;
+import com.entuition.clientsdk.model.VerifyPurchaseResponse;
 import com.entuition.wekend.R;
 import com.entuition.wekend.data.CognitoSyncClientManager;
 import com.entuition.wekend.data.source.userinfo.UserInfo;
@@ -70,6 +73,9 @@ public class UserInfoRemoteDataSource implements UserInfoDataSource {
     }
 
     @Override
+    public String getUsernameFromDevice() { return null; }
+
+    @Override
     public void refreshUserInfo() {
 
     }
@@ -80,7 +86,7 @@ public class UserInfoRemoteDataSource implements UserInfoDataSource {
     }
 
     @Override
-    public void searchUserInfoFromNickname(@NonNull String nickname, GetUserInfoCallback callback) {
+    public void searchUserInfoByNickname(@NonNull String nickname, GetUserInfoCallback callback) {
 
         UserInfo userInfo = new UserInfo();
         userInfo.setNickname(nickname);
@@ -89,12 +95,23 @@ public class UserInfoRemoteDataSource implements UserInfoDataSource {
     }
 
     @Override
-    public void searchUserInfoFromUsername(@NonNull String username, GetUserInfoCallback callback) {
+    public void searchUserInfoByUsername(@NonNull String username, GetUserInfoCallback callback) {
 
         UserInfo userInfo = new UserInfo();
         userInfo.setUsername(username);
 
         new SearchUserInfoTask(UserInfo.Index.USERNAME, mapper, callback).execute(userInfo);
+    }
+
+    @Override
+    public void searchUserInfoByPhone(@NonNull String phone, GetUserInfoCallback callback) {
+
+        Log.d(TAG, "searchUserInfoByPhone > phone : " + phone);
+
+        UserInfo userInfo = new UserInfo();
+        userInfo.setPhone(phone);
+
+        new SearchUserInfoTask(UserInfo.Index.PHONE_REGISTERED_TIME, mapper, callback).execute(userInfo);
     }
 
     @Override
@@ -147,6 +164,19 @@ public class UserInfoRemoteDataSource implements UserInfoDataSource {
 
     @Override
     public void clearBadgeCount(String tag, UpdateUserInfoCallback callback) {}
+
+    @Override
+    public void validatePurchase(String userId, String purchaseId, String token, ValidatePurchaseCallback callback) {
+        VerifyPurchaseRequest request = new VerifyPurchaseRequest();
+        request.setUserId(userId);
+        request.setPlatform("android");
+        request.setPurchaseId(purchaseId);
+        request.setPurchaseToken(token);
+
+        Log.d(TAG, "validatePurchase > userId : " + userId + ", purchaseId : " + purchaseId);
+
+        new VerifyPurchaseTask(callback).execute(request);
+    }
 
     private static class GetUserInfoTask extends AsyncTask<String, Void, Void> {
 
@@ -206,6 +236,7 @@ public class UserInfoRemoteDataSource implements UserInfoDataSource {
                 }
             } catch (Exception e) {
                 Log.e(TAG, e.getMessage());
+                callback.onError();
             }
 
             return null;
@@ -414,6 +445,45 @@ public class UserInfoRemoteDataSource implements UserInfoDataSource {
                 callback.onReceiveCode(result);
             } else {
                 callback.onFailedRequest();
+            }
+        }
+    }
+
+    private static class VerifyPurchaseTask extends AsyncTask<VerifyPurchaseRequest, Void, String> {
+
+        private final ValidatePurchaseCallback callback;
+
+        private VerifyPurchaseTask(ValidatePurchaseCallback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected String doInBackground(VerifyPurchaseRequest... verifyPurchaseRequests) {
+
+            Log.d(TAG, "VerifyPurchaseTask > doInBackground in");
+
+            VerifyPurchaseRequest request = verifyPurchaseRequests[0];
+
+            ApiClientFactory apiClientFactory = new ApiClientFactory();
+            AuthenticationAPIClient client = apiClientFactory.build(AuthenticationAPIClient.class);
+
+            try {
+                VerifyPurchaseResponse response = client.verifypurchasePost(request);
+                if (response != null) return response.getState();
+            } catch (Exception e) {
+                Log.e(TAG, "VerifyPurchaseTask > error : " + e.getMessage());
+                return null;
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result != null && result.equals("verified")) {
+                callback.onValidateComplete();
+            } else {
+                callback.onValidateFailed();
             }
         }
     }

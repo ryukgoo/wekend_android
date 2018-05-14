@@ -80,11 +80,34 @@ public class SettingEditProfileViewModelTest {
     @Test
     public void editTest() {
 
+        doAnswer(new Answer<String>() {
+            @Override
+            public String answer(InvocationOnMock invocation) throws Throwable {
+                return "123";
+            }
+        }).when(userInfoDataSourceMock).getUserId();
+
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                UserInfo user = new UserInfo();
+                UserInfoDataSource.GetUserInfoCallback callback = (UserInfoDataSource.GetUserInfoCallback) invocation.getArguments()[1];
+                callback.onUserInfoLoaded(user);
+                return null;
+            }
+        }).when(userInfoDataSourceMock).getUserInfo(anyString(), any(UserInfoDataSource.GetUserInfoCallback.class));
+
         doAnswer(new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
                 UserInfo user = (UserInfo) invocation.getArguments()[0];
                 UserInfoDataSource.UpdateUserInfoCallback callback = (UserInfoDataSource.UpdateUserInfoCallback) invocation.getArguments()[1];
+
+                user.setIntroduce(viewModel.introduce.get());
+                user.setCompany(viewModel.company.get());
+                user.setSchool(viewModel.school.get());
+                user.setArea(viewModel.area.get());
+
                 callback.onUpdateComplete(user);
                 return null;
             }
@@ -96,6 +119,9 @@ public class SettingEditProfileViewModelTest {
         viewModel.area.set("area");
         viewModel.editDone();
 
+        verify(userInfoDataSourceMock).getUserInfo(anyString(), any(UserInfoDataSource.GetUserInfoCallback.class));
+        verify(userInfoDataSourceMock).updateUserInfo(any(UserInfo.class), any(UserInfoDataSource.UpdateUserInfoCallback.class));
+
         assertEquals("introduce", viewModel.user.get().getIntroduce());
         assertEquals("company", viewModel.user.get().getCompany());
         assertEquals("school", viewModel.user.get().getSchool());
@@ -106,6 +132,24 @@ public class SettingEditProfileViewModelTest {
 
     @Test
     public void editFailedTest() {
+
+        doAnswer(new Answer<String>() {
+            @Override
+            public String answer(InvocationOnMock invocation) throws Throwable {
+                return "123";
+            }
+        }).when(userInfoDataSourceMock).getUserId();
+
+        doAnswer(new Answer<Void>() {
+            @Override
+            public Void answer(InvocationOnMock invocation) throws Throwable {
+                UserInfo user = new UserInfo();
+                UserInfoDataSource.GetUserInfoCallback callback = (UserInfoDataSource.GetUserInfoCallback) invocation.getArguments()[1];
+                callback.onUserInfoLoaded(user);
+                return null;
+            }
+        }).when(userInfoDataSourceMock).getUserInfo(anyString(), any(UserInfoDataSource.GetUserInfoCallback.class));
+
         doAnswer(new Answer<Void>() {
             @Override
             public Void answer(InvocationOnMock invocation) throws Throwable {
@@ -117,6 +161,8 @@ public class SettingEditProfileViewModelTest {
 
         viewModel.editDone();
 
+        verify(userInfoDataSourceMock).getUserInfo(anyString(), any(UserInfoDataSource.GetUserInfoCallback.class));
+        verify(userInfoDataSourceMock).updateUserInfo(any(UserInfo.class), any(UserInfoDataSource.UpdateUserInfoCallback.class));
         verify(navigatorMock).showUpdateError();
 
     }

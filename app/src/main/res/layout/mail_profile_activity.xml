@@ -132,7 +132,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
                 android:includeFontPadding="false"
-                android:text="@{@string/formatted_point(model.user.balloon)}"
+                android:text="@{model.point}"
                 android:visibility="@{model.status == ProposeStatus.none ? View.VISIBLE : View.GONE}" />
 
             <LinearLayout

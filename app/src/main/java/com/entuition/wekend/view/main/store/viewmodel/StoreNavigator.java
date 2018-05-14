@@ -13,4 +13,6 @@ public interface StoreNavigator {
     void onQueryInventoryFailed();
     void onPurchaseFailed();
 
+    void onAlreayHasSubscription();
+
 }

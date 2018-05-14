@@ -60,8 +60,21 @@ public class LikeListBindingAdapters {
 
     @BindingAdapter("friendProfileImage")
     public static void loadFriendProfileImage(ImageView view, String userId) {
+
+        ImageView imageView = (ImageView) view;
+        imageView.setImageBitmap(null);
+
         String photoFileName = ImageUtils.getUploadedPhotoFileName(userId, 0);
         String photoUrl = ImageUtils.getHttpUrl(ImageUtils.PROFILE_THUMB_BUCKET_NAME, photoFileName);
+
         ImageLoader.getInstance().displayImage(photoUrl, view, ImageOptions.FRIEND_THUMB_CIRCLE_GRID, new AnimateFirstDisplayListener());
+
+//        Bitmap loadedBitmap = ImageLoader.getInstance().loadImageSync(photoUrl);
+//
+//        if (loadedBitmap == null) {
+//            ImageLoader.getInstance().displayImage(photoUrl, view, ImageOptions.FRIEND_THUMB_CIRCLE_GRID, new AnimateFirstDisplayListener());
+//        } else {
+//            ImageLoader.getInstance().displayImage(photoUrl, view, ImageOptions.FRIEND_THUMB_CIRCLE_GRID);
+//        }
     }
 }

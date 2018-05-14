@@ -1,13 +1,11 @@
 package com.entuition.wekend.view.main.mailbox;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -148,14 +146,13 @@ public class MailProfileActivity extends AppCompatActivity implements MailProfil
         binding.appBar.profileViewPager.addOnPageChangeListener(binding.appBar.indicator);
     }
 
-    @SuppressLint("RestrictedApi")
     private void setupUserInputDialog() {
         LayoutInflater inflater = LayoutInflater.from(this);
         UserInputDialogBinding dialogBinding = UserInputDialogBinding.inflate(inflater, null, false);
         UserInputDialogViewModel dialogViewModel = new UserInputDialogViewModel(this);
         dialogBinding.setModel(dialogViewModel);
 
-        new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.CustomAlertDialog))
+        new AlertDialog.Builder(this, R.style.CustomAlertDialog)
                 .setTitle(getString(R.string.propose_message_title))
                 .setPositiveButton(getString(R.string.send), dialogViewModel)
                 .setNegativeButton(getString(R.string.cancel), dialogViewModel)

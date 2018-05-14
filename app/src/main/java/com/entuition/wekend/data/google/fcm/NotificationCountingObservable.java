@@ -1,4 +1,4 @@
-package com.entuition.wekend.data.google.gcm;
+package com.entuition.wekend.data.google.fcm;
 
 import com.entuition.wekend.util.Constants.NotificationType;
 

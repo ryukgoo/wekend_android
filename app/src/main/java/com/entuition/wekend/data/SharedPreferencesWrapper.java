@@ -22,6 +22,8 @@ public class SharedPreferencesWrapper {
     private static final String NOTIFICATION_VIBRATION = "NOTIFICATION_VIBRATION_BOOL";
     private static final String NO_MORE_GUIDE = "NO_MORE_GUIDE_RE";
 
+    private static final String SUBCSRIPTION_EXPIRATION_DATE = "EXPIRATION_DATE";
+
     public static void wipe(SharedPreferences sharedPreferences) {
         SharedPreferencesWrapper.storeValueInSharedPreferences(sharedPreferences, DEVIDE_UID, null);
         SharedPreferencesWrapper.storeValueInSharedPreferences(sharedPreferences, DEVICE_KEY, null);
@@ -67,24 +69,28 @@ public class SharedPreferencesWrapper {
         SharedPreferencesWrapper.storeBooleanSharedPreferences(sharedPreferences, NO_MORE_GUIDE, isShow);
     }
 
+    public static void setExpirationDate(SharedPreferences sharedPreferences, String dateString) {
+        SharedPreferencesWrapper.storeValueInSharedPreferences(sharedPreferences, SUBCSRIPTION_EXPIRATION_DATE, dateString);
+    }
+
     public static String getUidForDevice(SharedPreferences sharedPreferences) {
-        return SharedPreferencesWrapper.getValueFromSharedPreferences(sharedPreferences, DEVIDE_UID);
+        return SharedPreferencesWrapper.getStringFromSharedPreferences(sharedPreferences, DEVIDE_UID);
     }
 
     public static String getKeyForDevice(SharedPreferences sharedPreferences) {
-        return SharedPreferencesWrapper.getValueFromSharedPreferences(sharedPreferences, DEVICE_KEY);
+        return SharedPreferencesWrapper.getStringFromSharedPreferences(sharedPreferences, DEVICE_KEY);
     }
 
     public static String getUsernameFromSharedPreferences(SharedPreferences sharedPreferences) {
-        return SharedPreferencesWrapper.getValueFromSharedPreferences(sharedPreferences, USER_NAME);
+        return SharedPreferencesWrapper.getStringFromSharedPreferences(sharedPreferences, USER_NAME);
     }
 
     public static String getUserIdFromSharedPreferences(SharedPreferences sharedPreferences) {
-        return SharedPreferencesWrapper.getValueFromSharedPreferences(sharedPreferences, USER_ID);
+        return SharedPreferencesWrapper.getStringFromSharedPreferences(sharedPreferences, USER_ID);
     }
 
     public static String getRegistrationIdFromSharedPreferences(SharedPreferences sharedPreferences) {
-        return SharedPreferencesWrapper.getValueFromSharedPreferences(sharedPreferences, REGISTRATION_ID);
+        return SharedPreferencesWrapper.getStringFromSharedPreferences(sharedPreferences, REGISTRATION_ID);
     }
 
     public static int getNotificationLikeNumFromSharedPreferences(SharedPreferences sharedPreferences) {
@@ -107,6 +113,10 @@ public class SharedPreferencesWrapper {
         return SharedPreferencesWrapper.getBooleanFromSharedPreferences(sharedPreferences, NO_MORE_GUIDE, false);
     }
 
+    public static String getSubcsriptionExpirationDate(SharedPreferences sharedPreferences) {
+        return SharedPreferencesWrapper.getStringFromSharedPreferences(sharedPreferences, SUBCSRIPTION_EXPIRATION_DATE);
+    }
+
     private static void storeIntInSharedPreferences(SharedPreferences sharedPreferences, String key, int value) {
         Log.d(TAG, "storeIntInSharedPreferences > key : " + key + ", value : " + value);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -125,9 +135,9 @@ public class SharedPreferencesWrapper {
         editor.apply();
     }
 
-    private static String getValueFromSharedPreferences(SharedPreferences sharedPreferences, String key) {
+    private static String getStringFromSharedPreferences(SharedPreferences sharedPreferences, String key) {
         String value = sharedPreferences.getString(key, null);
-        Log.d(TAG, "getValueFromSharedPreferences > key : " + key + ", value : " + value);
+        Log.d(TAG, "getStringFromSharedPreferences > key : " + key + ", value : " + value);
         return value;
     }
 

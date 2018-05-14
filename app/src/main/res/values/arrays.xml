@@ -15,13 +15,14 @@
         <item>@string/mailbox_send</item>
     </string-array>
 
-    <string-array name="store_bonus">
-        <item></item>
-        <item>3000P + 500P</item>
-        <item>5000P + 1000P</item>
-        <item>10000P + 2500P</item>
-        <item>30000P + 8500P</item>
-        <item>Monthly</item>
+    <string-array name="inapp_purchase_title">
+        <item>@string/store_product_0</item>
+        <item>@string/store_product_1</item>
+        <item>@string/store_product_2</item>
+        <item>@string/store_product_3</item>
+        <item>@string/store_product_4</item>
+        <item>@string/store_product_5</item>
+        <item>@string/store_product_6</item>
     </string-array>
 
     <string-array name="share_apps">

@@ -201,6 +201,9 @@ public class CampaignListViewModel extends AbstractViewModel {
                     navigator.get().onFailedAddLike();
                 }
             }
+
+            @Override
+            public void onError() {}
         });
     }
 

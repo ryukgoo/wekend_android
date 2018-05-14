@@ -1,4 +1,4 @@
-package com.entuition.wekend.data.google.gcm;
+package com.entuition.wekend.data.google.fcm;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

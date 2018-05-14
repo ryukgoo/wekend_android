@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import com.entuition.clientsdk.model.LoginResponseModel;
 import com.entuition.clientsdk.model.RegisterRequestModel;
 import com.entuition.clientsdk.model.RegisterResponseModel;
+import com.entuition.clientsdk.model.ResetPasswordRequest;
+import com.entuition.clientsdk.model.ResetPasswordResponse;
 import com.entuition.wekend.data.CognitoSyncClientManager;
 import com.entuition.wekend.data.DeveloperAuthenticationProvider;
 import com.entuition.wekend.data.source.userinfo.UserInfo;
@@ -71,6 +73,16 @@ public class AuthenticationRepository implements AuthenticationDataSource {
         } else {
             callback.onFailedGetToken();
         }
+    }
+
+    @Override
+    public void resetPassword(@NonNull String userId, @NonNull String password, @NonNull RegisterCallback callback) {
+
+        ResetPasswordRequest request = new ResetPasswordRequest();
+        request.setUserId(userId);
+        request.setPassword(password);
+
+        new ResetPasswordTask(callback).execute(request);
     }
 
     private static class GetTokenTask extends AsyncTask<String, Void, String> {
@@ -151,6 +163,29 @@ public class AuthenticationRepository implements AuthenticationDataSource {
 
         @Override
         protected void onPostExecute(RegisterResponseModel result) {
+            if (result == null || result.getResult().equals(RESPONSE_FAILED)) {
+                callback.onFailedRegister();
+            } else {
+                callback.onCompleteRegister();
+            }
+        }
+    }
+
+    private static class ResetPasswordTask extends AsyncTask<ResetPasswordRequest, Void, ResetPasswordResponse> {
+
+        private final RegisterCallback callback;
+
+        ResetPasswordTask(RegisterCallback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected ResetPasswordResponse doInBackground(ResetPasswordRequest... resetPasswordRequests) {
+            return DeveloperAuthenticationProvider.getDevAuthClientInstance().resetPassword(resetPasswordRequests[0]);
+        }
+
+        @Override
+        protected void onPostExecute(ResetPasswordResponse result) {
             if (result == null || result.getResult().equals(RESPONSE_FAILED)) {
                 callback.onFailedRegister();
             } else {

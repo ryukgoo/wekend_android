@@ -245,6 +245,9 @@ public class CampaignDetailViewModel extends AbstractViewModel {
                     }
                     isStateLoading.set(false);
                 }
+
+                @Override
+                public void onError() {}
             });
         }
     }
@@ -288,6 +291,14 @@ public class CampaignDetailViewModel extends AbstractViewModel {
 
             @Override
             public void onDataNotAvailable() {
+                buttonText.set(getApplication().getString(R.string.button_like));
+                isStateLoading.set(false);
+                isButtonEnable.set(true);
+                isLikeProduct = false;
+            }
+
+            @Override
+            public void onError() {
                 buttonText.set(getApplication().getString(R.string.button_like));
                 isStateLoading.set(false);
                 isButtonEnable.set(true);

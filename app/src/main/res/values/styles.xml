@@ -84,7 +84,7 @@
         <item name="colorSwitchThumbNormal">@color/colorBackground</item>
     </style>
 
-    <style name="CustomAlertDialog" parent="AlertDialog.AppCompat">
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:colorAccent" tools:ignore="NewApi">@color/colorPrimaryDark</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>

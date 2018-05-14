@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.entuition.wekend.R;
 import com.entuition.wekend.data.source.authentication.AuthenticationRepository;
-import com.entuition.wekend.data.source.userinfo.UserInfoDataSource;
 import com.entuition.wekend.data.source.userinfo.UserInfoRepository;
 import com.entuition.wekend.databinding.SplashScreenActivityBinding;
 import com.entuition.wekend.util.Constants;
@@ -30,9 +29,7 @@ public class SplashScreen extends AppCompatActivity implements LaunchNavigator {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        UserInfoDataSource userInfoDataSource = UserInfoRepository.getInstance(this);
-
-        model = new LaunchViewModel(this, this, AuthenticationRepository.getInstance(), userInfoDataSource);
+        model = new LaunchViewModel(this, this, AuthenticationRepository.getInstance(), UserInfoRepository.getInstance(this));
 
         SplashScreenActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.splash_screen_activity);
         binding.setModel(model);
@@ -69,6 +66,8 @@ public class SplashScreen extends AppCompatActivity implements LaunchNavigator {
     @Override
     public void onLoginView() {
         Intent intent = new Intent(this, LoginActivity.class);
+        String username = UserInfoRepository.getInstance(this).getUsernameFromDevice();
+        intent.putExtra(Constants.ExtraKeys.USERNAME, username);
         startActivity(intent);
     }
 

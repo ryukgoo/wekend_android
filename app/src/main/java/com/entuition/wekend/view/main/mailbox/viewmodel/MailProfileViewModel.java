@@ -8,6 +8,9 @@ import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.util.Log;
 
+import com.entuition.wekend.R;
+import com.entuition.wekend.data.google.billing.GoogleBillingController;
+import com.entuition.wekend.data.google.billing.HasSubscriptionObserverable;
 import com.entuition.wekend.data.source.mail.IMail;
 import com.entuition.wekend.data.source.mail.MailDataSource;
 import com.entuition.wekend.data.source.mail.MailType;
@@ -26,6 +29,9 @@ import com.entuition.wekend.view.main.setting.adapter.ProfileViewPagerListener;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by ryukgoo on 2017. 11. 16..
@@ -41,6 +47,7 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
     public final ObservableArrayList<String> photos = new ObservableArrayList<>();
     public final ObservableField<String> phone = new ObservableField<>();
     public final ObservableField<ProductInfo> product = new ObservableField<>();
+    public final ObservableField<String> point = new ObservableField<>();
 
     public final ObservableBoolean isStatusLoading = new ObservableBoolean();
     public final ObservableBoolean isButtonVisible = new ObservableBoolean();
@@ -54,6 +61,9 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
     private final UserInfoDataSource userInfoDataSource;
     private final ProductInfoDataSource productInfoDataSource;
     private final MailDataSource mailDataSource;
+
+    // GoogleBillingController
+    private final GoogleBillingController billingController;
 
     private String userId;
     private String friendId;
@@ -70,11 +80,14 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
         this.productInfoDataSource = productInfoDataSource;
         this.mailDataSource = mailDataSource;
 
+        this.billingController = GoogleBillingController.getInstance(context);
+
         isStatusLoading.set(false);
         isButtonVisible.set(false);
         isMatchTextVisible.set(false);
         isMessageVisible.set(false);
         status.set(ProposeStatus.notMade);
+        point.set("");
     }
 
     @Override
@@ -120,8 +133,22 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
             public void onDataNotAvailable() {
                 Log.d(TAG, "onDataNotAvailable");
             }
+
+            @Override
+            public void onError() {}
         });
 
+        loadUserInfo();
+
+        HasSubscriptionObserverable.getInstance().addObserver(new Observer() {
+            @Override
+            public void update(Observable observable, Object data) {
+                loadUserInfo();
+            }
+        });
+    }
+
+    private void loadUserInfo() {
         userInfoDataSource.getUserInfo(userId, new UserInfoDataSource.GetUserInfoCallback() {
             @Override
             public void onUserInfoLoaded(UserInfo userInfo) {
@@ -130,6 +157,22 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
 
             @Override
             public void onDataNotAvailable() {}
+
+            @Override
+            public void onError() {}
+        });
+
+        GoogleBillingController.getInstance(getApplication()).checkSubcribing(new GoogleBillingController.OnValidateSubcribe() {
+            @Override
+            public void onValidateSubcribed(boolean isSubcribed, UserInfo userInfo) {
+                if (isSubcribed) {
+                    point.set(getApplication().getString(R.string.subscription_enabled));
+                } else {
+                    if (userInfo != null) {
+                        point.set(getApplication().getString(R.string.formatted_point, userInfo.getBalloon()));
+                    }
+                }
+            }
         });
     }
 
@@ -159,6 +202,28 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
     }
 
     public void onClickProposeButton() {
+
+        String purchaseTimestamp = user.get().getPurchaseTime();
+        String expiresTimestamp = user.get().getExpiresTime();
+
+        if (purchaseTimestamp != null && expiresTimestamp != null) {
+
+            long purchaseTimeMillis = Utilities.getDateFromTimeStamp(purchaseTimestamp).getTime();
+            long expiresTimeMillis = Utilities.getDateFromTimeStamp(expiresTimestamp).getTime();
+            long now = new Date().getTime();
+
+            Log.d(TAG, "purchaseTime : " + purchaseTimeMillis);
+            Log.d(TAG, "expiresTime : " + expiresTimeMillis);
+            Log.d(TAG, "nowTime : " + now);
+
+            if (expiresTimeMillis >= now) {
+                if (navigator.get() != null) { navigator.get().showUserInputDialog(); }
+                return;
+            }
+        }
+
+        Log.d(TAG, "subcribe is not available");
+
         if (navigator.get() != null) {
             navigator.get().confirmPropose(new DialogInterface.OnClickListener() {
                 @Override
@@ -291,9 +356,7 @@ public class MailProfileViewModel extends AbstractViewModel implements ProfileVi
                 }
 
                 @Override
-                public void onFailedUpdateMail() {
-
-                }
+                public void onFailedUpdateMail() { }
             });
         }
     }

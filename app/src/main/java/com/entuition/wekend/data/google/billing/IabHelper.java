@@ -72,6 +72,7 @@ import java.util.List;
  *
  */
 public class IabHelper {
+
     // Is debug logging enabled?
     boolean mDebugLog = false;
     String mDebugTag = "IabHelper";
@@ -174,6 +175,7 @@ public class IabHelper {
      *     is NOT your "developer public key".
      */
     public IabHelper(Context ctx, String base64PublicKey) {
+        Log.d(mDebugTag, "IabHelper initialize");
         mContext = ctx.getApplicationContext();
         mSignatureBase64 = base64PublicKey;
         logDebug("IAB helper created.");
@@ -185,6 +187,7 @@ public class IabHelper {
     public void enableDebugLogging(boolean enable, String tag) {
         checkNotDisposed();
         mDebugLog = enable;
+        mDebugTag = tag;
         mDebugTag = tag;
     }
 

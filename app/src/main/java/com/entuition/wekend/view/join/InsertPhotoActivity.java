@@ -73,27 +73,33 @@ public class InsertPhotoActivity extends AppCompatActivity implements SelectImag
     }
 
     @Override
+    public void onUploadImagePrepare() {}
+
+    @Override
     public void onImageSelected(Bitmap bitmap) {
         binding.insertProfileImage.setBackground(new CircleDrawable(bitmap, 20, 0, -4));
     }
 
     @Override
-    public void onUploadImageFailed() {
-
-    }
+    public void onUploadImageFailed() {}
 
     @Override
-    public void onUploadImageCanceled() {
-
-    }
+    public void onUploadImageCanceled() {}
 
     @Override
-    public void onUpdateUserInfoFailed() {
-
-    }
+    public void onUpdateUserInfoFailed() {}
 
     @Override
     public void onUploadImageCompleted() {
         Log.d(TAG, "onUploadImageCompleted > userInfo updated");
     }
+
+    @Override
+    public void onDeleteImagePrepare() {}
+
+    @Override
+    public void onDeleteImageCompleted() {}
+
+    @Override
+    public void onDeleteImageFailed() {}
 }

@@ -64,6 +64,9 @@ public class LaunchViewModel extends AbstractViewModel {
                             navigator.get().onLoginView();
                         }
                     }
+
+                    @Override
+                    public void onError() {}
                 });
             }
 

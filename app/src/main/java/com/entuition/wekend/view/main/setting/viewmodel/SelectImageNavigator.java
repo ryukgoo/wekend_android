@@ -14,9 +14,14 @@ public interface SelectImageNavigator {
 
     void onPermissionDenied();
 
+    void onUploadImagePrepare();
     void onUploadImageFailed();
     void onUploadImageCanceled();
     void onUpdateUserInfoFailed();
     void onUploadImageCompleted();
+
+    void onDeleteImagePrepare();
+    void onDeleteImageCompleted();
+    void onDeleteImageFailed();
 }
 

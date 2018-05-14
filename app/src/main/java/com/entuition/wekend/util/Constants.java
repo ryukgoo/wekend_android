@@ -39,6 +39,7 @@ public class Constants {
         public static final String NICKNAME = "nickname";
         public static final String GENDER = "gender";
         public static final String BIRTH = "birth";
+        public static final String PHONE = "phone";
         public static final String PRODUCT_ID = "product_id";
         public static final String PRODUCT_SHOW = "product_show";
         public static final String PRODUCT_TITLE = "product_title";

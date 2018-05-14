@@ -1,6 +1,7 @@
 package com.entuition.wekend.view.main.setting;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -39,6 +40,8 @@ public class SettingEditProfileActivity extends AppCompatActivity implements Sel
     private SettingEditProfileViewModel model;
     private MultiSelectImageViewModel imageModel;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,10 @@ public class SettingEditProfileActivity extends AppCompatActivity implements Sel
         imageModel = new MultiSelectImageViewModel(this, UserInfoRepository.getInstance(this));
         model = new SettingEditProfileViewModel(this, this, UserInfoRepository.getInstance(this));
         binding = DataBindingUtil.setContentView(this, R.layout.setting_edit_profile_activity);
+
+        progressDialog = new ProgressDialog(this, R.style.CustomProgressDialog);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage(getString(R.string.wait_please));
 
         binding.setModel(model);
         binding.setImageModel(imageModel);
@@ -127,21 +134,63 @@ public class SettingEditProfileActivity extends AppCompatActivity implements Sel
 
     @Override
     public void onPermissionDenied() {
+        progressDialog.dismiss();
         AlertUtils.showAlertDialog(this, R.string.edit_profile_image_failed,
                 R.string.edit_profile_image_permission_denied);
     }
 
     @Override
-    public void onUploadImageFailed() {}
+    public void onUploadImagePrepare() {
+        progressDialog.show();
+    }
 
     @Override
-    public void onUploadImageCanceled() {}
+    public void onUploadImageFailed() {
+        progressDialog.dismiss();
+        AlertUtils.showAlertDialog(this, R.string.edit_profile_image_failed,
+                R.string.edit_profile_image_failed_message);
+    }
 
     @Override
-    public void onUpdateUserInfoFailed() {}
+    public void onUploadImageCanceled() {
+        progressDialog.dismiss();
+        AlertUtils.showAlertDialog(this, R.string.edit_profile_image_failed,
+                R.string.edit_profile_image_failed_message);
+    }
 
     @Override
-    public void onUploadImageCompleted() {}
+    public void onUpdateUserInfoFailed() {
+        progressDialog.dismiss();
+        AlertUtils.showAlertDialog(this, R.string.edit_profile_image_failed,
+                R.string.edit_profile_image_failed_message);
+    }
+
+    @Override
+    public void onUploadImageCompleted() {
+        progressDialog.dismiss();
+        AlertUtils.showAlertDialog(this, R.string.edit_profile_image_title,
+                R.string.edit_profile_image_message);
+    }
+
+    @Override
+    public void onDeleteImagePrepare() {
+        progressDialog.show();
+    }
+
+    @Override
+    public void onDeleteImageCompleted() {
+        progressDialog.dismiss();
+        Log.d(TAG, "onDeleteImageCompleted");
+        AlertUtils.showAlertDialog(this, R.string.delete_profile_image_title,
+                R.string.delete_profile_image_message);
+    }
+
+    @Override
+    public void onDeleteImageFailed() {
+        progressDialog.dismiss();
+        AlertUtils.showAlertDialog(this, R.string.delete_profile_image_failed_title,
+                R.string.delete_profile_image_failed_message);
+    }
 
     @Override
     public void dismiss() {

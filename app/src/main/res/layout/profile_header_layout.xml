@@ -75,7 +75,7 @@
             android:textColor="@color/colorPrimary"
             android:textSize="12sp"
             android:includeFontPadding="false"
-            android:text="@{@string/formatted_point(userInfo.balloon)}" />
+            android:text="@{model.point}" />
 
     </LinearLayout>
 

@@ -28,15 +28,23 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
                 android:includeFontPadding="false"
-                android:text="@{@string/formatted_point(model.userInfo.balloon)}" />
+                android:text="@{model.point}" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/store_recycler"
+            <android.support.v4.widget.SwipeRefreshLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_margin="12dp"
-                app:refreshStore="@{model.items}" />
+                android:layout_height="match_parent"
+                app:refreshing="@{model.isRefreshing}"
+                app:onRefreshListener="@{() -> model.onRefresh()}">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/store_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="12dp"
+                    app:refreshStore="@{model.items}" />
+
+            </android.support.v4.widget.SwipeRefreshLayout>
 
         </LinearLayout>
 

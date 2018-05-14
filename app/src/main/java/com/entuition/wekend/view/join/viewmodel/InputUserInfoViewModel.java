@@ -68,7 +68,7 @@ public class InputUserInfoViewModel extends AbstractViewModel {
         }
 
         isLoading.set(true);
-        dataSource.searchUserInfoFromNickname(nickname.get(), new UserInfoDataSource.GetUserInfoCallback() {
+        dataSource.searchUserInfoByNickname(nickname.get(), new UserInfoDataSource.GetUserInfoCallback() {
             @Override
             public void onUserInfoLoaded(UserInfo userInfo) {
                 isLoading.set(false);
@@ -86,6 +86,9 @@ public class InputUserInfoViewModel extends AbstractViewModel {
                     navigator.get().showAvailableNickname();
                 }
             }
+
+            @Override
+            public void onError() {}
         });
     }
 

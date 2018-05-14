@@ -32,4 +32,5 @@ public interface AuthenticationDataSource {
 
     void getToken(@NonNull GetTokenCallback callback);
 
+    void resetPassword(@NonNull String userId, @NonNull String password, @NonNull RegisterCallback callback);
 }

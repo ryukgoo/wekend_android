@@ -19,6 +19,7 @@ import com.entuition.wekend.data.source.userinfo.UserInfoRepository;
 import com.entuition.wekend.databinding.AgreementLayoutBinding;
 import com.entuition.wekend.databinding.LoginActivityBinding;
 import com.entuition.wekend.util.AlertUtils;
+import com.entuition.wekend.util.Constants;
 import com.entuition.wekend.view.join.viewmodel.AgreementNavigator;
 import com.entuition.wekend.view.join.viewmodel.AgreementViewModel;
 import com.entuition.wekend.view.join.viewmodel.LoginNavigator;
@@ -53,6 +54,9 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator, 
 
         loginViewModel.onCreate();
         signUpViewModel.onCreate();
+
+        String username = getIntent().getStringExtra(Constants.ExtraKeys.USERNAME);
+        if (username != null) { loginViewModel.email.set(username); }
     }
 
     @Override
@@ -124,15 +128,15 @@ public class LoginActivity extends AppCompatActivity implements LoginNavigator, 
 
     @Override
     public void onFindAccount() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomAlertDialog);
         builder.setItems(R.array.find_account_menu, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int which) {
                 if (which == 0) {
-                    Intent intent = new Intent(LoginActivity.this, FindAccountActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, ConfirmPhoneActivity.class);
                     startActivity(intent);
                 } else if (which == 1) {
-                    Intent intent = new Intent(LoginActivity.this, FindAccountActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, ConfirmAccountActivity.class);
                     startActivity(intent);
                 } else if (which == 2) {
                     Uri uri = Uri.parse("mailto:entuitiondevelop@gmail.com");

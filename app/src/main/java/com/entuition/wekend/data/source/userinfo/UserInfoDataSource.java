@@ -12,6 +12,7 @@ public interface UserInfoDataSource {
     interface GetUserInfoCallback {
         void onUserInfoLoaded(UserInfo userInfo);
         void onDataNotAvailable();
+        void onError();
     }
 
     interface UpdateUserInfoCallback {
@@ -48,17 +49,26 @@ public interface UserInfoDataSource {
         void onErrorUnknown();
     }
 
+    interface ValidatePurchaseCallback {
+        void onValidateComplete();
+        void onValidateFailed();
+    }
+
     void clear();
 
     String getUserId();
+
+    String getUsernameFromDevice();
 
     void refreshUserInfo();
 
     void getUserInfo(String userId, GetUserInfoCallback callback);
 
-    void searchUserInfoFromNickname(@NonNull String nickname, GetUserInfoCallback callback);
+    void searchUserInfoByNickname(@NonNull String nickname, GetUserInfoCallback callback);
 
-    void searchUserInfoFromUsername(@NonNull String username, GetUserInfoCallback callback);
+    void searchUserInfoByUsername(@NonNull String username, GetUserInfoCallback callback);
+
+    void searchUserInfoByPhone(@NonNull String phone, GetUserInfoCallback callback);
 
     void updateUserInfo(@NonNull UserInfo userInfo, UpdateUserInfoCallback callback);
 
@@ -81,4 +91,6 @@ public interface UserInfoDataSource {
     void deleteProfileImage(@NonNull String key, UpdateUserInfoCallback callback);
 
     void clearBadgeCount(String tag, UpdateUserInfoCallback callback);
+
+    void validatePurchase(String userId, String purchaseId, String token, ValidatePurchaseCallback callback);
 }

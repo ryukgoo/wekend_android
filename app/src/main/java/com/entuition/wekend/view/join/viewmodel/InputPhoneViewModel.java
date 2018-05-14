@@ -41,6 +41,7 @@ public class InputPhoneViewModel extends AbstractViewModel {
     private String nickname;
     private String gender;
     private int birth;
+    private String requestedPhone;
 
     public InputPhoneViewModel(Context context, InputPhoneNavigator navigator,
                                AuthenticationDataSource authenticationDataSource, UserInfoDataSource userInfoDataSource) {
@@ -77,6 +78,8 @@ public class InputPhoneViewModel extends AbstractViewModel {
     public void onClickRequestCode(View view) {
         Log.d(TAG, "onClickRequestCode");
 
+        requestedPhone = phone.get();
+
         userInfoDataSource.requestVerificationCode(phone.get(), new UserInfoDataSource.RequestCodeCallback() {
             @Override
             public void onReceiveCode(@NonNull String code) {
@@ -101,13 +104,16 @@ public class InputPhoneViewModel extends AbstractViewModel {
             if (navigator.get() != null) {
                 navigator.get().showStartRegister();
             }
-            authenticationDataSource.register(username, password, nickname, gender, birth, phone.get(),
+            authenticationDataSource.register(username, password, nickname, gender, birth, requestedPhone,
                     new AuthenticationDataSource.RegisterCallback() {
                 @Override
                 public void onCompleteRegister() {
                     authenticationDataSource.login(username, password, new AuthenticationDataSource.LoginCallback() {
                         @Override
                         public void onCompleteLogin() {
+
+                            userInfoDataSource.registerEndpointArn(null, null);
+
                             if (navigator.get() != null) {
                                 navigator.get().showStopRegister();
                                 navigator.get().onCompleteLogin();

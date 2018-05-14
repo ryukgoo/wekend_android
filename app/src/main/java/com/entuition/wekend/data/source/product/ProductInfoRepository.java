@@ -181,12 +181,13 @@ public class ProductInfoRepository implements ProductInfoDataSource {
         if (readState == null) return false;
 
         if (info.getReadTime() != null) {
-            Date readTime = DateUtils.parseISO8601Date(info.getReadTime());
 
             Log.d(TAG, "title : " + info.getProductTitle());
             Log.d(TAG, "readTime : " + info.getReadTime());
             Log.d(TAG, "MailLikeTime : " + readState.getMaleLikeTime());
             Log.d(TAG, "FemaleLikeTime : " + readState.getFemaleLikeTime());
+
+            Date readTime = DateUtils.parseISO8601Date(info.getReadTime());
 
             if (info.getGender().equals(Constants.GenderValue.male.toString())) {
                 if (readState.getFemaleLikeTime() != null) {

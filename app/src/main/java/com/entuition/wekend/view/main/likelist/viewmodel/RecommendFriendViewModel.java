@@ -104,6 +104,9 @@ public class RecommendFriendViewModel extends AbstractViewModel {
                 isLoading.set(false);
                 isRefreshing.set(false);
             }
+
+            @Override
+            public void onError() {}
         });
     }
 }

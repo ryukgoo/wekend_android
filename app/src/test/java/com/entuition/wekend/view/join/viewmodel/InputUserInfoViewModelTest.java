@@ -50,7 +50,7 @@ public class InputUserInfoViewModelTest {
                 callback.onDataNotAvailable();
                 return null;
             }
-        }).when(dataSourceMock).searchUserInfoFromNickname(anyString(), any(UserInfoDataSource.GetUserInfoCallback.class));
+        }).when(dataSourceMock).searchUserInfoByNickname(anyString(), any(UserInfoDataSource.GetUserInfoCallback.class));
 
         viewModel.onCreate();
         viewModel.nickname.set("nickname");

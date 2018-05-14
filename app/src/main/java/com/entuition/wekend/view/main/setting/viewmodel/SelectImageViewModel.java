@@ -102,7 +102,10 @@ public class SelectImageViewModel {
     }
 
     void uploadImage(final int index) {
-        if (navigator.get() != null) navigator.get().onImageSelected(ImageUtils.decodeFile(outputFile));
+        if (navigator.get() != null) {
+            navigator.get().onImageSelected(ImageUtils.decodeFile(outputFile));
+            navigator.get().onUploadImagePrepare();
+        }
         userInfoDataSource.getUserInfo(null, new UserInfoDataSource.GetUserInfoCallback() {
             @Override
             public void onUserInfoLoaded(UserInfo userInfo) {
@@ -135,29 +138,42 @@ public class SelectImageViewModel {
                             @Override
                             public void onErrorUnknown() {
                                 Log.e(TAG, "onErrorUnknown");
+                                if (navigator.get() != null) navigator.get().onUploadImageFailed();
                             }
                         });
             }
 
             @Override
             public void onDataNotAvailable() {}
+
+            @Override
+            public void onError() {}
         });
     }
 
     public void deleteImage(int index) {
+
+        if (navigator.get() != null) { navigator.get().onDeleteImagePrepare(); }
+
         String userId = userInfoDataSource.getUserId();
         String key = ImageUtils.getUploadedPhotoFileName(userId, index);
 
         userInfoDataSource.deleteProfileImage(key, new UserInfoDataSource.UpdateUserInfoCallback() {
             @Override
             public void onUpdateComplete(UserInfo userInfo) {
+
+                Log.d(TAG, "onUpdateComplete");
+
                 if (navigator.get() != null) {
                     navigator.get().onImageSelected(null);
+                    navigator.get().onDeleteImageCompleted();
                 }
             }
 
             @Override
-            public void onUpdateFailed() {}
+            public void onUpdateFailed() {
+                if (navigator.get() != null) { navigator.get().onDeleteImageFailed(); }
+            }
         });
     }
 }

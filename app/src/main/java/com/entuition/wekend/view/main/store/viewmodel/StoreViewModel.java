@@ -2,7 +2,6 @@ package com.entuition.wekend.view.main.store.viewmodel;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.BindingAdapter;
 import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
@@ -10,8 +9,10 @@ import android.databinding.ObservableField;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.entuition.wekend.R;
 import com.entuition.wekend.data.google.billing.GoogleBillingController;
-import com.entuition.wekend.data.google.billing.Inventory;
+import com.entuition.wekend.data.google.billing.HasSubscriptionObserverable;
+import com.entuition.wekend.data.google.billing.Purchase;
 import com.entuition.wekend.data.google.billing.SkuDetails;
 import com.entuition.wekend.data.source.userinfo.UserInfo;
 import com.entuition.wekend.data.source.userinfo.UserInfoDataSource;
@@ -19,10 +20,9 @@ import com.entuition.wekend.view.common.AbstractViewModel;
 import com.entuition.wekend.view.main.store.adapter.StoreAdapter;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by ryukgoo on 2017. 11. 17..
@@ -33,34 +33,43 @@ public class StoreViewModel extends AbstractViewModel implements GoogleBillingCo
     public static final String TAG = StoreViewModel.class.getSimpleName();
 
     public final ObservableBoolean isLoading = new ObservableBoolean();
+    public final ObservableBoolean isRefreshing = new ObservableBoolean();
     public final ObservableField<UserInfo> userInfo = new ObservableField<>();
+    public final ObservableField<String> point = new ObservableField<>();
     public final ObservableArrayList<SkuDetails> items = new ObservableArrayList<>();
 
     private final WeakReference<StoreNavigator> navigator;
     private final UserInfoDataSource userInfoDataSource;
     private final GoogleBillingController billingController;
 
-    private Map<String, String> bonusMap = new HashMap<>();
-
     public StoreViewModel(Context context, StoreNavigator navigator,
-                          UserInfoDataSource userInfoDataSource,
-                          GoogleBillingController billingController) {
+                          UserInfoDataSource userInfoDataSource, GoogleBillingController controller) {
         super(context);
 
         this.navigator = new WeakReference<StoreNavigator>(navigator);
         this.userInfoDataSource = userInfoDataSource;
-        this.billingController = billingController;
+        this.billingController = controller;
 
-        isLoading.set(false);
+        this.isLoading.set(false);
     }
 
     @Override
     public void onCreate() {
 
-        isLoading.set(true);
+        loadUserInfo();
 
-        billingController.init();
         billingController.setListener(this);
+        items.addAll(billingController.getSkuDetails());
+
+        HasSubscriptionObserverable.getInstance().addObserver(new Observer() {
+            @Override
+            public void update(Observable observable, Object data) {
+                loadUserInfo();
+            }
+        });
+    }
+
+    private void loadUserInfo() {
 
         userInfoDataSource.getUserInfo(null, new UserInfoDataSource.GetUserInfoCallback() {
             @Override
@@ -70,6 +79,22 @@ public class StoreViewModel extends AbstractViewModel implements GoogleBillingCo
 
             @Override
             public void onDataNotAvailable() {}
+
+            @Override
+            public void onError() {}
+        });
+
+        billingController.checkSubcribing(new GoogleBillingController.OnValidateSubcribe() {
+            @Override
+            public void onValidateSubcribed(boolean isSubcribed, UserInfo userInfo) {
+                if (isSubcribed) {
+                    point.set(getApplication().getString(R.string.subscription_enabled));
+                } else {
+                    if (userInfo != null) {
+                        point.set(getApplication().getString(R.string.formatted_point, userInfo.getBalloon()));
+                    }
+                }
+            }
         });
     }
 
@@ -80,60 +105,63 @@ public class StoreViewModel extends AbstractViewModel implements GoogleBillingCo
     public void onPause() {}
 
     @Override
-    public void onDestroy() {
-        billingController.dismiss();
-    }
+    public void onDestroy() {}
 
-    public boolean handleActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "handleActivityResult > requestCode : " + requestCode + ", resultCode : " + resultCode);
-        return billingController.handleActivityResult(requestCode, resultCode, data);
+    public void onRefresh() {
+        isRefreshing.set(true);
+        billingController.queryInventory();
     }
 
     @Override
-    public void onQueryFinished(Inventory inventory) {
-
-        bonusMap = billingController.getBonusMap();
-
-        List<SkuDetails> skuDetails = new ArrayList<>();
-        for (String sku : billingController.getSkuList()) {
-            if (inventory.hasDetails(sku)) {
-                skuDetails.add(inventory.getSkuDetails(sku));
-            }
-        }
-
+    public void onQueryFinished(List<SkuDetails> skuDetails) {
         items.clear();
         items.addAll(skuDetails);
         isLoading.set(false);
+        isRefreshing.set(false);
     }
 
     @Override
-    public void onPurchaseFinished(String sku) {
-        isLoading.set(false);
+    public void onPurchaseFinished(Purchase purchase) {
+
+        Log.d(TAG, "onPurchaseFinished > purchase : " + purchase.getSku());
+
+        isLoading.set(true);
+        // TODO : ....
+
+        String id = purchase.getSku();
+        String token = purchase.getToken();
+
+        userInfoDataSource.validatePurchase(userInfo.get().getUserId(), id, token, new UserInfoDataSource.ValidatePurchaseCallback() {
+            @Override
+            public void onValidateComplete() {
+                isLoading.set(false);
+                isRefreshing.set(false);
+                Log.d(TAG, "onPurchaseFinished > onValidateComplete");
+                if (navigator.get() != null) navigator.get().onPurchaseFinished();
+                HasSubscriptionObserverable.getInstance().hasSubscribe();
+            }
+
+            @Override
+            public void onValidateFailed() {
+                Log.d(TAG, "onPurchaseFinished > onValidateFailed");
+                isLoading.set(false);
+                isRefreshing.set(false);
+                if (navigator.get() != null) navigator.get().onPurchaseFailed();
+            }
+        });
+
     }
 
     @Override
     public void onConsumePurchase(String sku) {
         isLoading.set(false);
-
-        int point = billingController.getPrice(sku);
-
-        userInfoDataSource.purchasePoint(point, new UserInfoDataSource.UpdateUserInfoCallback() {
-            @Override
-            public void onUpdateComplete(UserInfo info) {
-                userInfo.set(info);
-            }
-
-            @Override
-            public void onUpdateFailed() {
-
-            }
-        });
     }
 
     @Override
     public void onQueryFailed() {
         Log.d(TAG, "onQueryFailed");
         isLoading.set(false);
+        isRefreshing.set(false);
         if (navigator.get() != null) navigator.get().onQueryInventoryFailed();
     }
 
@@ -156,15 +184,32 @@ public class StoreViewModel extends AbstractViewModel implements GoogleBillingCo
     }
 
     public String getBonusForSku(String sku) {
-        return bonusMap.get(sku);
+        return billingController.getPurchaseTitles().get(sku);
     }
 
-    public void launchPurchase(Activity activity, int position) {
-
+    public void launchPurchase(final Activity activity, final int position) {
         Log.d(TAG, "launcherPurchase > position : " + position);
 
-        isLoading.set(true);
-        billingController.launchPurchase(activity, position);
+        billingController.checkSubcribing(new GoogleBillingController.OnValidateSubcribe() {
+            @Override
+            public void onValidateSubcribed(boolean isSubcribed, UserInfo info) {
+                if (isSubcribed) {
+                    if (navigator.get() != null) navigator.get().onAlreayHasSubscription();
+                } else {
+                    isLoading.set(true);
+                    billingController.launchPurchase(activity, position, info.getUserId());
+                }
+            }
+        });
+
+        /*
+        if (billingController.isAvailablePurchase(position)) {
+            isLoading.set(true);
+            billingController.launchPurchase(activity, position, userInfo.get().getUserId());
+        } else {
+            if (navigator.get() != null) navigator.get().onAlreayHasSubscription();
+        }
+        */
     }
 
     @BindingAdapter("refreshStore")

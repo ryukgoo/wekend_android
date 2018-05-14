@@ -68,7 +68,9 @@ public class ContainerActivity extends AppCompatActivity implements ContainerNav
     private GuidePopupWindow guidePopupWindow;
 
     private ProfileHeaderLayoutBinding headerLayoutBinding;
+
     private ContainerViewModel model;
+
     private int selectedBottomBar = 0;
 
     private Map<String, AbstractFragment> fragmentMap = new HashMap<String, AbstractFragment>();
@@ -94,6 +96,8 @@ public class ContainerActivity extends AppCompatActivity implements ContainerNav
         setupBottomBar();
 
         model.onCreate();
+
+        GoogleBillingController.getInstance(this).init();
     }
 
     @Override
@@ -113,6 +117,9 @@ public class ContainerActivity extends AppCompatActivity implements ContainerNav
     @Override
     protected void onDestroy() {
         Log.d(TAG, "onDestroy");
+
+        GoogleBillingController.getInstance(this).dismiss();
+
         model.onDestroy();
         super.onDestroy();
     }

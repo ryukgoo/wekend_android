@@ -82,9 +82,15 @@ public class Utilities {
         return DateUtils.formatISO8601Date(new Date());
     }
 
+    public static String getTimestamp(Date date) { return DateUtils.formatISO8601Date(date); }
+
     public static String convertDateStringFromTimestamp(String timestamp) {
         Date date = DateUtils.parseISO8601Date(timestamp);
         return DateUtils.format("yyyy.MM.dd", date);
+    }
+
+    public static Date getDateFromTimeStamp(String timestamp) {
+        return DateUtils.parseISO8601Date(timestamp);
     }
 
     public static String mapToString(Map<String, String> map) {

@@ -63,7 +63,7 @@ public class InputAccountViewModel extends AbstractViewModel {
                 navigator.get().showNotEqualConfirm();
             }
         } else {
-            userInfoDataSource.searchUserInfoFromUsername(email.get(), new UserInfoDataSource.GetUserInfoCallback() {
+            userInfoDataSource.searchUserInfoByUsername(email.get(), new UserInfoDataSource.GetUserInfoCallback() {
                 @Override
                 public void onUserInfoLoaded(UserInfo userInfo) {
                     if (navigator.get() != null) {
@@ -77,6 +77,9 @@ public class InputAccountViewModel extends AbstractViewModel {
                         navigator.get().gotoInputUserInfo(email.get(), password.get());
                     }
                 }
+
+                @Override
+                public void onError() {}
             });
         }
     }

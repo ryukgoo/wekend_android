@@ -1,7 +1,6 @@
 package com.entuition.wekend.view.main.container.viewmodel;
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.preference.PreferenceManager;
@@ -13,8 +12,9 @@ import android.view.MenuItem;
 import com.entuition.wekend.R;
 import com.entuition.wekend.data.DeveloperAuthenticationProvider;
 import com.entuition.wekend.data.SharedPreferencesWrapper;
-import com.entuition.wekend.data.google.gcm.MessageReceivingService;
-import com.entuition.wekend.data.google.gcm.NotificationCountingObservable;
+import com.entuition.wekend.data.google.billing.GoogleBillingController;
+import com.entuition.wekend.data.google.billing.HasSubscriptionObserverable;
+import com.entuition.wekend.data.google.fcm.NotificationCountingObservable;
 import com.entuition.wekend.data.source.product.ProductInfoDataSource;
 import com.entuition.wekend.data.source.userinfo.UserInfo;
 import com.entuition.wekend.data.source.userinfo.UserInfoDataSource;
@@ -39,6 +39,7 @@ public class ContainerViewModel extends AbstractViewModel implements OnMenuTabCl
 
     public final ObservableField<String> title = new ObservableField<>();
     public final ObservableBoolean isShowDropdown = new ObservableBoolean();
+    public final ObservableField<String> point = new ObservableField<>();
 
     private final WeakReference<ContainerNavigator> navigator;
     private final UserInfoDataSource userInfoDataSource;
@@ -60,12 +61,17 @@ public class ContainerViewModel extends AbstractViewModel implements OnMenuTabCl
         title.set(getApplication().getString(R.string.title_campaign));
         isShowDropdown.set(true);
 
-        getApplication().startService(new Intent(getApplication(), MessageReceivingService.class));
-
         NotificationCountingObservable.getInstance().addObserver(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
                 userInfoDataSource.refreshUserInfo();
+                refreshUserInfo();
+            }
+        });
+
+        HasSubscriptionObserverable.getInstance().addObserver(new Observer() {
+            @Override
+            public void update(Observable observable, Object data) {
                 refreshUserInfo();
             }
         });
@@ -192,10 +198,12 @@ public class ContainerViewModel extends AbstractViewModel implements OnMenuTabCl
     }
 
     private void refreshUserInfo() {
+
         userInfoDataSource.getUserInfo(userInfoDataSource.getUserId(), new UserInfoDataSource.GetUserInfoCallback() {
             @Override
             public void onUserInfoLoaded(UserInfo userInfo) {
                 username = userInfo.getUsername();
+
                 if (navigator.get() != null) {
                     navigator.get().onUserInfoLoaded(userInfo);
                 }
@@ -203,7 +211,24 @@ public class ContainerViewModel extends AbstractViewModel implements OnMenuTabCl
 
             @Override
             public void onDataNotAvailable() {}
+
+            @Override
+            public void onError() {}
         });
+
+        GoogleBillingController.getInstance(getApplication()).checkSubcribing(new GoogleBillingController.OnValidateSubcribe() {
+            @Override
+            public void onValidateSubcribed(boolean isSubcribed, UserInfo userInfo) {
+                if (isSubcribed) {
+                    point.set(getApplication().getString(R.string.subscription_enabled));
+                } else {
+                    if (userInfo != null) {
+                        point.set(getApplication().getString(R.string.formatted_point, userInfo.getBalloon()));
+                    }
+                }
+            }
+        });
+
     }
 
     @Nullable

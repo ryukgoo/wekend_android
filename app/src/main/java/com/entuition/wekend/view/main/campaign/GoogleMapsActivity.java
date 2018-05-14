@@ -34,13 +34,13 @@ public class GoogleMapsActivity extends AppCompatActivity implements OnMapReadyC
 
         setupToolbar();
 
+        address = getIntent().getStringExtra(Constants.ExtraKeys.MAP_ADDRESS);
+        markerTitle = getIntent().getStringExtra(Constants.ExtraKeys.PRODUCT_TITLE);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        address = getIntent().getStringExtra(Constants.ExtraKeys.MAP_ADDRESS);
-        markerTitle = getIntent().getStringExtra(Constants.ExtraKeys.PRODUCT_TITLE);
     }
 
     @Override

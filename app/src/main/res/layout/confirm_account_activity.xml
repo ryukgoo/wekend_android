@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.entuition.wekend.view.join.viewmodel.ConfirmAccountViewModel" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/confirm_account_comment"
+            android:textColor="@color/colorTextLogin"
+            android:textSize="20sp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="80dp"
+            android:theme="@style/CustomEditTextStyle"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/colorTextLogin"
+            android:textSize="14sp"
+            android:hint="@string/email_hint"
+            android:maxLines="1"
+            android:text="@={viewModel.email}"
+            android:afterTextChanged="@{(s) -> viewModel.onChangeEmailText()}" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/ok"
+            android:textSize="@dimen/button_text_big"
+            android:textColor="@drawable/selector_textcolor_button_dark"
+            android:background="@drawable/selector_button_white"
+            android:enabled="@{viewModel.isButtonEnabled}"
+            android:onClick="@{(v) -> viewModel.onClickButton()}"/>
+
+    </LinearLayout>
+
+</layout>
+

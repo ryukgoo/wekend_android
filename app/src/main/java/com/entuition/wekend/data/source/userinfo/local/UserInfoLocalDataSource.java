@@ -64,6 +64,11 @@ public class UserInfoLocalDataSource implements UserInfoDataSource {
     }
 
     @Override
+    public String getUsernameFromDevice() {
+        return SharedPreferencesWrapper.getUsernameFromSharedPreferences(sharedPreferences);
+    }
+
+    @Override
     public void refreshUserInfo() {
 
     }
@@ -72,10 +77,13 @@ public class UserInfoLocalDataSource implements UserInfoDataSource {
     public void getUserInfo(@NonNull String userId, GetUserInfoCallback callback) {}
 
     @Override
-    public void searchUserInfoFromNickname(@NonNull String nickname, GetUserInfoCallback callback) {}
+    public void searchUserInfoByNickname(@NonNull String nickname, GetUserInfoCallback callback) {}
 
     @Override
-    public void searchUserInfoFromUsername(@NonNull String username, GetUserInfoCallback callback) {}
+    public void searchUserInfoByUsername(@NonNull String username, GetUserInfoCallback callback) {}
+
+    @Override
+    public void searchUserInfoByPhone(@NonNull String phone, GetUserInfoCallback callback) {}
 
     @Override
     public void updateUserInfo(@NonNull UserInfo userInfo, UpdateUserInfoCallback callback) {}
@@ -119,6 +127,9 @@ public class UserInfoLocalDataSource implements UserInfoDataSource {
             SharedPreferencesWrapper.saveNotificationMailNum(sharedPreferences, 0);
         }
     }
+
+    @Override
+    public void validatePurchase(String userId, String purchaseId, String token, ValidatePurchaseCallback callback) {}
 
     public void clearProfileImageCache(String imagePath) {
         String cachedPhotoKey = ImageUtils.getHttpUrl(ImageUtils.PROFILE_IMAGE_BUCKET_NAME, imagePath);

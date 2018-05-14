@@ -39,10 +39,14 @@ public class SettingBindingAdapters {
     @BindingAdapter("profileViewPager")
     public static void setPhotos(ViewPager viewPager, Set<String> photos) {
         ProfileViewPagerAdapter adapter = (ProfileViewPagerAdapter) viewPager.getAdapter();
-        if (adapter != null && photos != null) {
-            List<String> items = new ArrayList<>(photos);
-            Collections.sort(items, String.CASE_INSENSITIVE_ORDER);
-            adapter.replaceData(items);
+        if (adapter != null) {
+            if (photos != null) {
+                List<String> items = new ArrayList<>(photos);
+                Collections.sort(items, String.CASE_INSENSITIVE_ORDER);
+                adapter.replaceData(items);
+            } else {
+                adapter.replaceData(null);
+            }
         }
     }
 

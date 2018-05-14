@@ -15,6 +15,8 @@ import com.entuition.clientsdk.model.LoginRequestModel;
 import com.entuition.clientsdk.model.LoginResponseModel;
 import com.entuition.clientsdk.model.RegisterRequestModel;
 import com.entuition.clientsdk.model.RegisterResponseModel;
+import com.entuition.clientsdk.model.ResetPasswordRequest;
+import com.entuition.clientsdk.model.ResetPasswordResponse;
 import com.entuition.wekend.data.source.like.LikeInfoRepository;
 import com.entuition.wekend.data.source.mail.ReceiveMailRepository;
 import com.entuition.wekend.data.source.mail.SendMailRepository;
@@ -169,6 +171,22 @@ public class CognitoDeveloperAuthenticationClient {
         }
 
         return responseModel;
+    }
+
+    public ResetPasswordResponse resetPassword(ResetPasswordRequest request) {
+
+        ApiClientFactory apiClientFactory = new ApiClientFactory();
+        final AuthenticationAPIClient client = apiClientFactory.build(AuthenticationAPIClient.class);
+
+        try {
+            return client.resetpasswordPost(request);
+        } catch (ApiClientException e) {
+            Log.e(TAG, "Failed to invoke resetPassword", e);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to invoke resetPassword", e);
+        }
+
+        return null;
     }
 
     public void logout() {

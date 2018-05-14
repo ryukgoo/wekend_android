@@ -1,15 +1,12 @@
-package com.entuition.wekend.data.google.gcm;
+package com.entuition.wekend.data.google.fcm;
 
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -19,72 +16,67 @@ import com.entuition.wekend.data.source.like.LikeInfo;
 import com.entuition.wekend.data.source.like.observable.AddLikeObservable;
 import com.entuition.wekend.data.source.mail.observable.ReceiveMailObservable;
 import com.entuition.wekend.data.source.mail.observable.SendMailObservable;
-import com.entuition.wekend.data.source.userinfo.UserInfoRepository;
 import com.entuition.wekend.util.Constants;
-import com.entuition.wekend.util.Constants.NotificationType;
 import com.entuition.wekend.view.SplashScreen;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.Map;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
 
-/**
- * Created by ryukgoo on 2016. 5. 17..
- */
-public class MessageReceivingService extends IntentService {
+public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-    public static final String TAG = MessageReceivingService.class.getSimpleName();
+    public static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
 
     private static final String KEY_MESSAGE = "message";
 
-    public MessageReceivingService() {
-        super(TAG);
-    }
-
     @Override
-    public void onCreate() {
-        super.onCreate();
+    public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        UserInfoRepository.getInstance(getApplicationContext()).registerEndpointArn(null, null);
-    }
+        Log.d(TAG,"From : " + remoteMessage.getFrom());
 
-    @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-        Log.d(TAG, "onHandleIntent");
-    }
-
-    public static void handleRemoteNotification(Bundle extras, Context context) {
-
-        Log.d(TAG, "handleRemoteNotification");
-
-        String[] messages = parseMessage(extras);
+        String[] messages = parseMessage(remoteMessage.getData());
         if (messages == null) return;
 
-        NotificationType type = NotificationType.valueOf(messages[0]);
-        String message = messages[1];
-        int productId = Integer.parseInt(messages[2]);
-        int badge = Integer.parseInt(messages[3]);
+        try {
+            Constants.NotificationType type = Constants.NotificationType.valueOf(messages[0]);
+            String message = messages[1];
+            int productId = Integer.parseInt(messages[2]);
+            int badge = Integer.parseInt(messages[3]);
 
-        NotificationCountingObservable.getInstance().change(type);
+            NotificationCountingObservable.getInstance().change(type);
 
-        switch (type) {
-            case like:
-                LikeInfo info = new LikeInfo();
-                info.setProductId(productId);
-                AddLikeObservable.getInstance().addLike(info);
-                break;
-            case sendMail:
-                SendMailObservable.getInstance().change();
-                break;
-            case receiveMail:
-                ReceiveMailObservable.getInstance().change();
-                break;
+            switch (type) {
+                case like:
+                    LikeInfo info = new LikeInfo();
+                    info.setProductId(productId);
+                    AddLikeObservable.getInstance().addLike(info);
+                    break;
+                case sendMail:
+                    SendMailObservable.getInstance().change();
+                    break;
+                case receiveMail:
+                    ReceiveMailObservable.getInstance().change();
+                    break;
+            }
+
+            Intent intent = new Intent(getApplicationContext(), SplashScreen.class);
+            postNotification(intent, getApplicationContext(), type, message, badge);
+
+            if (remoteMessage.getNotification() != null) {
+                Log.d(TAG, "Message Notification Body : " + remoteMessage.getNotification().getBody());
+            }
+
+            for (String key : remoteMessage.getData().keySet()) {
+                Log.d(TAG, "key : " + key + ", value : " + remoteMessage.getData().get(key));
+            }
+        } catch (IllegalArgumentException e) {
+
         }
-
-        Intent intent = new Intent(context, SplashScreen.class);
-        postNotification(intent, context, type, message, badge);
     }
 
-    private static void postNotification(Intent intentAction, Context context, NotificationType type, String message, int badge) {
-
+    private void postNotification(Intent intentAction, Context context, Constants.NotificationType type, String message, int badge) {
         Log.d(TAG, "postNotification > message : " + message + ", badge : " + badge);
 
         intentAction.putExtra(Constants.START_ACTIVITY_POSITION, getTabIndexFromType(type));
@@ -128,11 +120,10 @@ public class MessageReceivingService extends IntentService {
 
         }
 
-//        sendIconBadge(context, badge);
         ShortcutBadger.applyCount(context, badge);
     }
 
-    private static int getTabIndexFromType(Constants.NotificationType type) {
+    private int getTabIndexFromType(Constants.NotificationType type) {
 
         switch (type) {
             case like:
@@ -145,41 +136,14 @@ public class MessageReceivingService extends IntentService {
         return 0;
     }
 
-    private static String[] parseMessage(Bundle extras) {
-        if (extras != null) {
-            for (String key : extras.keySet()) {
+    private String[] parseMessage(Map<String, String> data) {
+        if (data != null) {
+            for (String key : data.keySet()) {
                 if (key.equals(KEY_MESSAGE)) {
-                    return extras.getString(key).split("\\|\\|");
+                    return data.get(key).split("\\|\\|");
                 }
             }
         }
         return null;
     }
-
-    /*
-    private static void sendIconBadge(Context context, int badge) {
-        Intent intent = new Intent("android.intent.action.BADGE_COUNT_UPDATE");
-        intent.putExtra("badge_count_package_name", context.getPackageName());
-        intent.putExtra("badge_count_class_name", getLauncherClassName(context));
-        intent.putExtra("badge_count", badge);
-        context.sendBroadcast(intent);
-    }
-
-    private static String getLauncherClassName(Context context) {
-        PackageManager pm = context.getPackageManager();
-
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-
-        List<ResolveInfo> resolveInfos = pm.queryIntentActivities(intent, 0);
-        for (ResolveInfo resolveInfo : resolveInfos) {
-            String pkgName = resolveInfo.activityInfo.applicationInfo.packageName;
-            if (pkgName.equalsIgnoreCase(context.getPackageName())) {
-                String className = resolveInfo.activityInfo.name;
-                return className;
-            }
-        }
-        return null;
-    }
-    */
 }

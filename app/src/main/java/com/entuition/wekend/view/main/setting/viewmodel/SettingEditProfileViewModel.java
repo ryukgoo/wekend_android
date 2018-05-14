@@ -71,6 +71,9 @@ public class SettingEditProfileViewModel extends AbstractViewModel {
 
             @Override
             public void onDataNotAvailable() {}
+
+            @Override
+            public void onError() {}
         });
     }
 
@@ -84,27 +87,49 @@ public class SettingEditProfileViewModel extends AbstractViewModel {
     public void onDestroy() {}
 
     public void editDone() {
-        user.get().setIntroduce(introduce.get());
-        user.get().setCompany(company.get());
-        user.get().setSchool(school.get());
-        user.get().setArea(area.get());
-
-        userInfoDataSource.updateUserInfo(user.get(), new UserInfoDataSource.UpdateUserInfoCallback() {
+        String userId = userInfoDataSource.getUserId();
+        userInfoDataSource.getUserInfo(userId, new UserInfoDataSource.GetUserInfoCallback() {
             @Override
-            public void onUpdateComplete(UserInfo userInfo) {
-                user.set(userInfo);
+            public void onUserInfoLoaded(UserInfo userInfo) {
+                userInfo.setIntroduce(introduce.get());
+                userInfo.setCompany(company.get());
+                userInfo.setSchool(school.get());
+                userInfo.setArea(area.get());
+
+                userInfoDataSource.updateUserInfo(userInfo, new UserInfoDataSource.UpdateUserInfoCallback() {
+                    @Override
+                    public void onUpdateComplete(UserInfo userInfo) {
+                        user.set(userInfo);
+                        if (navigator.get() != null) {
+                            navigator.get().dismiss();
+                        }
+                    }
+
+                    @Override
+                    public void onUpdateFailed() {
+                        if (navigator.get() != null) {
+                            navigator.get().showUpdateError();
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onDataNotAvailable() {
                 if (navigator.get() != null) {
-                    navigator.get().dismiss();
+                    navigator.get().showUpdateError();
                 }
             }
 
             @Override
-            public void onUpdateFailed() {
+            public void onError() {
                 if (navigator.get() != null) {
                     navigator.get().showUpdateError();
                 }
             }
         });
+
+
     }
 
     public void onFocusPhone(boolean focus) {

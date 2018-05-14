@@ -46,6 +46,9 @@ public class LoginViewModel extends AbstractViewModel {
         Log.d(TAG, "onCreate");
         isLoading.set(false);
         isLoginButtonValid.set(false);
+
+        String username = userInfoDataSource.getUsernameFromDevice();
+        if (username != null) { email.set(username); }
     }
 
     @Override
@@ -75,6 +78,9 @@ public class LoginViewModel extends AbstractViewModel {
                         public void onUserInfoLoaded(UserInfo userInfo) {
                             isLoading.set(false);
                             if (navigator.get() != null) {
+
+                                userInfoDataSource.registerEndpointArn(null, null);
+
                                 navigator.get().onCompleteLogin();
                             }
                         }
@@ -86,6 +92,9 @@ public class LoginViewModel extends AbstractViewModel {
                                 navigator.get().showFailedLogin();
                             }
                         }
+
+                        @Override
+                        public void onError() {}
                     });
                 }
 
